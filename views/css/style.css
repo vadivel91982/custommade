@@ -1,0 +1,51 @@
+@charset "UTF-8";
+/*
+Theme Name: Create a Wall
+Description: Dedicated Wordpress theme for Create a Wall
+*/
+/* ==========================================================================
+	Base
+/* ========================================================================== */
+
+
+
+/************************************** Custom style starts *********************************/
+
+.previews {
+	border:0px;
+	max-height: 550px;
+}
+.previews ul.tabs-left  {
+	/*max-height: 558px;
+	overflow-y: scroll;
+	overflow-x: hidden;	*/
+}
+.tabs-left li  a {
+	text-align:center;
+}
+.tabs-left li  a img {
+	width:96px;
+	height:90px;
+}
+.tabs-left > li.active > a, .tabs-left > li.active > a:hover, .tabs-left > li.active > a:focus, .tabs-left {
+	border:0px;
+}
+
+
+button.image-grid .fa-align-justify{
+	    transform: rotate(90deg);
+    padding: 0px;
+    font-size: 44px;
+    position: absolute;
+    left: -5px;
+    top: -2px;
+}
+
+.gridbg{
+ background: url(../img/grid-line.png) repeat;
+ width: 100%;
+ height: 100%;
+ position: absolute;
+ top: 0;
+ z-index: 1
+}

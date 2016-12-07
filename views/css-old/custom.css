@@ -1,0 +1,417 @@
+@font-face {
+	font-family: 'Conv_Book Antiqua Regular';
+	src: url('fonts/Book Antiqua Regular.eot');
+	src: local('â˜º'), 
+		 url('fonts/Book Antiqua Regular.woff') format('woff'), 
+		 url('fonts/Book Antiqua Regular.ttf') format('truetype'), 
+		 url('fonts/Book Antiqua Regular.svg') format('svg');
+	font-weight: normal;
+	font-style: normal;
+}
+
+@font-face {
+	font-family: 'ufonts_com_centurygothic';
+	src: url('fonts/ufonts_com_centurygothic.eot');
+	src: url('fonts/ufonts_com_centurygothic.eot') format('embedded-opentype'), 
+		 url('fonts/ufonts_com_centurygothic.woff2') format('woff2'), 
+		 url('fonts/ufonts_com_centurygothic.woff') format('woff'), 
+		 url('fonts/ufonts_com_centurygothic.ttf') format('truetype'), 
+		 url('fonts/ufonts_com_centurygothic.svg#ufonts_com_centurygothic') format('svg');
+}
+html, body {
+	font-family: Century Gothic,CenturyGothic,AppleGothic,sans-serif;
+	font-size: 14px;
+	color: #666666;
+}
+img {
+    max-width: 100%;
+    height: auto;
+    vertical-align: middle;
+}
+/*.container {
+	width: 1100px;
+	margin: 30px auto
+}*/
+.container {
+    max-width: 988px;
+	width: 988px;
+}
+.row-eq-height {
+	display: -webkit-box;
+	display: -webkit-flex;
+	display: -ms-flexbox;
+	display: flex;
+}
+.no-gutter > [class*='col-'] {
+	padding-right: 0;
+	padding-left: 0;
+}
+input[type="radio"] {
+	display: none;
+}
+input[type="radio"] + label {
+	/*color: #292321;*/
+	/*font-family: Arial, sans-serif;*/
+	font-size: 14px;
+}
+input[type="radio"] + label span {
+	display: inline-block;
+	width: 10px;
+	height: 10px;
+	margin: -1px 4px 0 0;
+	vertical-align: middle;
+	cursor: pointer;
+}
+input[type="radio"] + label span {
+	background-color: none;
+	border: 1px solid #ddd;
+}
+input[type="radio"]:checked + label span {
+	background-color: #8a6293;
+	border: 1px solid #8a6293;
+}
+input[type="radio"] + label span,
+input[type="radio"]:checked + label span {
+	-webkit-transition: background-color 0.4s linear;
+	-o-transition: background-color 0.4s linear;
+	-moz-transition: background-color 0.4s linear;
+	transition: background-color 0.4s linear;
+}
+.ghost-button {
+	color: #a1be7c;
+	background-color: #fff;
+	border: 2px solid #a1be7c;
+	padding: 8px;
+}
+.ghost-button:hover, .ghost-button:focus, .ghost-button:active {
+	color: #a1be7c;
+	text-decoration: none;
+}
+.tabs-left, .tabs-right {border-bottom: none;}
+.tabs-left {border-right: 1px solid #ddd;}
+.tabs-right {border-left: 1px solid #ddd;}
+.tabs-left > li, .tabs-right > li {float: none;margin-bottom: 2px;}
+.tabs-left > li {margin-right: -1px;}
+.tabs-right > li { margin-left: -1px;}
+.tabs-left > li.active > a,
+.tabs-left > li.active > a:hover,
+.tabs-left > li.active > a:focus {
+	border-bottom-color: #ddd;
+	border-right-color: transparent;
+}
+.tabs-right > li.active > a,
+.tabs-right > li.active > a:hover,
+.tabs-right > li.active > a:focus {
+	border-bottom: 1px solid #ddd;
+	border-left-color: transparent;
+}
+.tabs-left > li > a {
+	border-radius: 4px 0 0 4px;
+	margin-right: 0;
+	display: block;
+}
+.tabs-right > li > a {
+	border-radius: 0 4px 4px 0;
+	margin-right: 0;
+}
+#base-image {
+	max-width: 100%;
+	max-height: 300px;
+}
+.transform-buttons button {
+	height: 40px;
+	border-radius: 0 !important;
+}
+.transform-info, .transform-info:hover, .transform-info:active, .transform-info:focus {
+	border-radius: 0;
+	background-color: #8a6293;
+	color: white;
+	cursor: default;
+	font-size: 18px;
+}
+.button-group button {border-radius: 0 !important;}
+.colour-options {
+	font-size: 1.1em;
+	margin-top: 30px;
+}
+.colour-options img {
+	cursor: pointer;
+}
+.colour-options p {
+	margin-top: 10px;
+	margin-bottom: 0px;
+}
+
+.previews {
+	border: 1px solid #ddd;
+	display: inline-block;
+	width: 100%;
+	overflow: hidden;
+}
+.preview_preview-text-container {
+	padding: 10px 10px 0 20px;
+	background-color: #dddddd;
+	margin: 0;
+}
+.preview_preview-text-container p {
+	color: #8a6293;
+}
+.preview_preview-text-container p small { color: #aaa; }
+.previews .tab-content { margin: 0; }
+
+.choose-area {padding-bottom: 0;}
+.cart-section h3 {
+	font-size: 14px;
+	font-weight: 600;
+	font-family: Century Gothic,CenturyGothic,AppleGothic,sans-serif;
+	text-transform: uppercase;
+	margin: 0 0 15px 0
+}	
+.cart-section .form-horizontal a{display: block;padding-top: 5px;color: #9e191d;text-align: center;text-decoration: underline}
+.cart-section .radio label { padding: 0; }
+.wall-dimensions .radio { display: inline-block; }
+.cart-section .form-horizontal .form-group{margin-left: 0 !important;margin-right: 0 !important}
+.cart-section input{
+	width: 160px !important;
+    border-radius: 0 !important	
+}
+.choose-info {
+	background-color: #a1be7c;
+	margin: 0;
+	color: white;
+}
+.choose-info:before {
+	content: " ";
+	background-image: url("https://api.createawall.co.uk/img/info-icon.png");
+	background-repeat: no-repeat;
+	background-position: center center;
+	height: 16px;
+	width: 16px;
+	position: relative;
+	display: inline-block;
+	background-repeat: no-repeat;
+	top: 3px;
+	margin-right: 0px;
+}
+.choose-info p {
+	padding: 8px 0.5em 8px;
+	display: inline-block;
+	margin-bottom: 0;
+}
+.upload-zip-button {
+	background-color: #a1be7c;
+	color: white;
+	border-radius: 0;
+	font-size: 1em;
+}
+.single_add_to_cart_button {
+	background-color: #a1be7c;
+	color: white;
+	width: 100%;
+	border-radius: 0;
+	font-size: 20px;
+}
+.single_add_to_cart_button:hover { color: white; }
+.single_add_to_cart_button img { margin-right: 10px; }
+.or { margin: 40px 0; }
+.canvas-template { cursor: pointer; }
+.save-design-link-container { padding: 21px 0px; }
+[name="canvas-variation"] { padding: 0; }
+.method-info { cursor: pointer;}
+.not-happy { margin-top: 30px; }
+#go-back {
+	line-height: 19px;
+	background: #8a6293;
+	border: #8a6293;
+}
+ul.share-buttons {
+	list-style: none;
+	padding: 15px 0 0 0;
+}
+ul.share-buttons li { display: inline; }
+.fixedsticky {top: 25px;}
+.change-image {
+	margin-top: 2em;
+	background-color: #8b6394;
+	color: white;
+	padding-top: 3em;
+	padding-bottom: 3em;
+}
+.change-image h3 {
+	margin-right: 1em
+}
+.change-image .btn {
+	margin-top: -13px;
+	margin-left: 13px;
+}
+.change-image h3, .change-image .btn {
+	display: inline-block;
+}
+#collage-preview-non-sticky img {
+	margin-top: 30px;
+}
+#cropper-tool-container {
+	min-height: 330px;
+	max-height: 500px;
+	overflow: hidden;
+}
+.overlay {
+	position: absolute;
+	bottom: 0;
+	max-width: 100%;
+	top: 0;
+}        
+.overlay {position: relative;}
+.backdrop {
+	position: absolute;
+	text-align: center;
+	width: 100%;
+	background-image: url("img/wallpaper-bg.png");
+}
+.backdrop .preview { height: 100%; }
+
+/**** new design **/
+.product-title{
+	font-size: 30px;
+	font-family: 'Conv_Book Antiqua Regular';
+	text-align: center;
+	font-weight: normal;
+	/*border-bottom: 1px solid #b3b3b3;*/
+	color: #666666;
+	padding-bottom: 10px;
+	margin-bottom: 40px;
+}
+.prod_desc h2{
+	font-size: 30px;
+	font-family: 'Conv_Book Antiqua Regular';
+	font-weight: normal;
+	padding-bottom: 20px;
+}
+.prod_desc{ padding-bottom: 30px; }
+.form-horizontal .control-label {
+	margin-bottom: 10px;
+	font-weight: normal;
+	color: #666;
+	padding-top: 0
+}
+.cart_section .form-control{
+	border: 1px solid #afb1b4 !important	
+}
+.cart-section .form-group{margin-bottom: 10px;}
+.input-group-addon{
+	background: #afb1b4;
+	width: 40px;
+	color: #fff;
+	padding: 0;
+	font-size: 20px;
+	border-radius: 0 !important
+}
+.widthbox  .input-group-addon{vertical-align: top;padding-top: 5px;}
+.heightbox  .input-group-addon{vertical-align: middle;text-align: right;padding-right: 5px;}
+.customise-section {margin-top: 30px;}
+.customise-section .btn-default{
+	background: #afb2b4;
+	color: #fff;
+	text-transform: uppercase;
+	border-color: #afb2b4;
+	margin-bottom: 10px;
+	width: 200px;
+	padding-left: 0;
+	font-weight: normal;
+	font-size: 15px;
+}
+.customise-section .btn-default i{
+	font-size: 18px;
+    float: left;
+    padding-left: 10px;
+    font-weight: normal;
+}
+.price-section{padding: 10px 0 20px;clear:both}
+.price-section .our_price_display {
+    font-size: 30px;
+    font-family: 'Conv_Book Antiqua Regular';
+    color: #990000;
+    font-weight: bold;
+}
+.price-section .our_price_display b{font-size: 16px;font-weight: normal}
+.price-section .sq-price{
+	font-size: 20px;
+    font-family: 'Conv_Book Antiqua Regular';
+	font-weight: normal
+}
+.button-sec p{font-weight: normal}
+#add_to_cart input, #sampleButton {
+   background: #891812;
+    display: block;
+    width: 200px !important;
+    padding: 0;
+    cursor: pointer;
+    padding: 4px;
+    line-height: 18px;
+    text-align: center;
+    color: #ffffff;
+    text-transform: uppercase;
+    font-weight: normal;
+    font-size: 14px;
+    text-decoration: none;
+    height: 43px;
+	text-decoration: none;
+	border: 0
+}
+#sampleButton {
+    background: #676767;
+}
+
+#buy_block{
+    width:100% !important;
+}
+
+/** Responsive **/
+@media (max-width: 991px) {
+	.change-image h3 {
+		font-size: 22px;
+	}
+}
+
+@media (max-width: 767px) {
+	.change-image .btn {
+		margin-top: 10px;
+		margin-left: 0;
+	}
+	.transform-buttons .btn {
+		margin-left: 0 !important;
+	}
+	.transform-buttons > .btn {
+		display: inline-block;
+		width: 50%;
+	}
+	.customise-section .transform-info {
+		width: 100%;
+		border: 0;
+	}
+	.previews.customise-section {
+		/*display: none;*/
+	}
+	#left-col {
+		margin-bottom: 2em;
+	}
+	#cropper-tool-container {
+		max-height: 300px;
+	}
+}
+
+@media (max-width: 767px) {
+	.preview_preview-text-container {
+		width: 100% !important;
+	}
+	.tabs-left > li {
+		display: inline-block;
+		width: auto;
+	}
+	.tabs-left, .tabs-left > li > a {
+		border: none;
+	}
+	.nav-tabs > li.active > a, .nav-tabs > li.active > a:hover, .nav-tabs > li.active > a:focus {
+		border: none;
+	}
+}
