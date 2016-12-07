@@ -258,6 +258,49 @@
                                         <a href="javascript:void(0)" id="sampleButton" onclick="addSampleToCart(this);
                                                 return false;">Commander un échantillon</a>
                                     </div>
+                                    {assign var="color_feature" value=""}
+
+                                    {if isset($features) && $features|is_array && $features|count}
+                                        {foreach from=$features item='feature'}
+                                            {if $feature.id_feature == 1}
+                                                {assign var="color_feature" value=$feature.value}
+                                            {/if}
+                                        {/foreach}
+                                    {/if}
+                                    {if isset($accessories) && $accessories}
+                                        <div class="accessories">
+                                            <p><span style="padding-right:10px">{l s='Coloris'}</span> <select style="width:250px" onchange="javascript:document.location.href = this.value">
+                                                    <option value="{$link->getProductLink($product)}">{$color_feature|escape:'UTF-8':'htmlall'} - {l s='Ref.'} {$product->reference|escape:'UTF-8':'htmlall'}</option>
+                                                    {foreach from=$accessories item=accessoire}
+                                                        <option value="{$accessoire.link}">{foreach from=$accessoire.features item=feature}{if $feature.id_feature==1}{$feature.value}{/if}{/foreach} - {l s='Ref.'} {$accessoire.reference}</option>
+                                                    {/foreach}
+                                                </select></p>
+                                            <div class="clear"></div>
+                                            <ul class="list_accessories">
+
+                                                {assign var="cover" value=""}
+                                                {if isset($images) && $images|is_array && $images|count}
+                                                    {foreach from=$images key=id_image item='image' name="images"}
+                                                        {if $image.cover || $smarty.foreach.images.index == 1}
+                                                            {assign var="cover" value=$id_image}
+                                                            {break}
+                                                        {/if}
+                                                    {/foreach}
+                                                {/if}
+
+                                                <li>
+                                                    <img src="{$link->getImageLink($product->link_rewrite, $product->id|cat:'-'|cat:$cover, 'home_default')}" alt="" height="46" width="46" />
+                                                </li>
+
+                                                {foreach from=$accessories item=accessoire}
+                                                    <li><a href="{$accessoire.link}"><img src="{$link->getImageLink($accessoire.link_rewrite, $accessoire.id_image, 'listingproduit')}" class="img-responsive" width="46" height="46" /></a></li>
+                                                {/foreach}</ul>
+                                                {if $accessories|@count > 5}
+                                                <span class="attributes_more">{l s='Voir plus'}</span>
+                                            {/if}
+                                            <div class="clear"></div>
+                                        </div>
+                                    {/if}
                                     </div> 
 
 
@@ -280,7 +323,7 @@
                                                 {foreach from=$getUnivers1 key=k item=universeImage}
                                                     <li {if (1 == $k+1)}class="active"{/if}>
                                                        <!-- <a href="#scene{$k+1}" data-toggle="tab">{$universeImage['universe_name']|escape:'html':'UTF-8'}</a>-->
-														<a href="#scene{$k+1}" data-toggle="tab"><img src="{$img_dir|escape:'html':'UTF-8'}{$universeImage['image']|escape:'html':'UTF-8'}" width="90px"></a>
+                                                        <a href="#scene{$k+1}" data-toggle="tab"><img src="{$img_dir|escape:'html':'UTF-8'}{$universeImage['image']|escape:'html':'UTF-8'}" width="90px"></a>
                                                     </li>
                                                 {/foreach}
                                             </ul>
@@ -308,7 +351,7 @@
                                     </form>
                                     {/if}
                                         <img 
-                                        </div>
+                                            </div>
 
 
                                         <!--<script type="text/javascript">
@@ -330,8 +373,8 @@
                                         </script>-->
 
                                         <script>
-											
-                                            
+
+
                                             (function ($) {
                                                 var flipValue = 0;
                                                 var dynamicImage = '';
@@ -376,71 +419,71 @@
                                                     //datas = 'id=' + id + '&get_type=' + type + '&datas=' + data;
                                                     data.imageUrl = id;
                                                     data.type = type;
-                                                    
+
                                                     if (type == 'flip') {
                                                         data.mirror = flipValue;
                                                     }
-                                                    
+
                                                     var tempRotateVal = data.rotate;
                                                     if (tempRotateVal < 0) {
-                                                        
+
                                                         /*if(flipValue == 1){
-                                                            var finalRotateValue = 360 + tempRotateVal;
-                                                        }else{
-                                                            var finalRotateValue = tempRotateVal * -1;
-                                                        }*/
+                                                         var finalRotateValue = 360 + tempRotateVal;
+                                                         }else{
+                                                         var finalRotateValue = tempRotateVal * -1;
+                                                         }*/
                                                         console.log(flipValue);
-                                                        if(flipValue == 0){
-                                                            if(tempRotateVal == -90){
+                                                        if (flipValue == 0) {
+                                                            if (tempRotateVal == -90) {
                                                                 finalRotateValue = 90;
                                                             }
-                                                            if(tempRotateVal == -180){
+                                                            if (tempRotateVal == -180) {
                                                                 finalRotateValue = 180;
                                                             }
-                                                            if(tempRotateVal == -270){
+                                                            if (tempRotateVal == -270) {
                                                                 finalRotateValue = 270;
                                                             }
-                                                        }else{
-                                                            if(tempRotateVal == -90){
+                                                        } else {
+                                                            if (tempRotateVal == -90) {
                                                                 finalRotateValue = 270;
                                                             }
-                                                            if(tempRotateVal == -180){
+                                                            if (tempRotateVal == -180) {
                                                                 finalRotateValue = 0;
                                                             }
-                                                            if(tempRotateVal == -270){
+                                                            if (tempRotateVal == -270) {
                                                                 finalRotateValue = 90;
                                                             }
                                                         }
-                                                        
+
                                                         data.rotate = finalRotateValue;
-                                                    }else{
+                                                    } else {
                                                         //var correctRotateValue = data.rotate;
                                                     }
-                                                    
+
                                                     datas = data;
                                                     //console.log(datas);
                                                     //return true;
                                                     /*$.ajax({
-                                                        url: baseDir,
-                                                        method: 'POST',
-                                                        data: datas,
-                                                        beforeSend: function () {
-                                                            manipulationButtons.each(function (key, button) {
-                                                                $(button).addClass('disabled');
-                                                            });
-                                                        },
-                                                        success: function (response) {
-                                                            //alert(response);
-                                                            $('.preview').attr('src', base_url);
-                                                        },
-                                                        complete: function () {
-                                                            manipulationButtons.each(function (key, button) {
-                                                                $(button).removeClass('disabled');
+                                                     url: baseDir,
+                                                     method: 'POST',
+                                                     data: datas,
+                                                     beforeSend: function () {
+                                                     manipulationButtons.each(function (key, button) {
+                                                     $(button).addClass('disabled');
+                                                     });
+                                                     },
+                                                     success: function (response) {
+                                                     //alert(response);
+                                                     $('.preview').attr('src', base_url);
+                                                     },
+                                                     complete: function () {
+                                                     manipulationButtons.each(function (key, button) {
+                                                     $(button).removeClass('disabled');
+                                                     
+                                                     });
+                                                     }
+                                                     });*/
 
-                                                            });
-                                                        }
-                                                    });*/
-                                                    
                                                     dynamicImage = image.cropper("getCroppedCanvas").toDataURL('image/jpeg', 1);
                                                     $('.preview').attr('src', dynamicImage);
                                                 }
@@ -469,21 +512,21 @@
                                                     return data;
                                                 }
 
-                                                
 
-                                                var options = {													
-													viewMode: 1, // Can use 'viewMode: 3' to remove the canvas borders but causes zoom issues on rotate.
-													aspectRatio: 1 / 1,
-													dragMode: 'move',
-													checkCrossOrigin: false,
-													zoomOnWheel: false,
-													zoomable: false,
-													movable: false,
-													cropBoxResizable: false,
-													minCropBoxHeight: 2000,
+
+                                                var options = {
+                                                    viewMode: 1, // Can use 'viewMode: 3' to remove the canvas borders but causes zoom issues on rotate.
+                                                    aspectRatio: 1 / 1,
+                                                    dragMode: 'move',
+                                                    checkCrossOrigin: false,
+                                                    zoomOnWheel: false,
+                                                    zoomable: false,
+                                                    movable: false,
+                                                    cropBoxResizable: false,
+                                                    minCropBoxHeight: 2000,
                                                     minContainerWidth: 710,
                                                     minContainerHeight: 500,
-													guides: false,
+                                                    guides: false,
 
                                                     cropend: function (e) {
                                                         makeTransformation('crop', jobId, $(this).cropper('getData'));
@@ -504,22 +547,22 @@
                                                     if ($(this).hasClass('disabled')) {
                                                         return;
                                                     }
-                                                    
+
                                                     //flipValue = 0;
                                                     image.cropper('rotate', -90);
                                                     makeTransformation('rotate', jobId, image.cropper('getData'));
-                                                    
+
                                                     var tempCroperData = image.cropper('getData');
                                                     var tempRotateValue = tempCroperData.rotate * -1;
-                                                    if(tempRotateValue == 90 || tempRotateValue == 270){
+                                                    if (tempRotateValue == 90 || tempRotateValue == 270) {
                                                         jQuery('.flipbtns').hide();
                                                         jQuery('.image-flip-vertically').show();
-                                                    }else{
+                                                    } else {
                                                         jQuery('.flipbtns').hide();
                                                         jQuery('.image-flip-horizontally').show();
                                                     }
                                                     /**/
-                                                    
+
                                                     /**/
                                                 });
 
@@ -533,21 +576,20 @@
                                                     image.cropper('rotate', 90);
                                                     makeTransformation('rotate', jobId, image.cropper('getData'));
                                                 });
-												
+
 
                                                 /*           prabakaran                  */
-											
+
 
                                                 $(document).on('click', '.image-flip-horizontally', function (e) {
                                                     e.preventDefault();
-                                                    
+
                                                     if ($(this).hasClass('disabled')) {
                                                         return;
                                                     }
-                                                    if(flipValue == 0){
+                                                    if (flipValue == 0) {
                                                         flipValue = 1;
-                                                    }
-                                                    else if(flipValue == 1){
+                                                    } else if (flipValue == 1) {
                                                         flipValue = 0;
                                                     }
                                                     console.log(flipValue);
@@ -562,10 +604,9 @@
                                                     if ($(this).hasClass('disabled')) {
                                                         return;
                                                     }
-                                                    if(flipValue == 0){
+                                                    if (flipValue == 0) {
                                                         flipValue = 1;
-                                                    }
-                                                    else if(flipValue == 1){
+                                                    } else if (flipValue == 1) {
                                                         flipValue = 0;
                                                     }
                                                     var reversed = -1 * image.cropper('getData').scaleY;
@@ -591,19 +632,19 @@
                                                         return;
                                                     }
                                                 });
-												
-													
-												$(document).on('click', '.image-grid', function (e) {   
-													e.preventDefault();
-													//alert('testing');
-													var button = $(this);
 
-													$('.gridlayout').toggleClass('gridbg');
 
-													if ($(this).hasClass('disabled')) {
-														return;
-													}
-												});
+                                                $(document).on('click', '.image-grid', function (e) {
+                                                    e.preventDefault();
+                                                    //alert('testing');
+                                                    var button = $(this);
+
+                                                    $('.gridlayout').toggleClass('gridbg');
+
+                                                    if ($(this).hasClass('disabled')) {
+                                                        return;
+                                                    }
+                                                });
 
                                                 /* prabakaran */
 
@@ -867,9 +908,9 @@
                                                         var settings = previewSettings['canvas'][id][size];
                                                         var image = preview.find('.backdrop img');
                                                         var overlay = preview.find('.overlay img');
-													
+
                                                         overlay.attr('src', settings.overlayUrl);
-														alert('overlayUrl');
+                                                        alert('overlayUrl');
                                                         image.css('top', settings.top);
                                                         image.css('width', settings.width);
                                                         image.css('left', settings.left);
@@ -941,6 +982,6 @@
                                                  }
                                                  });
                                                  });*/
-												 
+
                                             })(jQuery);
                                         </script>
