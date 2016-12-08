@@ -26,23 +26,10 @@
 <div class="panel">
 	<h3><i class="icon icon-credit-card"></i> {l s='CustomMade' mod='custommade'}</h3>
 	<p>
-		<strong>{l s='Here is my new generic module!' mod='custommade'}</strong><br />
-		{l s='Thanks to PrestaShop, now I have a great module.' mod='custommade'}<br />
-		{l s='I can configure it using the following configuration form.' mod='custommade'}
+		<strong>{l s='Do you want to customize particular product' mod='custommade'}</strong><br /><br />
+		{l s='Please refer to Catalog > Products > Custom Made Wall Mural.' mod='custommade'}<br /><br />
+		<strong>{l s='LIST AND CHANGE UNIVERSE IMAGE' mod='custommade'}</strong><br /><br />
+		{l s='Display by Room List.' mod='custommade'}<br />
 	</p>
 	<br />
-	<p>
-		{l s='This module will boost your sales!' mod='custommade'}
-	</p>
-</div>
-
-<div class="panel">
-	<h3><i class="icon icon-tags"></i> {l s='Documentation' mod='custommade'}</h3>
-	<p>
-		&raquo; {l s='You can get a PDF documentation to configure this module' mod='custommade'} :
-		<ul>
-			<li><a href="#" target="_blank">{l s='English' mod='custommade'}</a></li>
-			<li><a href="#" target="_blank">{l s='French' mod='custommade'}</a></li>
-		</ul>
-	</p>
 </div>

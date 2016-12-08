@@ -60,6 +60,18 @@ class CustomMadeAdminController extends ModuleAdminController
         if (empty($this->toolbar_title)) {
             $this->initToolbarTitle();
         }
+        $id_universe = (int)Tools::getValue('id_universe');
+        if ($id_universe) {
+            $count_cover_image = Db::getInstance()->getValue('SELECT `image` FROM `'._DB_PREFIX_.Tools::strtolower($this->table).'` u WHERE u.`id_universe` = '.(int)$id_universe);
+            $image = $this->custModuleFolderName.$count_cover_image;
+            $ext = pathinfo($image, PATHINFO_EXTENSION);
+            $image_url = ImageManager::thumbnail($image, $count_cover_image, 350, $ext, true, true);
+        } else {
+            $image = '';
+            $image_url = '';
+        }        
+        $image_size = file_exists($image) ? filesize($image) / 1000 : false;
+
         $helper = new HelperForm();
         $this->setHelperDisplay($helper);
         Shop::addTableAssociation($this->table, array('type' => 'shop'));
@@ -85,6 +97,9 @@ class CustomMadeAdminController extends ModuleAdminController
                     'type' => 'file',
                     'label' => $this->module->l('Photo:', 'CustomMadeAdmin'),
                     'name' => 'image',
+                    'image' => $image_url ? $image_url : false,
+                    'size' => $image_size,
+                    'display_image' => true,
                     'required' => true,
                     'hint' => $this->l('Image format not recognized, allowed formats are: .gif, .jpg, .png'),
                 ),

@@ -117,12 +117,12 @@ class Custommade extends Module
         $return = DB::getInstance()->Execute($sql);
 
         $universeSql = 'CREATE TABLE IF NOT EXISTS `'._DB_PREFIX_.Tools::strtolower($this->universe).'` (
-          `id_universe` int(8) NOT NULL AUTO_INCREMENT,
-          `universe_name` varchar(64) NOT NULL,
-          `image` varchar(250) NOT NULL,
-          `thump` varchar(250) NOT NULL,
-          `active` enum("1","0") NOT NULL DEFAULT "1",
-          PRIMARY KEY (`id_universe`)
+            `id_universe` int(8) NOT NULL AUTO_INCREMENT,
+            `universe_name` varchar(64) NOT NULL,
+            `image` varchar(250) NOT NULL,
+            `thump` varchar(250) NOT NULL,
+            `active` enum("1","0") NOT NULL DEFAULT "1",
+            PRIMARY KEY (`id_universe`)
         ) ENGINE=InnoDB  DEFAULT CHARSET=latin1 AUTO_INCREMENT=1 ;';
         $return &= DB::getInstance()->Execute($universeSql);
 
@@ -164,12 +164,10 @@ class Custommade extends Module
         if (((bool)Tools::isSubmit('submitCustommadeModule')) == true) {
             $this->postProcess();
         }
-
         $this->context->smarty->assign('module_dir', $this->_path);
-
         $output = $this->context->smarty->fetch($this->local_path.'views/templates/admin/configure.tpl');
-
-        return $output.$this->renderForm();
+        //return $output.$this->renderForm();
+        return $output;
     }
 
     /**

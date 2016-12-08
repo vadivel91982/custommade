@@ -275,14 +275,14 @@ class CustomMadeDefaultModuleFrontController extends ModuleFrontController
         }
         //echo $this->custModuleFolderName;die;
         $this->context->controller->addCSS(_MODULE_DIR_.'custommade/views/css/font-awesome/font-awesome.css');
-        $this->context->controller->addCSS(_MODULE_DIR_.'custommade/views/css/bootstrap.css');
+        //$this->context->controller->addCSS(_MODULE_DIR_.'custommade/views/css/bootstrap.css');
         $this->context->controller->addCSS(_MODULE_DIR_.'custommade/views/css/cropper.css');
         $this->context->controller->addCSS(_MODULE_DIR_.'custommade/views/css/fixedsticky.css');
         $this->context->controller->addCSS(_MODULE_DIR_.'custommade/views/css/custom.css');
         $this->context->controller->addCSS(_MODULE_DIR_.'custommade/views/css/style.css');
 
         $this->context->controller->addJS(_MODULE_DIR_.'custommade/views/js/jquery.js');
-        $this->context->controller->addJS(_MODULE_DIR_.'custommade/views/js/bootstrap.js');
+        //$this->context->controller->addJS(_MODULE_DIR_.'custommade/views/js/bootstrap.js');
         $this->context->controller->addJS(_MODULE_DIR_.'custommade/views/js/cropper.js');
         $this->context->controller->addJS(_MODULE_DIR_.'custommade/views/js/fixedsticky.js');
         $this->context->controller->addJS(_MODULE_DIR_.'custommade/views/js/front.js');
