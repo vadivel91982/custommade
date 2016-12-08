@@ -21,44 +21,40 @@
 			<tr>
 				<td valign="top"><label for="Height" style="width:300px;">{l s='Max Height :' mod='custommade'}</label></td>
 				<td>
-					<input type="hidden" name="loyalty_filled" value="1">
 					<input type="text" name="Height" id="Height" value="{$getCustomize->cust_height|escape:'html':'UTF-8'}" >
 				</td>
 				<td>
-					<p class="preference_description">Centimeter</p>
+					<p class="preference_description">{l s=' Centimeter' mod='custommade'}</p>
 				</td>
 				<p class="preference_description"></p>
 			</tr>
 			<tr>
 				<td valign="top"><label for="Width" style="width:300px;">{l s='Max Width :' mod='custommade'}</label></td>	
 			 	<td>
-					<input type="hidden" name="loyalty_filled" value="1">
 					<input type="text" name="Width" id="Width" value="{$getCustomize->cust_width|escape:'html':'UTF-8'}" >
 				</td>
 				<td>
-					<p class="preference_description">Centimeter</p>
+					<p class="preference_description">{l s=' Centimeter' mod='custommade'}</p>
 				</td>
 				<p class="preference_description"></p>
 			</tr>
 			<tr>
 				<td valign="top"><label for="SquareMeter" style="width:300px;">{l s='Price Per Square Meter :' mod='custommade'}</label></td>
 				<td>
-					<input type="hidden" name="loyalty_filled" value="1">
 					<input type="text" name="SquareMeter" id="SquareMeter" value="{$getCustomize->sq_meter_price|escape:'html':'UTF-8'}" >
 				</td>
 				<td>
-					<p class="preference_description">m<sup>2</sup></p>
+					<p class="preference_description">{l s=' Per Square Meter' mod='custommade'}</p>
 				</td>
 				<p class="preference_description"></p>
 			</tr>
 			<tr>
 				<td valign="top"><label for="Delivery" style="width:300px;">{l s='Delivery Days :' mod='custommade'}</label></td>
 				<td>
-					<input type="hidden" name="loyalty_filled" value="1">
 					<input type="text" name="Delivery" id="Delivery" value="{$getCustomize->cust_delivery|escape:'html':'UTF-8'}" >
 				</td>
 				<td>
-					<p class="preference_description">Days</p>
+					<p class="preference_description">{l s=' Days' mod='custommade'}</p>
 				</td>
 				<p class="preference_description"></p>
 			</tr>
