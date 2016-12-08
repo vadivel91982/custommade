@@ -224,6 +224,7 @@ class CustomMadeDefaultModuleFrontController extends ModuleFrontController
             //echo "<pre>";
             //p($getPriceDetail);
             $iso_code = Language::getIsoById( (int)$this->context->language->id );
+            
             if ($iso_code) {
                 $baseUrl = "'".Tools::getHttpHost(true).__PS_BASE_URI__.$iso_code.'/module/'.$this->custommadeObj->name.'/'."'";
                 //$tempModuleUrl = Tools::getHttpHost(true).__PS_BASE_URI__.$iso_code.'/module/'.$this->custommadeObj->name.'/default/';
@@ -270,7 +271,8 @@ class CustomMadeDefaultModuleFrontController extends ModuleFrontController
                 'img_dir' => $this->custModuleFolderName,
                 'customBaseurl' => $baseUrl,
                 'getPriceDetails' => $getPriceDetail,
-                'tempModuleUrl' => $tempModuleUrl
+                'tempModuleUrl' => $tempModuleUrl,
+                'rootUrl' => Tools::getHttpHost(true).__PS_BASE_URI__
             ));
         }
         //echo $this->custModuleFolderName;die;

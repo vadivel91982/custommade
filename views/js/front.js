@@ -26,4 +26,13 @@
 * to avoid any conflicts with others containers.
 */
 
-/**/
+/*if(window.location.hostname == '192.168.3.127'){
+    var ajaxBaseUrl = 'http://192.168.3.127/prestashop/';
+}else{
+    var ajaxBaseUrl = '/';
+}
+
+
+jQuery.post(ajaxBaseUrl+'module/custommade/cropper',function(data){
+    
+})*/

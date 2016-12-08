@@ -1,40 +1,43 @@
 <?php
-/**
-* 2007-2015 PrestaShop
-*
-* NOTICE OF LICENSE
-*
-* This source file is subject to the Academic Free License (AFL 3.0)
-* that is bundled with this package in the file LICENSE.txt.
-* It is also available through the world-wide-web at this URL:
-* http://opensource.org/licenses/afl-3.0.php
-* If you did not receive a copy of the license and are unable to
-* obtain it through the world-wide-web, please send an email
-* to license@prestashop.com so we can send you a copy immediately.
-*
-* DISCLAIMER
-*
-* Do not edit or add to this file if you wish to upgrade PrestaShop to newer
-* versions in the future. If you wish to customize PrestaShop for your
-* needs please refer to http://www.prestashop.com for more information.
-*
-*  @author    PrestaShop SA <contact@prestashop.com>
-*  @copyright 2007-2015 PrestaShop SA
-*  @license   http://opensource.org/licenses/afl-3.0.php  Academic Free License (AFL 3.0)
-*  International Registered Trademark & Property of PrestaShop SA
-*/
 
-if (!defined('_PS_VERSION_')) { die(header('HTTP/1.0 404 Not Found')); }
-require_once dirname(__FILE__).'/models/AuFilDesCoul.php';
-class Custommade extends Module
-{
+/**
+ * 2007-2015 PrestaShop
+ *
+ * NOTICE OF LICENSE
+ *
+ * This source file is subject to the Academic Free License (AFL 3.0)
+ * that is bundled with this package in the file LICENSE.txt.
+ * It is also available through the world-wide-web at this URL:
+ * http://opensource.org/licenses/afl-3.0.php
+ * If you did not receive a copy of the license and are unable to
+ * obtain it through the world-wide-web, please send an email
+ * to license@prestashop.com so we can send you a copy immediately.
+ *
+ * DISCLAIMER
+ *
+ * Do not edit or add to this file if you wish to upgrade PrestaShop to newer
+ * versions in the future. If you wish to customize PrestaShop for your
+ * needs please refer to http://www.prestashop.com for more information.
+ *
+ *  @author    PrestaShop SA <contact@prestashop.com>
+ *  @copyright 2007-2015 PrestaShop SA
+ *  @license   http://opensource.org/licenses/afl-3.0.php  Academic Free License (AFL 3.0)
+ *  International Registered Trademark & Property of PrestaShop SA
+ */
+if (!defined('_PS_VERSION_')) {
+    die(header('HTTP/1.0 404 Not Found'));
+}
+require_once dirname(__FILE__) . '/models/AuFilDesCoul.php';
+
+class Custommade extends Module {
+
     protected $config_form = false;
 
-    public function __construct()
-    {
+    public function __construct() {
         $this->name = 'custommade';
         $this->default_name = 'aufildes';
         $this->universe = 'universe';
+        $this->customoption = 'options';
         $this->tab = 'pricing_promotion';
         $this->version = '1.0.0';
         $this->author = 'by 202-ecommerce';
@@ -53,14 +56,15 @@ class Custommade extends Module
         $this->confirmUninstall = $this->l('Are you sure you want to uninstall custom made your wall mural?');
 
         $this->ps_versions_compliancy = array('min' => '1.6', 'max' => _PS_VERSION_);
+
+        
     }
 
     /**
      * Don't forget to create update methods if needed:
      * http://doc.prestashop.com/display/PS16/Enabling+the+Auto-Update
      */
-    public function install()
-    {
+    public function install() {
         Configuration::updateValue('CUSTOMMADE_LIVE_MODE', false);
 
         // Install Tabs
@@ -88,21 +92,22 @@ class Custommade extends Module
         //include(dirname(__FILE__).'/sql/install.php');
 
         return parent::install() &&
-            $this->installSQL() &&
-            $this->registerHook('header') &&
-            $this->registerHook('backOfficeHeader') &&
-            $this->registerHook('displayAdminProductsExtra') &&
-            $this->registerHook('actionProductSave') &&
-            $this->registerHook('displayRightColumnProduct');
+                $this->installSQL() &&
+                $this->registerHook('header') &&
+                $this->registerHook('backOfficeHeader') &&
+                $this->registerHook('displayAdminProductsExtra') &&
+                $this->registerHook('actionProductSave') &&
+                $this->registerHook('displayRightColumnProduct') &&
+                $this->registerHook('displayShoppingCartFooter') &&
+                $this->registerHook('displayOrderConfirmation');
     }
 
     /**
      * Install SQL
      * @return boolean
      */
-    private function installSQL()
-    {
-        $sql = 'CREATE TABLE IF NOT EXISTS `'._DB_PREFIX_.Tools::strtolower($this->default_name).'` (
+    private function installSQL() {
+        $sql = 'CREATE TABLE IF NOT EXISTS `' . _DB_PREFIX_ . Tools::strtolower($this->default_name) . '` (
                 `id_afdc` INT UNSIGNED NOT NULL AUTO_INCREMENT,
                 `id_product` INT UNSIGNED NOT NULL DEFAULT 1,
                 `prod_customize` INT UNSIGNED NOT NULL DEFAULT 0,
@@ -116,7 +121,7 @@ class Custommade extends Module
             ) DEFAULT CHARSET=utf8 ;';
         $return = DB::getInstance()->Execute($sql);
 
-        $universeSql = 'CREATE TABLE IF NOT EXISTS `'._DB_PREFIX_.Tools::strtolower($this->universe).'` (
+        $universeSql = 'CREATE TABLE IF NOT EXISTS `' . _DB_PREFIX_ . Tools::strtolower($this->universe) . '` (
             `id_universe` int(8) NOT NULL AUTO_INCREMENT,
             `universe_name` varchar(64) NOT NULL,
             `image` varchar(250) NOT NULL,
@@ -126,11 +131,19 @@ class Custommade extends Module
         ) ENGINE=InnoDB  DEFAULT CHARSET=latin1 AUTO_INCREMENT=1 ;';
         $return &= DB::getInstance()->Execute($universeSql);
 
+        $customOptionSql = 'CREATE TABLE IF NOT EXISTS `' . _DB_PREFIX_ . Tools::strtolower($this->customoption) . '` (
+            `id` bigint(32) NOT NULL AUTO_INCREMENT,
+            `order_id` bigint(32) NOT NULL,
+            `product_id` bigint(32) NOT NULL,
+            `options` text NOT NULL,
+            PRIMARY KEY (`id`)
+          ) ENGINE=InnoDB DEFAULT CHARSET=latin1 AUTO_INCREMENT=1 ;';
+        $return &= DB::getInstance()->Execute($customOptionSql);
+
         return $return;
     }
 
-    public function uninstall()
-    {
+    public function uninstall() {
         Configuration::deleteByName('CUSTOMMADE_LIVE_MODE');
         if (!parent::uninstall() || !$this->unregisterHook('header')) {
             return false;
@@ -145,8 +158,8 @@ class Custommade extends Module
         if (!$tab->delete()) {
             return false;
         }
-        $sql = 'DROP TABLE IF EXISTS `'._DB_PREFIX_.Tools::strtolower($this->default_name).'`';
-        $universesql = 'DROP TABLE IF EXISTS `'._DB_PREFIX_.Tools::strtolower($this->universe).'`';
+        $sql = 'DROP TABLE IF EXISTS `' . _DB_PREFIX_ . Tools::strtolower($this->default_name) . '`';
+        $universesql = 'DROP TABLE IF EXISTS `' . _DB_PREFIX_ . Tools::strtolower($this->universe) . '`';
         if (parent::uninstall() === false || DB::getInstance()->Execute($sql) === false || DB::getInstance()->Execute($universesql) === false) {
             return false;
         }
@@ -156,16 +169,15 @@ class Custommade extends Module
     /**
      * Load the configuration form
      */
-    public function getContent()
-    {
+    public function getContent() {
         /**
          * If values have been submitted in the form, process.
          */
-        if (((bool)Tools::isSubmit('submitCustommadeModule')) == true) {
+        if (((bool) Tools::isSubmit('submitCustommadeModule')) == true) {
             $this->postProcess();
         }
         $this->context->smarty->assign('module_dir', $this->_path);
-        $output = $this->context->smarty->fetch($this->local_path.'views/templates/admin/configure.tpl');
+        $output = $this->context->smarty->fetch($this->local_path . 'views/templates/admin/configure.tpl');
         //return $output.$this->renderForm();
         return $output;
     }
@@ -173,8 +185,7 @@ class Custommade extends Module
     /**
      * Create the form that will be displayed in the configuration of your module.
      */
-    protected function renderForm()
-    {
+    protected function renderForm() {
         $helper = new HelperForm();
 
         $helper->show_toolbar = false;
@@ -186,7 +197,7 @@ class Custommade extends Module
         $helper->identifier = $this->identifier;
         $helper->submit_action = 'submitCustommadeModule';
         $helper->currentIndex = $this->context->link->getAdminLink('AdminModules', false)
-            .'&configure='.$this->name.'&tab_module='.$this->tab.'&module_name='.$this->name;
+                . '&configure=' . $this->name . '&tab_module=' . $this->tab . '&module_name=' . $this->name;
         $helper->token = Tools::getAdminTokenLite('AdminModules');
 
         $helper->tpl_vars = array(
@@ -201,13 +212,12 @@ class Custommade extends Module
     /**
      * Create the structure of your form.
      */
-    protected function getConfigForm()
-    {
+    protected function getConfigForm() {
         return array(
             'form' => array(
                 'legend' => array(
-                'title' => $this->l('Settings'),
-                'icon' => 'icon-cogs',
+                    'title' => $this->l('Settings'),
+                    'icon' => 'icon-cogs',
                 ),
                 'input' => array(
                     array(
@@ -253,8 +263,7 @@ class Custommade extends Module
     /**
      * Set values for the inputs.
      */
-    protected function getConfigFormValues()
-    {
+    protected function getConfigFormValues() {
         return array(
             'CUSTOMMADE_LIVE_MODE' => Configuration::get('CUSTOMMADE_LIVE_MODE', true),
             'CUSTOMMADE_ACCOUNT_EMAIL' => Configuration::get('CUSTOMMADE_ACCOUNT_EMAIL', 'contact@prestashop.com'),
@@ -265,8 +274,7 @@ class Custommade extends Module
     /**
      * Save form data.
      */
-    protected function postProcess()
-    {
+    protected function postProcess() {
         $form_values = $this->getConfigFormValues();
 
         foreach (array_keys($form_values) as $key) {
@@ -275,13 +283,12 @@ class Custommade extends Module
     }
 
     /**
-    * Add the CSS & JavaScript files you want to be loaded in the BO.
-    */
-    public function hookBackOfficeHeader()
-    {
+     * Add the CSS & JavaScript files you want to be loaded in the BO.
+     */
+    public function hookBackOfficeHeader() {
         if (Tools::getValue('module_name') == $this->name) {
-            $this->context->controller->addJS($this->_path.'views/js/back.js');
-            $this->context->controller->addCSS($this->_path.'views/css/back.css');
+            $this->context->controller->addJS($this->_path . 'views/js/back.js');
+            $this->context->controller->addCSS($this->_path . 'views/css/back.css');
         }
     }
 
@@ -290,12 +297,11 @@ class Custommade extends Module
      * @param array params
      * @return boolean
      */
-    public function hookdisplayAdminProductsExtra($params)
-    {
-        $ver= _PS_VERSION_;
+    public function hookdisplayAdminProductsExtra($params) {
+        $ver = _PS_VERSION_;
         $datas = array(
-            'name'    => $this->displayName,
-            'getCustomize' => AuFilDesCoul::getAuFilDesByIDProduct((int)Tools::getValue('id_product'))
+            'name' => $this->displayName,
+            'getCustomize' => AuFilDesCoul::getAuFilDesByIDProduct((int) Tools::getValue('id_product'))
         );
         $this->context->smarty->assign($datas);
         return $this->display(__FILE__, 'AdminProduct.tpl');
@@ -305,32 +311,38 @@ class Custommade extends Module
      * displayRightColumnProduct
      * @param array params
      * @return boolean
-    */
-    public function hookdisplayRightColumnProduct($params)
-    {
-        $product = new Product((int)Tools::getValue('id_product'));
-        $prod_det = AuFilDesCoul::getAuFilDesByIDProduct((int)$product->id, true);
+     */
+    public function hookdisplayRightColumnProduct($params) {
+        $product = new Product((int) Tools::getValue('id_product'));
+        $prod_det = AuFilDesCoul::getAuFilDesByIDProduct((int) $product->id, true);
         if (Validate::isLoadedObject($product)) {
-            $customize = ($prod_det->prod_customize !='' || $prod_det->prod_customize !='0')?(int)$prod_det->prod_customize : '0';
+            $customize = ($prod_det->prod_customize != '' || $prod_det->prod_customize != '0') ? (int) $prod_det->prod_customize : '0';
             if ($customize != '' || $customize != '0') {
                 $this->smarty->assign(
-                    array(
-                        'prodCustomizeStatus' => (int)$customize,
-                        'id_product' => (int)$product->id
-                    ));
+                        array(
+                            'prodCustomizeStatus' => (int) $customize,
+                            'id_product' => (int) $product->id
+                ));
                 return $this->display(__FILE__, 'product.tpl');
             }
         }
         return false;
     }
 
+    public function hookdisplayShoppingCartFooter($params) {
+        $this->context->controller->addJS($this->_path . 'views/js/croptosession.js');
+    }
+
+    public function hookdisplayOrderConfirmation($params) {
+        $this->context->controller->addJS($this->_path . 'views/js/orderconfirm.js');
+    }
+
     /**
      * Add the CSS & JavaScript files you want to be added on the FO.
      */
-    public function hookHeader()
-    {
-        $this->context->controller->addJS($this->_path.'/views/js/front.js');
-        $this->context->controller->addCSS($this->_path.'/views/css/front.css');
+    public function hookHeader() {
+        $this->context->controller->addJS($this->_path . '/views/js/front.js');
+        $this->context->controller->addCSS($this->_path . '/views/css/front.css');
     }
 
     /**
@@ -338,8 +350,7 @@ class Custommade extends Module
      * @param array
      * @return boolean
      */
-    public function hookactionProductSave($product)
-    {
+    public function hookactionProductSave($product) {
         return $this->saveAndUpdate($_POST);
     }
 
@@ -348,26 +359,26 @@ class Custommade extends Module
      * @param array
      * @return boolean
      */
-    private function saveAndUpdate($product)
-    {
+    private function saveAndUpdate($product) {
         $prod_save = AuFilDesCoul::getAuFilDesByIDProduct($product['id_product']);
-        $customize = ($prod_save->id_product)?$prod_save->id_product:'';
+        $customize = ($prod_save->id_product) ? $prod_save->id_product : '';
         if ($customize == '') {
-            $prod_save->id_product = (int)$product['id_product'];
-            $prod_save->prod_customize = ($product['prod_customize']!='')?(int)$product['prod_customize']:'0';
-            $prod_save->cust_height    = ($product['Height']!='')?(int)$product['Height']:'0';
-            $prod_save->cust_width     = ($product['Width']!='')?(int)$product['Width']:'0';
-            $prod_save->sq_meter_price = ($product['SquareMeter']!='')?(int)$product['SquareMeter']:'0';
-            $prod_save->cust_delivery  = ($product['Delivery']!='')?(string)$product['Delivery']:'0';
+            $prod_save->id_product = (int) $product['id_product'];
+            $prod_save->prod_customize = ($product['prod_customize'] != '') ? (int) $product['prod_customize'] : '0';
+            $prod_save->cust_height = ($product['Height'] != '') ? (int) $product['Height'] : '0';
+            $prod_save->cust_width = ($product['Width'] != '') ? (int) $product['Width'] : '0';
+            $prod_save->sq_meter_price = ($product['SquareMeter'] != '') ? (int) $product['SquareMeter'] : '0';
+            $prod_save->cust_delivery = ($product['Delivery'] != '') ? (string) $product['Delivery'] : '0';
             if ($prod_save->prod_customize != '0') {
                 return $prod_save->save();
             }
         } else {
-            $prod_customize = ($product['prod_customize'] != '' || $product['prod_customize'] != '0')?(int)$product['prod_customize'] : '0';
-            $sql = "UPDATE `"._DB_PREFIX_.Tools::strtolower($this->default_name)."` SET prod_customize = ". $prod_customize .",cust_height = ". $product['Height'] .",cust_width = ". $product['Width'] .",sq_meter_price = ". $product['SquareMeter'] .",cust_delivery = ". $product['Delivery'] ." WHERE id_product = ". $product['id_product'];
+            $prod_customize = ($product['prod_customize'] != '' || $product['prod_customize'] != '0') ? (int) $product['prod_customize'] : '0';
+            $sql = "UPDATE `" . _DB_PREFIX_ . Tools::strtolower($this->default_name) . "` SET prod_customize = " . $prod_customize . ",cust_height = " . $product['Height'] . ",cust_width = " . $product['Width'] . ",sq_meter_price = " . $product['SquareMeter'] . ",cust_delivery = " . $product['Delivery'] . " WHERE id_product = " . $product['id_product'];
             if (!Db::getInstance()->execute($sql)) {
                 die('error!');
             }
         }
     }
+
 }

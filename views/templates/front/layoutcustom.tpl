@@ -176,14 +176,20 @@
                     <div class="col-md-3" id="left-col">
                         <div class="cart-section wall-dimensions">
                             <h3>1. Entrez vos dimensions</h3>
-                            <div class="form-horizontal">
+                            <div class="input-group input-group-sm" style="display:none;">
+                                <input type="text" class="form-control" id="dataX" placeholder="x">
+                            </div>
+                            <div class="input-group input-group-sm" style="display:none;">
+                                <input type="text" class="form-control" id="dataY" placeholder="y">
+                            </div>
+                            <div class="form-horizontal docs-data">
                                 <div class="form-group widthbox">
                                     <label for="width" class="control-label">Largeur (cm)</label>
                                     <div class="input-group">
                                         <div class="input-group-addon">
                                             <i class="fa fa-arrows-h" aria-hidden="true"></i>
-                                        </div>
-                                        <input value="{$getPriceDetails->cust_width}" class="form-control" id="dimensions-width" type="number" placeholder="300 cm max">
+                                        </div>										
+                                        <input value="{$getPriceDetails->cust_width}" class="form-control" id="dataWidth" type="number" placeholder="300 cm max">										
                                     </div>
                                 </div>
                                 <div class="form-group heightbox">
@@ -192,7 +198,7 @@
                                         <div class="input-group-addon">
                                             <i class="fa fa-arrows-v" aria-hidden="true"></i>
                                         </div>
-                                        <input value="{$getPriceDetails->cust_height}" class="form-control" id="dimensions-height" type="number"  placeholder="300 cm max">
+                                        <input value="{$getPriceDetails->cust_height}" class="form-control" id="dataHeight" type="number"  placeholder="300 cm max">
                                     </div>
                                 </div>
                                 <div><a href="#" title="Autres dimensions?">Autres dimensions?</a></div>
@@ -203,794 +209,514 @@
                                     <!-- <button type="button" class="btn btn-default transform-info">
                                             Image manipulation tools:
                                     </button> -->
-                                    <button type="button" class="btn btn-default image-rotate-left">
-                                        <i class="fa fa-undo" aria-hidden="true"></i> Rotation 90&deg;
-                                    </button>
+
+
+                                    <div id="actions">
+                                        <div class="docs-buttons">			
+
+
+                                            <button type="button" data-method="rotate" data-option="90" class="btn btn-default image-rotate-left">
+                                                <i class="fa fa-undo" aria-hidden="true"></i> Rotation 90&deg;
+                                            </button>
+
+                                            <button type="button" class="btn btn-default flipbtns image-flip-horizontally" data-method="scaleX" data-option="-1">
+                                                <i class="fa fa-arrows-h" aria-hidden="true"></i> Effet Mirror
+                                            </button>
+                                            <button type="button" class="btn btn-default flipbtns image-flip-vertically" style="display:none;">
+                                                <i class="fa fa-arrows-h" aria-hidden="true"></i> Effet Mirror
+                                            </button>
+                                            <button type="button" class="btn btn-default image-grid"><i class="fa fa-align-justify" aria-hidden="true"></i>
+                                                Montrer les l&eacute;s
+                                            </button>
+
+                                            <!--	<button type="button" class="btn btn-primary" data-method="getCroppedCanvas">
+                                                            Get Cropped Canvas
+                                                    </button> -->
+
+                                            <!-- Show the cropped image in modal -->
+                                            <div class="modal docs-cropped" id="getCroppedCanvasModal"   role="dialog" aria-hidden="true" aria-labelledby="getCroppedCanvasTitle">
+                                                <div class="modal-dialog">
+                                                    <div class="modal-content">
+                                                        <div class="modal-header" style="display:none;">
+                                                            <button data-dismiss="modal" aria-hidden="true"></button>
+                                                            <h4 id="getCroppedCanvasTitle"></h4>
+                                                        </div>
+                                                        <div class="modal-body"></div>
+                                                        <div class="modal-footer" style="display:none;">
+                                                            <button data-dismiss="modal"></button>
+                                                            <a  id="download" href="javascript:void(0);"></a>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                            <div class="docs-toggles" style="display:none;">
+                                                <div class="docs-aspect-ratios" data-toggle="buttons">   
+                                                </div>
+                                            </div>
+                                        </div>								
+                                    </div>	
+
+
+
                                     <!-- <button type="button" class="btn btn-default image-rotate-right">
                                             Rotate right
                                     </button> -->
-                                    <button type="button" class="btn btn-default flipbtns image-flip-horizontally">
-                                        <i class="fa fa-arrows-h" aria-hidden="true"></i> Effet Mirror
-                                    </button>
-                                    <button type="button" class="btn btn-default flipbtns image-flip-vertically" style="display:none;">
-                                        <i class="fa fa-arrows-h" aria-hidden="true"></i> Effet Mirror
-                                    </button>
-                                    <button type="button" class="btn btn-default image-grid"><i class="fa fa-align-justify" aria-hidden="true"></i>
-                                        Montrer les l&eacute;s
-                                    </button>
+
                                 </div>
+
+
                                 <div class="price-section">
-                                    <p class="our_price_display "><b>PRIX:<b>
-                                                <span class="price our_price_display"> 
-                                                    <meta itemprop="currency" content="EUR" />
-                                                    {if $priceDisplay >= 0 && $priceDisplay <= 2}
-                                                        <span itemprop="price" style="display: none;">{sprintf("%.02f", $productPrice)}</span>
-                                                    {/if}
-                                                    <span itemprop="condition" style="display: none;" content="new"></span>
-                                                    {if (!$allow_oosp && $product->quantity <= 0) OR !$product->available_for_order OR (isset($restricted_country_mode) AND $restricted_country_mode) OR $PS_CATALOG_MODE}
-                                                        <span itemprop="availability" style="display: none;" content="out_of_stock"></span>
-                                                    {else}
-                                                        <span itemprop="availability" style="display: none;" content="in_stock"></span>
-                                                    {/if}
-                                                    {if $priceDisplay >= 0 && $priceDisplay <= 2}
-                                                        <span id="our_price_display">{convertPrice price=$productPrice}</span>
-                                                        <!--{if $tax_enabled  && ((isset($display_tax_label) && $display_tax_label == 1) OR !isset($display_tax_label))}
-                                                {if $priceDisplay == 1}{l s='tax excl.'}{else}{l s='tax incl.'}{/if}
-                                            {/if}-->
-                                        {/if}
-                                    </span>
-                                    </p>
-                                    <span class="sq-price">{$getPriceDetails->sq_meter_price} £/m2</span>
-                                    </div>
-                                    <div class="button-sec">
-                                        {if (!$allow_oosp && $product->quantity <= 0) OR !$product->available_for_order OR (isset($restricted_country_mode) AND $restricted_country_mode) OR $PS_CATALOG_MODE}
-                                            <p id="add_to_cart" class="buttons_bottom_block">
-                                                <span class="exclusive">
-                                                    {l s='Ajouter au panier'}
-                                                </span>
-                                            </p>
-                                        {else}
-                                            <p id="add_to_cart" class="buttons_bottom_block">
-                                                <input type="submit" name="Submit" value="{l s='Ajouter au panier'}" class="exclusive" />
-                                            </p>
-                                        {/if}
-                                        <p>Livraison sous {$getPriceDetails->cust_delivery} jours</p>
-                                        <a href="javascript:void(0)" id="sampleButton" onclick="addSampleToCart(this);
-                                                return false;">Commander un échantillon</a>
-                                    </div>
-                                    {assign var="color_feature" value=""}
-
-                                    {if isset($features) && $features|is_array && $features|count}
-                                        {foreach from=$features item='feature'}
-                                            {if $feature.id_feature == 1}
-                                                {assign var="color_feature" value=$feature.value}
+                                    <p class="our_price_display "><b>PRIX:</b>
+                                        <span class="price our_price_display"> 
+                                            <meta itemprop="currency" content="EUR" />
+                                            {if $priceDisplay >= 0 && $priceDisplay <= 2}
+                                                <span itemprop="price" style="display: none;">{sprintf("%.02f", $productPrice)}</span>
                                             {/if}
-                                        {/foreach}
-                                    {/if}
-
-                                    </div> 
-
-
-
-                                    </div>
-                                    </div>
-                                    <div class="col-md-9" id="right-col">   
-                                        <div id="cropper-tool-container">
-                                            <img  src="{$link->getImageLink($product->link_rewrite, $cover.id_image, 'large_default')}" id="base-image" class="cropper-hidden" />						
-                                        </div>
-                                    </div>
-                                    {if isset($accessories) && $accessories}
-                                        <div class="accessories">
-                                            <p>
-                                                <span style="padding-right:10px">{l s='Coloris'}</span> <select style="width:250px" onchange="javascript:document.location.href = this.value">
-                                                    <option value="">{$color_feature|escape:'UTF-8':'htmlall'} - {l s='Ref.'} {$product->reference|escape:'UTF-8':'htmlall'}</option>
-                                                    {foreach from=$accessories item=accessoire}
-                                                        <option value="{$tempModuleUrl}?id_product={$accessoire['id_product']|intval}">{foreach from=$accessoire.features item=feature}{if $feature.id_feature==1}{$feature.value}{/if}{/foreach} - {l s='Ref.'} {$accessoire.reference}</option>
-                                                    {/foreach}
-                                                </select>
-                                            </p>
-                                            <div class="clear"></div>
-                                            <ul class="list_accessories">
-
-                                                {assign var="cover" value=""}
-                                                {if isset($images) && $images|is_array && $images|count}
-                                                    {foreach from=$images key=id_image item='image' name="images"}
-                                                        {if $image.cover || $smarty.foreach.images.index == 1}
-                                                            {assign var="cover" value=$id_image}
-                                                            {break}
-                                                        {/if}
-                                                    {/foreach}
-                                                {/if}
-
-                                                <li>
-                                                    <img src="{$link->getImageLink($product->link_rewrite, $product->id|cat:'-'|cat:$cover, 'home_default')}" alt="" height="46" width="46" />
-                                                </li>
-
-
-
-                                                {foreach from=$accessories item=accessoire}
-                                                    <li><a href="{$tempModuleUrl}?id_product={$accessoire['id_product']|intval}"><img src="{$link->getImageLink($accessoire.link_rewrite, $accessoire.id_image, 'large_default')}" class="img-responsive" width="46" height="46" /></a></li>
-                                                {/foreach}
-                                            </ul>
-                                            {if $accessories|@count > 5}
-                                                <span class="attributes_more">{l s='Voir plus'}</span>
+                                            <span itemprop="condition" style="display: none;" content="new"></span>
+                                            {if (!$allow_oosp && $product->quantity <= 0) OR !$product->available_for_order OR (isset($restricted_country_mode) AND $restricted_country_mode) OR $PS_CATALOG_MODE}
+                                                <span itemprop="availability" style="display: none;" content="out_of_stock"></span>
+                                            {else}
+                                                <span itemprop="availability" style="display: none;" content="in_stock"></span>
                                             {/if}
-                                            <div class="clear"></div>
-                                        </div>
-                                    {/if}
-                                    </div>
-
-                                    <div class="previews customise-section" id="previews-container">
-                                        <div class="col-xs-12 col-sm-2 no-gutter" style="padding-right:0;padding-left:0;">
-                                            <!-- required for floating -->
-                                            <!-- Nav tabs -->
-                                            <ul class="nav nav-tabs tabs-left">
-                                                <!-- 'tabs-right' for right tabs -->
-                                                {foreach from=$getUnivers1 key=k item=universeImage}
-                                                    <li {if (1 == $k+1)}class="active"{/if}>
-                                                       <!-- <a href="#scene{$k+1}" data-toggle="tab">{$universeImage['universe_name']|escape:'html':'UTF-8'}</a>-->
-                                                        <a href="#scene{$k+1}" data-toggle="tab"><img src="{$img_dir|escape:'html':'UTF-8'}{$universeImage['image']|escape:'html':'UTF-8'}" width="90px"></a>
-                                                    </li>
-                                                {/foreach}
-                                            </ul>
-                                        </div>
-                                        <div class="col-xs-12 col-sm-10 no-gutter" >
-                                            <!-- Tab panes -->
-                                            <div class="tab-content">
-                                                {foreach from=$getUnivers1 key=k item=universeImage}
-                                                    <div class="tab-pane {if (1 == $k+1)}active{/if}" id="scene{$k+1}">
-                                                        <div class="backdrop" style="height:76%;" >
-                                                            <img class="preview" src="" style="left:0;top:0">
-                                                        </div>
-                                                        <div class="overlay">
-                                                            <img src="{$img_dir|escape:'html':'UTF-8'}{$universeImage['image']|escape:'html':'UTF-8'}">
-                                                        </div>
-                                                    </div>
-                                                {/foreach}
-                                            </div>
-                                        </div>
-                                    </div>
-
-
-                                    </div>
-                                    </div>
-                                    </form>
-                                    {/if}
-                                        <img 
-                                            </div>
-
-
-                                        <!--<script type="text/javascript">
-                                            (function ($) {
-                                                $(document).ready(function () {
-                                                    var masonryGrid = $('.masonry-grid');
-                                                    masonryGrid.masonry({
-                                                        itemSelector: '.image',
-                                                        columnWidth: '.image',
-                                                        percentPosition: true
-                                                    });
-
-                                                    masonryGrid.imagesLoaded().progress(function () {
-                                                        masonryGrid.masonry('layout');
-                                                    });
-
-                                                });
-                                            })(jQuery);
-                                        </script>-->
-
-                                        <script>
-
-
-                                            (function ($) {
-                                                var flipValue = 0;
-                                                var dynamicImage = '';
-                                                var image = $('#base-image');
-                                                //$('#collage-preview').fixedsticky();
-
-                                                document.title = "Papier peint luxe, D&eacute;coration murale, Tapisserie design - Au fil des Couleurs";
-                                                var getUrl = window.location;
-                                                var baseUrl = getUrl.protocol + "//" + getUrl.host + "/" + getUrl.pathname.split('/')[1] + "/";
-                                                var jobId = $('#base-image').attr('src');
-                                                var base_url = baseUrl;
-                                                var activeAjaxRequests = 0;
-                                                function makeTransformation(type, id, data) {
-                                                    //alert(type);
-                                                    //var url = "";
-                                                    switch (type) {
-                                                        case 'crop':
-                                                            type = type;
-                                                            //url = base_url + "transform/0/crop";
-                                                            break;
-                                                        case 'rotate':
-                                                            type = type;
-                                                            //url = base_url + "transform/0/rotate";
-                                                            break;
-                                                        case 'flip':
-                                                            type = type;
-                                                            //url = base_url + "transform/0/flip";
-                                                            break;
-                                                        case 'filter':
-                                                            type = type;
-                                                            //url = base_url + "transform/0/filter";
-                                                            break;
-                                                        default:
-                                                            return false;
-                                                    }
-
-                                                    //url = url.replace('0', id);
-                                                    var manipulationButtons = $('.transform-buttons button');
-
-                                                    // Add the image data to the transformation data.
-                                                    data = addImageData(data);
-                                                    //datas = 'id=' + id + '&get_type=' + type + '&datas=' + data;
-                                                    data.imageUrl = id;
-                                                    data.type = type;
-
-                                                    if (type == 'flip') {
-                                                        data.mirror = flipValue;
-                                                    }
-
-                                                    var tempRotateVal = data.rotate;
-                                                    if (tempRotateVal < 0) {
-
-                                                        /*if(flipValue == 1){
-                                                         var finalRotateValue = 360 + tempRotateVal;
-                                                         }else{
-                                                         var finalRotateValue = tempRotateVal * -1;
-                                                         }*/
-                                                        console.log(flipValue);
-                                                        if (flipValue == 0) {
-                                                            if (tempRotateVal == -90) {
-                                                                finalRotateValue = 90;
-                                                            }
-                                                            if (tempRotateVal == -180) {
-                                                                finalRotateValue = 180;
-                                                            }
-                                                            if (tempRotateVal == -270) {
-                                                                finalRotateValue = 270;
-                                                            }
-                                                        } else {
-                                                            if (tempRotateVal == -90) {
-                                                                finalRotateValue = 270;
-                                                            }
-                                                            if (tempRotateVal == -180) {
-                                                                finalRotateValue = 0;
-                                                            }
-                                                            if (tempRotateVal == -270) {
-                                                                finalRotateValue = 90;
-                                                            }
-                                                        }
-
-                                                        data.rotate = finalRotateValue;
-                                                    } else {
-                                                        //var correctRotateValue = data.rotate;
-                                                    }
-
-                                                    datas = data;
-                                                    //console.log(datas);
-                                                    //return true;
-                                                    /*$.ajax({
-                                                     url: baseDir,
-                                                     method: 'POST',
-                                                     data: datas,
-                                                     beforeSend: function () {
-                                                     manipulationButtons.each(function (key, button) {
-                                                     $(button).addClass('disabled');
-                                                     });
-                                                     },
-                                                     success: function (response) {
-                                                     //alert(response);
-                                                     $('.preview').attr('src', base_url);
-                                                     },
-                                                     complete: function () {
-                                                     manipulationButtons.each(function (key, button) {
-                                                     $(button).removeClass('disabled');
-                                                     
-                                                     });
-                                                     }
-                                                     });*/
-
-                                                    dynamicImage = image.cropper("getCroppedCanvas").toDataURL('image/jpeg', 1);
-                                                    $('.preview').attr('src', dynamicImage);
-                                                }
-
-
-                                                /**
-                                                 * Add the image data to the provided object.
-                                                 */
-                                                function addImageData(data) {
-                                                    var imageData = image.cropper('getImageData');
-                                                    /**
-                                                     * If the image has been rotated on it's side flip the width and height to ensure the server-side
-                                                     * percentage conversion is correct.
-                                                     */
-                                                    switch (imageData.rotate) {
-                                                        case 90:
-                                                        case 270:
-                                                            data.imageWidth = imageData.naturalHeight;
-                                                            data.imageHeight = imageData.naturalWidth;
-                                                            break;
-                                                        default:
-                                                            data.imageWidth = imageData.naturalWidth;
-                                                            data.imageHeight = imageData.naturalHeight;
-                                                    }
-
-                                                    return data;
-                                                }
-
-
-
-                                                var options = {
-                                                    viewMode: 1, // Can use 'viewMode: 3' to remove the canvas borders but causes zoom issues on rotate.
-                                                    aspectRatio: 1 / 1,
-                                                    dragMode: 'move',
-                                                    checkCrossOrigin: false,
-                                                    zoomOnWheel: false,
-                                                    zoomable: false,
-                                                    movable: false,
-                                                    cropBoxResizable: false,
-                                                    minCropBoxHeight: 2000,
-                                                    minContainerWidth: 710,
-                                                    minContainerHeight: 500,
-                                                    guides: false,
-
-                                                    cropend: function (e) {
-                                                        makeTransformation('crop', jobId, $(this).cropper('getData'));
-                                                    }
-
-                                                };
-
-
-                                                image.cropper(options);
-
-                                                $(document).on('click', '.transform-info', function (e) {
-                                                    e.preventDefault();
-                                                });
-
-                                                $(document).on('click', '.image-rotate-left', function (e) {
-                                                    e.preventDefault();
-
-                                                    if ($(this).hasClass('disabled')) {
-                                                        return;
-                                                    }
-
-                                                    //flipValue = 0;
-                                                    image.cropper('rotate', -90);
-                                                    makeTransformation('rotate', jobId, image.cropper('getData'));
-
-                                                    var tempCroperData = image.cropper('getData');
-                                                    var tempRotateValue = tempCroperData.rotate * -1;
-                                                    if (tempRotateValue == 90 || tempRotateValue == 270) {
-                                                        jQuery('.flipbtns').hide();
-                                                        jQuery('.image-flip-vertically').show();
-                                                    } else {
-                                                        jQuery('.flipbtns').hide();
-                                                        jQuery('.image-flip-horizontally').show();
-                                                    }
-                                                    /**/
-
-                                                    /**/
-                                                });
-
-                                                $(document).on('click', '.image-rotate-right', function (e) {
-                                                    e.preventDefault();
-
-                                                    if ($(this).hasClass('disabled')) {
-                                                        return;
-                                                    }
-
-                                                    image.cropper('rotate', 90);
-                                                    makeTransformation('rotate', jobId, image.cropper('getData'));
-                                                });
-
-
-                                                /*           prabakaran                  */
-
-
-                                                $(document).on('click', '.image-flip-horizontally', function (e) {
-                                                    e.preventDefault();
-
-                                                    if ($(this).hasClass('disabled')) {
-                                                        return;
-                                                    }
-                                                    if (flipValue == 0) {
-                                                        flipValue = 1;
-                                                    } else if (flipValue == 1) {
-                                                        flipValue = 0;
-                                                    }
-                                                    console.log(flipValue);
-                                                    var reversed = -1 * image.cropper('getData').scaleX;
-                                                    image.cropper('scaleX', reversed);
-                                                    makeTransformation('flip', jobId, image.cropper('getData'));
-                                                });
-
-                                                $(document).on('click', '.image-flip-vertically', function (e) {
-                                                    e.preventDefault();
-
-                                                    if ($(this).hasClass('disabled')) {
-                                                        return;
-                                                    }
-                                                    if (flipValue == 0) {
-                                                        flipValue = 1;
-                                                    } else if (flipValue == 1) {
-                                                        flipValue = 0;
-                                                    }
-                                                    var reversed = -1 * image.cropper('getData').scaleY;
-                                                    image.cropper('scaleY', reversed);
-                                                    makeTransformation('flip', jobId, image.cropper('getData'));
-                                                });
-
-                                                $(document).on('click', '.image-reset', function (e) {
-                                                    e.preventDefault();
-
-                                                    if ($(this).hasClass('disabled')) {
-                                                        return;
-                                                    }
-
-                                                    image.cropper('reset');
-                                                });
-
-                                                $(document).on('click', '.colour-options img', function (e) {
-                                                    e.preventDefault();
-                                                    var button = $(this);
-
-                                                    if ($(this).hasClass('disabled')) {
-                                                        return;
-                                                    }
-                                                });
-
-
-                                                $(document).on('click', '.image-grid', function (e) {
-                                                    e.preventDefault();
-                                                    //alert('testing');
-                                                    var button = $(this);
-
-                                                    $('.gridlayout').toggleClass('gridbg');
-
-                                                    if ($(this).hasClass('disabled')) {
-                                                        return;
-                                                    }
-                                                });
-                                                 
-                                                
-                                                 
-
-                                                /* prabakaran */
-
-                                                /**
-                                                 * Update The Hidden Fields
-                                                 */
-                                                /**
-                                                 * Calculate wall dimensions and update quantity hidden field.
-                                                 */
-                                                var updateWallPrice = function () {
-                                                    var dimensions = calculateWallDimension();
-                                                    var hiddenQuantity = $('[name="quantity"]');
-                                                    var hiddenVariation = $('[name="variation_id"]');
-                                                    /**
-                                                     * Quantity is actually now based on a 100th of a meter squared.
-                                                     */
-                                                    var quantity = dimensions.squared * 100;
-                                                    hiddenQuantity.val(quantity);
-
-                                                    var hiddenWidth = $('[name="wallpaper_width"]');
-                                                    var hiddenHeight = $('[name="wallpaper_height"]');
-                                                    hiddenWidth.val(dimensions.width);
-                                                    hiddenHeight.val(dimensions.height);
-
-                                                    var applicationMethod = $('[name="application-method"]:checked');
-                                                    hiddenVariation.val(applicationMethod.val());
-
-                                                    var price = applicationMethod.data('price');
-                                                    var totalPrice = price * quantity;
-
-                                                    // Multiply price by 1.2 due to the client requiring VAT to be included
-                                                    //$('.price').text((totalPrice * 1.2).toFixed(2));
-                                                };
-
-                                                $(document).ready(function () {
-                                                    updateWallPrice();
-                                                });
-
-                                                $(document).on('click', '[name="dimension-unit"], .dimension-unit-label, [name="application-method"], .application-method-label', function () {
-                                                    updateWallPrice();
-                                                });
-
-                                                $(document).on('change keyup blur', '#dimensions-height, #dimensions-width', function () {
-                                                    var width = $('#dimensions-width').val();
-                                                    var height = $('#dimensions-height').val();
-
-                                                    if (window.currentWidth == width && window.currentHeight == height) {
-                                                        return;
-                                                    }
-
-                                                    window.currentWidth = width;
-                                                    window.currentHeight = height;
-
-                                                    updateWallPrice();
-                                                    resizeAspectRatio(width, height);
-                                                });
-
-                                                function resizeAspectRatio(width, height) {
-                                                    options.aspectRatio = width / height;
-                                                    image.cropper('destroy').cropper(options);
-                                                }
-
-                                                image.on('built.cropper', function () {
-                                                    makeTransformation('crop', jobId, image.cropper('getData'));
-                                                });
-
-                                                function calculateWallDimension() {
-                                                    var width = $('#dimensions-width').val();
-                                                    var height = $('#dimensions-height').val();
-                                                    var unit = $('[name="dimension-unit"]:checked').val();
-
-                                                    var values = {};
-
-                                                    switch (unit) {
-                                                        case 'centimeters':
-                                                            values.width = width / 100;
-                                                            values.height = height / 100;
-                                                            break;
-                                                            /*case 'meters':
-                                                             values.width = width;
-                                                             values.height = height;
-                                                             break;
-                                                             case 'inch':
-                                                             values.width = width / 39.370;
-                                                             values.height = height / 39.370;
-                                                             break;*/
-                                                    }
-
-                                                    values.squared = (values.width * values.height).toFixed(2);
-
-                                                    return values;
-                                                }
-
-                                                /**
-                                                 * Update Canvas Cart
-                                                 */
-                                                var updateCanvasHiddenFields = function () {
-                                                    var select = $('[name="canvas-variation"]');
-                                                    var selectedOption = select.find('option:selected');
-                                                    var hiddenVariation = $('[name="variation_id"]');
-
-                                                    // Multiply price by 1.2 due to the client requiring VAT to be included
-                                                    $('.price').text((selectedOption.data('price') * 1.2).toFixed(2));
-                                                    hiddenVariation.val(selectedOption.val());
-                                                };
-
-                                                function resizeCanvasAspectRatio() {
-                                                    var select = $('[name="canvas-variation"]');
-                                                    var selectedOption = select.find('option:selected');
-                                                    var layout = $('[name="layout"]:checked');
-                                                    var width = selectedOption.data('width');
-                                                    var height = selectedOption.data('height');
-
-                                                    if (layout.val() == 'portrait') {
-                                                        resizeAspectRatio(width, height);
-                                                        return;
-                                                    }
-
-                                                    resizeAspectRatio(height, width);
-                                                }
-
-                                                function updateOrientationHiddenField() {
-                                                    var layout = $('[name="layout"]:checked');
-                                                    var orientationHiddenField = $("[name='canvas_orientation']");
-
-                                                    orientationHiddenField.val(layout.val());
-                                                }
-
-                                                $(document).on('change', '[name="layout"]', function () {
-                                                    resizeCanvasAspectRatio();
-                                                    updateOrientationHiddenField();
-                                                    updatePreviewCss();
-                                                });
-
-                                                $(document).on('change', '[name="canvas-variation"]', function () {
-                                                    updateCanvasHiddenFields();
-                                                    resizeCanvasAspectRatio();
-                                                    updatePreviewCss();
-                                                });
-
-
-
-
-                                                function updateCollageTemplateHiddenField() {
-                                                    var selectedTemplate = $('[name="canvas-template"]:checked').val();
-                                                    var hiddenField = $('[name="canvas_template"]');
-                                                    hiddenField.val(selectedTemplate);
-                                                }
-
-                                                $(document).on('change', '[name="canvas-template"]', function () {
-                                                    updateCollageTemplateHiddenField();
-                                                    console.log('chnanged');
-                                                });
-
-
-                                                $(document).on('click', '.upload-zip-button', function (e) {
-                                                    e.preventDefault();
-                                                    var fileInput = $('#user_collage_zip');
-                                                    fileInput.click();
-                                                });
-
-                                                $(document).on('change', '#user_collage_zip', function () {
-                                                    var input = $(this);
-                                                    var file = this.files[0];
-
-                                                    if (this.files.length == 0) {
-                                                        return;
-                                                    }
-
-                                                    if (file.type !== 'application/zip' && file.type !== 'application/x-zip-compressed') {
-                                                        alert('You must select a zip file');
-                                                        return;
-                                                    }
-
-                                                    var formData = new FormData();
-                                                    formData.append('file', file);
-
-                                                    var submitButton = $('.single_add_to_cart_button');
-                                                    var uploadButton = $('.upload-zip-button');
-                                                    var uploadText = uploadButton.html();
-
-                                                    $.ajax({
-                                                        url: 'https://api.createawall.co.uk/library/job/update-original-file/05eb03a7-b22d-11e6-9a4d-00155d141523/',
-                                                        type: 'POST',
-                                                        data: formData,
-                                                        processData: false,
-                                                        contentType: false,
-                                                        beforeSend: function () {
-                                                            submitButton.prop('disabled', true);
-                                                            uploadButton.html('Uploading your zip file...');
-                                                        },
-                                                        error: function () {
-                                                            alert('There was an error uploading your file.');
-                                                            uploadButton.html(uploadText);
-                                                        },
-                                                        success: function (response) {
-                                                            alert('Your zip file has been successfully uploaded.');
-                                                            $('.single_add_to_cart_button').addClass('has-file');
-                                                            submitButton.prop('disabled', false);
-                                                            uploadButton.html("CHOOSE A DIFFERENT ZIP FILE");
-                                                        },
-                                                        complete: function () {
-
-                                                        }
-                                                    });
-                                                });
-
-                                                $(document).on('click', '#save-design', function (e) {
-                                                    e.preventDefault();
-                                                    var button = $(this);
-                                                    var buttonVal = button.html();
-
-                                                    button.html('<img src="https://api.createawall.co.uk/img/loading-small.gif">');
-
-                                                    setTimeout(function () {
-                                                        button.html(buttonVal);
-                                                        $('#save-modal').modal('show');
-                                                    }, 1000);
-                                                });
-
-                                                $(document).on('click', '.previews img', function () {
-                                                    $('#show-share-modal').click();
-                                                });
-
-                                                $('#method-info-modal').on('show.bs.modal', function (event) {
-                                                    var button = $(event.relatedTarget);
-                                                    var name = button.data('method-name');
-                                                    var description = button.data('method-description');
-
-                                                    var modal = $(this);
-                                                    modal.find('.modal-title').text(name);
-                                                    modal.find('.modal-body p').html(description);
-                                                });
-
-                                                function updatePreviewCss() {
-                                                    var layout = $('[name="layout"]:checked').val();
-                                                    var size = $('[name="canvas-variation"] option:selected').data('size');
-                                                    var horizontalPreviews = $('.horizontal-preview-button');
-                                                    var verticalPreviews = $('.vertical-preview-button');
-
-                                                    $('.horizontal-preview, .vertical-preview').removeClass('active');
-
-                                                    switch (layout) {
-                                                        case 'landscape':
-                                                            horizontalPreviews.show();
-                                                            verticalPreviews.hide();
-                                                            var previewType = 'horizontal';
-                                                            break;
-                                                        case 'portrait':
-                                                            verticalPreviews.show();
-                                                            horizontalPreviews.hide();
-                                                            var previewType = 'vertical';
-                                                            break;
-                                                    }
-
-                                                    var previews = $('.' + previewType + '-preview');
-                                                    $(previews[0]).addClass('active');
-                                                    previews.each(function (key, preview) {
-                                                        var preview = $(preview);
-                                                        var id = $(preview).attr('id');
-                                                        var settings = previewSettings['canvas'][id][size];
-                                                        var image = preview.find('.backdrop img');
-                                                        var overlay = preview.find('.overlay img');
-
-                                                        overlay.attr('src', settings.overlayUrl);
-                                                        alert('overlayUrl');
-                                                        image.css('top', settings.top);
-                                                        image.css('width', settings.width);
-                                                        image.css('left', settings.left);
-
-                                                        console.log(id, settings);
-                                                    });
-                                                }
-
-                                                $(document).on('click', '.go-back', function (e) {
-                                                    e.preventDefault();
-                                                    window.history.back();
-                                                });
-
-                                                function updateCanvasBleedType() {
-                                                    var select = $('#canvas-bleed-type');
-                                                    var selectedType = select.find('option:selected').val();
-                                                    var hiddenField = $("[name='canvas_bleed']");
-                                                    hiddenField.val(selectedType);
-                                                }
-
-                                                $(document).on('change', '#canvas-bleed-type', function (e) {
-                                                    updateCanvasBleedType();
-                                                });
-
-                                                $(document).on('click', '.single_add_to_cart_button.is-collage', function (e) {
-                                                    var button = $(this);
-
-                                                    if (!button.hasClass('has-file')) {
-                                                        e.preventDefault();
-                                                        alert('You must upload a zip file before adding to your bag.');
-                                                    }
-                                                });
-                                                /*
-                                                 $(document).on('click', '#email-design', function (e) {
-                                                 var sendButton = $(this);
-                                                 var emailAddress = $('#email-address');
-                                                 var saveModal = $('#save-modal');
-                                                 
-                                                 if (sendButton.hasClass('disabled')) {
-                                                 return;
-                                                 }
-                                                 
-                                                 if (emailAddress.val().length == 0) {
-                                                 emailAddress.focus();
-                                                 alert('Please enter your email address');
-                                                 
-                                                 return;
-                                                 }
-                                                 
-                                                 $.ajax({
-                                                 url: 'https://api.createawall.co.uk/library/job/05eb03a7-b22d-11e6-9a4d-00155d141523/photo_wall_mural/email-design',
-                                                 data: {
-                                                 email_address: emailAddress.val()
-                                                 },
-                                                 beforeSend: function () {
-                                                 sendButton.html('Sending email...');
-                                                 sendButton.addClass('disabled');
-                                                 },
-                                                 success: function () {
-                                                 saveModal.modal('hide');
-                                                 alert('Design has been sent to ' + emailAddress.val());
-                                                 },
-                                                 error: function (errors) {
-                                                 alert(errors.responseJSON.message);
-                                                 },
-                                                 complete: function () {
-                                                 sendButton.html('Send Email');
-                                                 sendButton.removeClass('disabled');
-                                                 }
-                                                 });
-                                                 });*/
-
-                                            })(jQuery);
-                                        </script>
+                                            {if $priceDisplay >= 0 && $priceDisplay <= 2}
+                                                <span id="our_price_display">{convertPrice price=$productPrice}</span>
+                                                <!--{if $tax_enabled  && ((isset($display_tax_label) && $display_tax_label == 1) OR !isset($display_tax_label))}
+                                        {if $priceDisplay == 1}{l s='tax excl.'}{else}{l s='tax incl.'}{/if}
+                                    {/if}-->
+                                {/if}
+                            </span>
+                        </p>
+                        <span class="sq-price">{$getPriceDetails->sq_meter_price} £/m2</span>
+                    </div>
+                    <div class="button-sec">
+                        {if (!$allow_oosp && $product->quantity <= 0) OR !$product->available_for_order OR (isset($restricted_country_mode) AND $restricted_country_mode) OR $PS_CATALOG_MODE}
+                            <p id="add_to_cart" class="buttons_bottom_block">
+                                <span class="exclusive">
+                                    {l s='Ajouter au panier'}
+                                </span>
+                            </p>
+                        {else}
+                            <p id="add_to_cart" class="buttons_bottom_block">
+                                <input type="button" id="addcartbtn" name="Submit" value="{l s='Ajouter au panier'}" class="exclusive" />
+                            </p>
+                        {/if}
+                        <p>Livraison sous {$getPriceDetails->cust_delivery} jours</p>
+                        <a href="javascript:void(0)" id="sampleButton" onclick="addSampleToCart(this);
+                                return false;">Commander un échantillon</a>
+                    </div>
+                    {assign var="color_feature" value=""}
+
+                    {if isset($features) && $features|is_array && $features|count}
+                        {foreach from=$features item='feature'}
+                            {if $feature.id_feature == 1}
+                                {assign var="color_feature" value=$feature.value}
+                            {/if}
+                        {/foreach}
+                    {/if}
+
+                </div> 
+
+
+
+            </div>
+        </div>
+        <div class="col-md-9" id="right-col">   
+
+            <div class="img-container">
+                <img src="{$link->getImageLink($product->link_rewrite, $cover.id_image, 'large_default')}" alt="Picture">
+            </div>
+
+
+        </div>
+        {if isset($accessories) && $accessories}
+            <div class="accessories">
+                <p>
+                    <span style="padding-right:10px">{l s='Coloris'}</span> <select style="width:250px" onchange="javascript:document.location.href = this.value">
+                        <option value="">{$color_feature|escape:'UTF-8':'htmlall'} - {l s='Ref.'} {$product->reference|escape:'UTF-8':'htmlall'}</option>
+                        {foreach from=$accessories item=accessoire}
+                            <option value="{$tempModuleUrl}?id_product={$accessoire['id_product']|intval}">{foreach from=$accessoire.features item=feature}{if $feature.id_feature==1}{$feature.value}{/if}{/foreach} - {l s='Ref.'} {$accessoire.reference}</option>
+                        {/foreach}
+                    </select>
+                </p>
+                <div class="clear"></div>
+                <ul class="list_accessories">
+
+                    {assign var="cover" value=""}
+                    {if isset($images) && $images|is_array && $images|count}
+                        {foreach from=$images key=id_image item='image' name="images"}
+                            {if $image.cover || $smarty.foreach.images.index == 1}
+                                {assign var="cover" value=$id_image}
+                                {break}
+                            {/if}
+                        {/foreach}
+                    {/if}
+
+                    <li>
+                        <img src="{$link->getImageLink($product->link_rewrite, $product->id|cat:'-'|cat:$cover, 'home_default')}" alt="" height="46" width="46" />
+                    </li>
+
+
+
+                    {foreach from=$accessories item=accessoire}
+                        <li><a href="{$tempModuleUrl}?id_product={$accessoire['id_product']|intval}"><img src="{$link->getImageLink($accessoire.link_rewrite, $accessoire.id_image, 'large_default')}" class="img-responsive" width="46" height="46" /></a></li>
+                            {/foreach}
+                </ul>
+                {if $accessories|@count > 5}
+                    <span class="attributes_more">{l s='Voir plus'}</span>
+                {/if}
+                <div class="clear"></div>
+            </div>
+        {/if}
+    </div>
+
+    <div class="previews customise-section" id="previews-container">
+        <div class="col-xs-12 col-sm-2 no-gutter" style="padding-right:0;padding-left:0;">
+            <!-- required for floating -->
+            <!-- Nav tabs -->
+            <ul class="nav nav-tabs tabs-left">
+                <!-- 'tabs-right' for right tabs -->
+                {foreach from=$getUnivers1 key=k item=universeImage}
+                    <li {if (1 == $k+1)}class="active"{/if}>
+                       <!-- <a href="#scene{$k+1}" data-toggle="tab">{$universeImage['universe_name']|escape:'html':'UTF-8'}</a>-->
+                        <a href="#scene{$k+1}" data-toggle="tab"><img src="{$img_dir|escape:'html':'UTF-8'}{$universeImage['image']|escape:'html':'UTF-8'}" width="90px"></a>
+                    </li>
+                {/foreach}
+            </ul>
+        </div>
+        <div class="col-xs-12 col-sm-10 no-gutter" >
+            <!-- Tab panes -->
+            <div class="tab-content">
+                {foreach from=$getUnivers1 key=k item=universeImage}
+                    <div class="tab-pane {if (1 == $k+1)}active{/if}" id="scene{$k+1}">
+                        <div class="backdrop" style="height:76%;" >
+                            <img class="preview" src="" style="left:0;top:0">
+                        </div>
+                        <div class="overlay">
+                            <img src="{$img_dir|escape:'html':'UTF-8'}{$universeImage['image']|escape:'html':'UTF-8'}">
+                        </div>
+                    </div>
+                {/foreach}
+            </div>
+        </div>
+    </div>
+
+
+</div>
+</div>
+</form>
+{/if}
+    <img 
+</div>
+
+
+
+<script>
+    //window.onload = function () {
+
+    //'use strict';
+    var rootUrl = '{$rootUrl}';
+    var Cropper = window.Cropper;
+    var URL = window.URL || window.webkitURL;
+    var container = document.querySelector('.img-container');
+    var image = container.getElementsByTagName('img').item(0);
+    var download = document.getElementById('download');
+    var actions = document.getElementById('actions');
+    var dataX = document.getElementById('dataX');
+    var dataY = document.getElementById('dataY');
+    var dataHeight = document.getElementById('dataHeight');
+    var dataWidth = document.getElementById('dataWidth');
+    var dataRotate = document.getElementById('dataRotate');
+    var dataScaleX = document.getElementById('dataScaleX');
+    var dataScaleY = document.getElementById('dataScaleY');
+    var options = {
+        aspectRatio: 1 / 1,
+        minContainerHeight: 500,
+        preview: '.backdrop',
+        viewMode: 1,
+        ready: function (e) {
+            if (jQuery.trim(sessionStorage.cropData) != '') {
+                var prevCropDataOrg = JSON.parse(sessionStorage.cropData);
+                cropper.setData(prevCropDataOrg);
+                //console.log(cropper.getData());
+                if (jQuery.trim(sessionStorage.hasGrid) == '1') {
+                    jQuery('.gridlayout').addClass('gridbg');
+                }
+            }
+        },
+        cropstart: function (e) {
+            //console.log(e.type, e.detail.action);
+            setCropToSession()
+        },
+        cropmove: function (e) {
+            //console.log(e.type, e.detail.action);
+            setCropToSession()
+        },
+        cropend: function (e) {
+            //console.log(e.type, e.detail.action);
+            setCropToSession()
+        },
+        crop: function (e) {
+            var data = e.detail;
+
+            //console.log(e.type);
+            dataX.value = Math.round(data.x);
+            dataY.value = Math.round(data.y);
+            dataHeight.value = Math.round(data.height);
+            dataWidth.value = Math.round(data.width);
+            //dataRotate.value = typeof data.rotate !== 'undefined' ? data.rotate : '';
+            //dataScaleX.value = typeof data.scaleX !== 'undefined' ? data.scaleX : '';
+            //dataScaleY.value = typeof data.scaleY !== 'undefined' ? data.scaleY : '';
+        },
+        zoom: function (e) {
+            //console.log(e.type, e.detail.ratio);
+            var currentCropData = cropper.getData();
+            sessionStorage.cropData = JSON.stringify(currentCropData);
+        }
+    };
+    var cropper = new Cropper(image, options);
+    var originalImageURL = image.src;
+    var uploadedImageURL;
+
+    // Tooltip
+    $('[data-toggle="tooltip"]').tooltip();
+
+
+    // Buttons
+    if (!document.createElement('canvas').getContext) {
+        $('button[data-method="getCroppedCanvas"]').prop('disabled', true);
+    }
+
+    if (typeof document.createElement('cropper').style.transition === 'undefined') {
+        $('button[data-method="rotate"]').prop('disabled', true);
+        $('button[data-method="scale"]').prop('disabled', true);
+    }
+
+
+    // Download
+    if (typeof download.download === 'undefined') {
+        download.className += ' disabled';
+    }
+
+
+    // Options
+    actions.querySelector('.docs-toggles').onchange = function (event) {
+        var e = event || window.event;
+        var target = e.target || e.srcElement;
+        var cropBoxData;
+        var canvasData;
+        var isCheckbox;
+        var isRadio;
+
+        if (!cropper) {
+            return;
+        }
+
+        if (target.tagName.toLowerCase() === 'label') {
+            target = target.querySelector('input');
+        }
+
+        isCheckbox = target.type === 'checkbox';
+        isRadio = target.type === 'radio';
+
+        if (isCheckbox || isRadio) {
+            if (isCheckbox) {
+                options[target.name] = target.checked;
+                cropBoxData = cropper.getCropBoxData();
+                canvasData = cropper.getCanvasData();
+
+                options.ready = function () {
+                    console.log('ready');
+                    cropper.setCropBoxData(cropBoxData).setCanvasData(canvasData);
+                };
+            } else {
+                options[target.name] = target.value;
+                options.ready = function () {
+                    console.log('ready');
+                };
+            }
+
+            // Restart
+            cropper.destroy();
+            cropper = new Cropper(image, options);
+        }
+    };
+
+
+    // Methods
+    actions.querySelector('.docs-buttons').onclick = function (event) {
+        var e = event || window.event;
+        var target = e.target || e.srcElement;
+        var result;
+        var input;
+        var data;
+
+        if (!cropper) {
+            return;
+        }
+
+        while (target !== this) {
+            if (target.getAttribute('data-method')) {
+                break;
+            }
+
+            target = target.parentNode;
+        }
+
+        if (target === this || target.disabled || target.className.indexOf('disabled') > -1) {
+            return;
+        }
+
+        data = {
+            method: target.getAttribute('data-method'),
+            target: target.getAttribute('data-target'),
+            option: target.getAttribute('data-option'),
+            secondOption: target.getAttribute('data-second-option')
+        };
+
+        if (data.method) {
+            if (typeof data.target !== 'undefined') {
+                input = document.querySelector(data.target);
+
+                if (!target.hasAttribute('data-option') && data.target && input) {
+                    try {
+                        data.option = JSON.parse(input.value);
+                    } catch (e) {
+                        console.log(e.message);
+                    }
+                }
+            }
+
+            if (data.method === 'getCroppedCanvas') {
+                data.option = JSON.parse(data.option);
+            }
+
+            result = cropper[data.method](data.option, data.secondOption);
+
+            switch (data.method) {
+                case 'scaleX':
+                case 'scaleY':
+                    target.setAttribute('data-option', -data.option);
+                    break;
+
+                case 'getCroppedCanvas':
+                    if (result) {
+
+                        // Bootstrap's Modal
+                        $('#getCroppedCanvasModal').modal().find('.modal-body').html(result);
+
+                        if (!download.disabled) {
+                            download.href = result.toDataURL('image/jpeg');
+                        }
+                    }
+
+                    break;
+
+                case 'destroy':
+                    cropper = null;
+
+                    if (uploadedImageURL) {
+                        URL.revokeObjectURL(uploadedImageURL);
+                        uploadedImageURL = '';
+                        image.src = originalImageURL;
+                    }
+
+                    break;
+            }
+
+            if (typeof result === 'object' && result !== cropper && input) {
+                try {
+                    input.value = JSON.stringify(result);
+                } catch (e) {
+                    console.log(e.message);
+                }
+            }
+        }
+    };
+
+    $(document).on('click', '.image-grid', function (e) {
+        e.preventDefault();
+        //alert('testing');
+        var button = $(this);
+
+        $('.gridlayout').toggleClass('gridbg');
+
+        if ($('.gridlayout').hasClass('gridbg')) {
+            sessionStorage.hasGrid = '1';
+        } else {
+            sessionStorage.hasGrid = '0';
+        }
+
+        if ($(this).hasClass('disabled')) {
+            return;
+        }
+    });
+
+    document.body.onkeydown = function (event) {
+        var e = event || window.event;
+
+        if (!cropper || this.scrollTop > 300) {
+            return;
+        }
+
+        switch (e.keyCode) {
+            case 37:
+                e.preventDefault();
+                cropper.move(-1, 0);
+                break;
+
+            case 38:
+                e.preventDefault();
+                cropper.move(0, -1);
+                break;
+
+            case 39:
+                e.preventDefault();
+                cropper.move(1, 0);
+                break;
+
+            case 40:
+                e.preventDefault();
+                cropper.move(0, 1);
+                break;
+        }
+    };
+
+    jQuery(document).on('click', '.image-rotate-left', function () {
+        setCropToSession();
+    });
+
+    jQuery(document).on('click', '.flipbtns', function () {
+        setCropToSession();
+    });
+
+    jQuery(document).on('click', '#addcartbtn', function () {
+        var finalData = cropper.getData();
+        finalData.stripe = sessionStorage.hasGrid;
+        var finalDataString = JSON.stringify(finalData);
+        jQuery.post(rootUrl + 'module/custommade/cropper?action=setdata&pid=' + id_product, {
+            data: finalDataString
+        }, function () {
+            jQuery('#buy_block').submit();
+        });
+        
+    });
+
+    function setCropToSession() {
+        var currentCropData = cropper.getData();
+        sessionStorage.cropData = JSON.stringify(currentCropData);
+    }
+
+
+
+
+    /*setInterval(function () {
+     var currentCropData = cropper.getData();
+     sessionStorage.cropData = JSON.stringify(currentCropData);
+     //console.log(currentCropData);
+     }, 1000);*/
+
+    //};
+
+
+
+</script>
