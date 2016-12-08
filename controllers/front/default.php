@@ -212,6 +212,7 @@ class CustomMadeDefaultModuleFrontController extends ModuleFrontController
             }
 
             $accessories = $this->product->getAccessories($this->context->language->id);
+            
             if ($this->product->cache_is_pack || count($accessories)) {
                 $this->context->controller->addCSS(_THEME_CSS_DIR_.'product_list.css');
             }
@@ -225,8 +226,11 @@ class CustomMadeDefaultModuleFrontController extends ModuleFrontController
             $iso_code = Language::getIsoById( (int)$this->context->language->id );
             if ($iso_code) {
                 $baseUrl = "'".Tools::getHttpHost(true).__PS_BASE_URI__.$iso_code.'/module/'.$this->custommadeObj->name.'/'."'";
+                //$tempModuleUrl = Tools::getHttpHost(true).__PS_BASE_URI__.$iso_code.'/module/'.$this->custommadeObj->name.'/default/';
+                $tempModuleUrl = Tools::getHttpHost(true).__PS_BASE_URI__.'module/'.$this->custommadeObj->name.'/default';
             } else {
                 $baseUrl = "'".Tools::getHttpHost(true).__PS_BASE_URI__.'module/'.$this->custommadeObj->name.'/'."'";
+                $tempModuleUrl = Tools::getHttpHost(true).__PS_BASE_URI__.'module/'.$this->custommadeObj->name.'/default';
             }
             
             $this->context->smarty->assign(array(
@@ -265,7 +269,8 @@ class CustomMadeDefaultModuleFrontController extends ModuleFrontController
                 'getUnivers1' => $getUnivers,
                 'img_dir' => $this->custModuleFolderName,
                 'customBaseurl' => $baseUrl,
-                'getPriceDetails' => $getPriceDetail
+                'getPriceDetails' => $getPriceDetail,
+                'tempModuleUrl' => $tempModuleUrl
             ));
         }
         //echo $this->custModuleFolderName;die;
@@ -382,6 +387,7 @@ class CustomMadeDefaultModuleFrontController extends ModuleFrontController
                 );
             }
         }
+        
         $size = Image::getSize(ImageType::getFormatedName('large'));
         $this->context->smarty->assign(array(
             'have_image' => (isset($cover['id_image']) && (int)$cover['id_image'])? array((int)$cover['id_image']) : Product::getCover((int)Tools::getValue('id_product')),

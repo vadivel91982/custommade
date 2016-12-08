@@ -49,7 +49,7 @@
                                                         var productUnitPriceRatio = '{$product->unit_price_ratio}';
                                                         var idDefaultImage = {if isset($cover.id_image_only)}{$cover.id_image_only}{else}0{/if};
                                                             var stock_management = {$stock_management|intval};
-                                                            var baseDir = '{$customBaseurl}';
+                                                            //var baseDir = '{$customBaseurl}';
     {if !isset($priceDisplayPrecision)}
         {assign var='priceDisplayPrecision' value=2}
     {/if}
@@ -267,14 +267,28 @@
                                             {/if}
                                         {/foreach}
                                     {/if}
+
+                                    </div> 
+
+
+
+                                    </div>
+                                    </div>
+                                    <div class="col-md-9" id="right-col">   
+                                        <div id="cropper-tool-container">
+                                            <img  src="{$link->getImageLink($product->link_rewrite, $cover.id_image, 'large_default')}" id="base-image" class="cropper-hidden" />						
+                                        </div>
+                                    </div>
                                     {if isset($accessories) && $accessories}
                                         <div class="accessories">
-                                            <p><span style="padding-right:10px">{l s='Coloris'}</span> <select style="width:250px" onchange="javascript:document.location.href = this.value">
-                                                    <option value="{$link->getProductLink($product)}">{$color_feature|escape:'UTF-8':'htmlall'} - {l s='Ref.'} {$product->reference|escape:'UTF-8':'htmlall'}</option>
+                                            <p>
+                                                <span style="padding-right:10px">{l s='Coloris'}</span> <select style="width:250px" onchange="javascript:document.location.href = this.value">
+                                                    <option value="">{$color_feature|escape:'UTF-8':'htmlall'} - {l s='Ref.'} {$product->reference|escape:'UTF-8':'htmlall'}</option>
                                                     {foreach from=$accessories item=accessoire}
-                                                        <option value="{$accessoire.link}">{foreach from=$accessoire.features item=feature}{if $feature.id_feature==1}{$feature.value}{/if}{/foreach} - {l s='Ref.'} {$accessoire.reference}</option>
+                                                        <option value="{$tempModuleUrl}?id_product={$accessoire['id_product']|intval}">{foreach from=$accessoire.features item=feature}{if $feature.id_feature==1}{$feature.value}{/if}{/foreach} - {l s='Ref.'} {$accessoire.reference}</option>
                                                     {/foreach}
-                                                </select></p>
+                                                </select>
+                                            </p>
                                             <div class="clear"></div>
                                             <ul class="list_accessories">
 
@@ -292,26 +306,18 @@
                                                     <img src="{$link->getImageLink($product->link_rewrite, $product->id|cat:'-'|cat:$cover, 'home_default')}" alt="" height="46" width="46" />
                                                 </li>
 
+
+
                                                 {foreach from=$accessories item=accessoire}
-                                                    <li><a href="{$accessoire.link}"><img src="{$link->getImageLink($accessoire.link_rewrite, $accessoire.id_image, 'listingproduit')}" class="img-responsive" width="46" height="46" /></a></li>
-                                                {/foreach}</ul>
-                                                {if $accessories|@count > 5}
+                                                    <li><a href="{$tempModuleUrl}?id_product={$accessoire['id_product']|intval}"><img src="{$link->getImageLink($accessoire.link_rewrite, $accessoire.id_image, 'large_default')}" class="img-responsive" width="46" height="46" /></a></li>
+                                                {/foreach}
+                                            </ul>
+                                            {if $accessories|@count > 5}
                                                 <span class="attributes_more">{l s='Voir plus'}</span>
                                             {/if}
                                             <div class="clear"></div>
                                         </div>
                                     {/if}
-                                    </div> 
-
-
-
-                                    </div>
-                                    </div>
-                                    <div class="col-md-9" id="right-col">       
-                                        <div id="cropper-tool-container">
-                                            <img  src="{$link->getImageLink($product->link_rewrite, $cover.id_image, 'large_default')}" id="base-image" class="cropper-hidden" />						
-                                        </div>
-                                    </div>	
                                     </div>
 
                                     <div class="previews customise-section" id="previews-container">
@@ -645,6 +651,9 @@
                                                         return;
                                                     }
                                                 });
+                                                 
+                                                
+                                                 
 
                                                 /* prabakaran */
 
