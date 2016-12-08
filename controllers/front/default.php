@@ -285,6 +285,7 @@ class CustomMadeDefaultModuleFrontController extends ModuleFrontController
         $this->context->controller->addJS(_MODULE_DIR_.'custommade/views/js/bootstrap.js');
         $this->context->controller->addJS(_MODULE_DIR_.'custommade/views/js/cropper.js');
         $this->context->controller->addJS(_MODULE_DIR_.'custommade/views/js/fixedsticky.js');
+        $this->context->controller->addJS(_MODULE_DIR_.'custommade/views/js/front.js');
         $this->setTemplate('layoutcustom.tpl');
     }
 
