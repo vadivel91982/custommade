@@ -29,16 +29,16 @@
 		<thead>
 			<tr>
 				<th>
-					<span class="title_box ">{l s='Date'}</span>
+					<span class="title_box ">{l s=''}</span>
 				</th>
 				<th>
-					<span class="title_box ">{l s='Document'}</span>
+					<span class="title_box ">{l s='Product Name'}</span>
 				</th>
 				<th>
-					<span class="title_box ">{l s='Number'}</span>
+					<span class="title_box ">{l s='Height'}</span>
 				</th>
 				<th>
-					<span class="title_box ">{l s='Amount'}</span>
+					<span class="title_box ">{l s='Width'}</span>
 				</th>
 				<th></th>
 			</tr>
@@ -53,9 +53,6 @@
 					
 				</td>
 				<td>
-				
-				</td>
-				<td class="text-right document_action">
 				
 				</td>
 			</tr>

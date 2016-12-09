@@ -316,7 +316,8 @@ class Custommade extends Module {
      * @return boolean
      */
     public function hookdisplayAdminOrder($params) {
-       return $this->display(__FILE__, 'order.tpl');
+        
+        return $this->display(__FILE__, 'order.tpl');
     }
 
     /**

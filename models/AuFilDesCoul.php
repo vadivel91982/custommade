@@ -98,4 +98,5 @@ class AuFilDesCoul extends ObjectModel
         $query = 'SELECT * FROM `'._DB_PREFIX_.'universe` WHERE `active` = 1 ORDER BY id_universe ASC';
         return Db::getInstance()->executeS($query);
     }
+
 }
