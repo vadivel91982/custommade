@@ -47,7 +47,7 @@ class Custommade extends Module {
          * Set $this->bootstrap to true if your module is compliant with bootstrap (PrestaShop 1.6)
          */
         $this->bootstrap = true;
-
+       
         parent::__construct();
 
         $this->displayName = $this->l('Custom Made Wall Mural');
@@ -99,7 +99,8 @@ class Custommade extends Module {
                 $this->registerHook('actionProductSave') &&
                 $this->registerHook('displayRightColumnProduct') &&
                 $this->registerHook('displayShoppingCartFooter') &&
-                $this->registerHook('displayOrderConfirmation');
+                $this->registerHook('displayOrderConfirmation') &&
+                $this->registerHook('displayAdminOrder');
     }
 
     /**
@@ -138,7 +139,7 @@ class Custommade extends Module {
             `options` text NOT NULL,
             `status` varchar(20) NOT NULL DEFAULT \'pending\',
             PRIMARY KEY (`id`)
-          ) ENGINE=InnoDB  DEFAULT CHARSET=latin1 AUTO_INCREMENT=0 ;';
+          ) ENGINE=InnoDB  DEFAULT CHARSET=latin1 AUTO_INCREMENT=1 ;';
         $return &= DB::getInstance()->Execute($customOptionSql);
 
         return $return;
@@ -161,7 +162,8 @@ class Custommade extends Module {
         }
         $sql = 'DROP TABLE IF EXISTS `' . _DB_PREFIX_ . Tools::strtolower($this->default_name) . '`';
         $universesql = 'DROP TABLE IF EXISTS `' . _DB_PREFIX_ . Tools::strtolower($this->universe) . '`';
-        if (parent::uninstall() === false || DB::getInstance()->Execute($sql) === false || DB::getInstance()->Execute($universesql) === false) {
+        $customoptionsql = 'DROP TABLE IF EXISTS `' . _DB_PREFIX_ . Tools::strtolower($this->customoption) . '`';
+        if (parent::uninstall() === false || DB::getInstance()->Execute($sql) === false || DB::getInstance()->Execute($universesql) === false || DB::getInstance()->Execute($customoptionsql) === false) {
             return false;
         }
         return true;
@@ -306,6 +308,15 @@ class Custommade extends Module {
         );
         $this->context->smarty->assign($datas);
         return $this->display(__FILE__, 'AdminProduct.tpl');
+    }
+
+    /**
+     * displayAdminOrder
+     * @param array params
+     * @return boolean
+     */
+    public function hookdisplayAdminOrder($params) {
+       return $this->display(__FILE__, 'order.tpl');
     }
 
     /**
