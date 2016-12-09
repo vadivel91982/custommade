@@ -222,7 +222,7 @@
                                             <button type="button" class="btn btn-default flipbtns image-flip-horizontally" data-method="scaleX" data-option="-1">
                                                 <i class="fa fa-arrows-h" aria-hidden="true"></i> Effet Mirror
                                             </button>
-                                            <button type="button" class="btn btn-default flipbtns image-flip-vertically" style="display:none;">
+                                            <button type="button" class="btn btn-default flipbtns image-flip-vertically" data-method="scaleY" data-option="-1" style="display:none;">
                                                 <i class="fa fa-arrows-h" aria-hidden="true"></i> Effet Mirror
                                             </button>
                                             <button type="button" class="btn btn-default image-grid"><i class="fa fa-align-justify" aria-hidden="true"></i>
@@ -388,8 +388,8 @@
             <div class="tab-content">
                 {foreach from=$getUnivers1 key=k item=universeImage}
                     <div class="tab-pane {if (1 == $k+1)}active{/if}" id="scene{$k+1}">
-                        <div class="backdrop" style="height:76%;" >
-                            <img class="preview" src="" style="left:0;top:0">
+                        <div class="backdrop" style="height:100%;max-height:100%;" >
+                            <img class="preview" src="" style="left:0;top:0;">
                         </div>
                         <div class="overlay">
                             <img src="{$img_dir|escape:'html':'UTF-8'}{$universeImage['image']|escape:'html':'UTF-8'}">
@@ -411,6 +411,8 @@
 
 
 <script>
+
+
     //window.onload = function () {
 
     //'use strict';
@@ -429,10 +431,16 @@
     var dataScaleX = document.getElementById('dataScaleX');
     var dataScaleY = document.getElementById('dataScaleY');
     var options = {
-        aspectRatio: 1 / 1,
-        minContainerHeight: 500,
-        preview: '.backdrop',
         viewMode: 1,
+        aspectRatio: 1 / 1,
+
+        dragMode: 'move',
+        checkCrossOrigin: false,
+        zoomOnWheel: false,
+        zoomable: false,
+        minContainerHeight: 500,
+        guides: false,
+
         ready: function (e) {
             if (jQuery.trim(sessionStorage.cropData) != '') {
                 var prevCropDataOrg = JSON.parse(sessionStorage.cropData);
@@ -442,18 +450,26 @@
                     jQuery('.gridlayout').addClass('gridbg');
                 }
             }
+            dynamicImage = image.cropper.getCroppedCanvas().toDataURL('image/jpeg', 1);
+            $('.preview').attr('src', dynamicImage);
         },
         cropstart: function (e) {
             //console.log(e.type, e.detail.action);
-            setCropToSession()
+            setCropToSession();
+            dynamicImage = image.cropper.getCroppedCanvas().toDataURL('image/jpeg', 1);
+            $('.preview').attr('src', dynamicImage);
         },
         cropmove: function (e) {
             //console.log(e.type, e.detail.action);
-            setCropToSession()
+            setCropToSession();
+            dynamicImage = image.cropper.getCroppedCanvas().toDataURL('image/jpeg', 1);
+            $('.preview').attr('src', dynamicImage);
         },
         cropend: function (e) {
             //console.log(e.type, e.detail.action);
-            setCropToSession()
+            setCropToSession();
+            dynamicImage = image.cropper.getCroppedCanvas().toDataURL('image/jpeg', 1);
+            $('.preview').attr('src', dynamicImage);
         },
         crop: function (e) {
             var data = e.detail;
@@ -682,11 +698,46 @@
     };
 
     jQuery(document).on('click', '.image-rotate-left', function () {
+        var currentCropData = cropper.getData();
+        if(currentCropData.rotate == 90 || currentCropData.rotate == 270){
+            jQuery('.image-flip-horizontally').hide();
+            jQuery('.image-flip-vertically').show();
+        }else{
+            jQuery('.image-flip-horizontally').show();
+            jQuery('.image-flip-vertically').hide();
+        }
+        
         setCropToSession();
+        dynamicImage = image.cropper.getCroppedCanvas().toDataURL('image/jpeg', 1);
+        $('.preview').attr('src', dynamicImage);
     });
 
     jQuery(document).on('click', '.flipbtns', function () {
         setCropToSession();
+        dynamicImage = image.cropper.getCroppedCanvas().toDataURL('image/jpeg', 1);
+        $('.preview').attr('src', dynamicImage);
+    });
+    
+    jQuery(document).on('keyup','#dataWidth',function(){
+        var curVal = jQuery.trim(jQuery(this).val());
+        curVal = curVal * 1;
+        var newOpt = {
+            width:curVal
+        };
+        cropper.setData(newOpt);
+        dynamicImage = image.cropper.getCroppedCanvas().toDataURL('image/jpeg', 1);
+        $('.preview').attr('src', dynamicImage);
+    });
+    
+    jQuery(document).on('keyup','#dataHeight',function(){
+        var curVal = jQuery.trim(jQuery(this).val());
+        curVal = curVal * 1;
+        var newOpt = {
+            width:curVal
+        };
+        cropper.setData(newOpt);
+        dynamicImage = image.cropper.getCroppedCanvas().toDataURL('image/jpeg', 1);
+        $('.preview').attr('src', dynamicImage);
     });
 
     jQuery(document).on('click', '#addcartbtn', function () {
@@ -698,7 +749,7 @@
         }, function () {
             jQuery('#buy_block').submit();
         });
-        
+
     });
 
     function setCropToSession() {

@@ -136,8 +136,9 @@ class Custommade extends Module {
             `order_id` bigint(32) NOT NULL,
             `product_id` bigint(32) NOT NULL,
             `options` text NOT NULL,
+            `status` varchar(20) NOT NULL DEFAULT \'pending\',
             PRIMARY KEY (`id`)
-          ) ENGINE=InnoDB DEFAULT CHARSET=latin1 AUTO_INCREMENT=1 ;';
+          ) ENGINE=InnoDB  DEFAULT CHARSET=latin1 AUTO_INCREMENT=0 ;';
         $return &= DB::getInstance()->Execute($customOptionSql);
 
         return $return;

@@ -20,53 +20,49 @@ if (!defined('_PS_VERSION_')) {
 class CustomMadeGenerateimageModuleFrontController extends ModuleFrontController {
 
     public function __construct() {
-        /*echo '----' . __LINE__ . '----' . __FILE__ . '<pre>' . print_r($_POST, true) . '</pre>';
-        echo '----' . __LINE__ . '----' . __FILE__ . '<pre>' . print_r(Tools::getValue('type'), true) . '</pre>';
-        die;*/
         parent::__construct();
-        $options = array();
-        //$options['hd_image_url'] = 'http://localhost/afdc/wallpapper.jpg';
-        //$options['hd_image_url'] = 'http://www.wallpapereast.com/static/images/HD-Wallpaper-D5D.jpg';
-        if (!empty(Tools::getValue('imageUrl')))
-            $options['hd_image_url'] = Tools::getValue('imageUrl');
-        if (!empty(Tools::getValue('x')))
-            $options['crop_x'] = Tools::getValue('x');
-        else
-            $options['crop_x'] = 0;
-        if (!empty(Tools::getValue('y')))
-            $options['crop_y'] = Tools::getValue('y');
-        else
-            $options['crop_y'] = 0;
-        if (!empty(Tools::getValue('width')))
-            $options['width'] = Tools::getValue('width');
-        else
-            $options['width'] = 300;
-        if (!empty(Tools::getValue('height')))
-            $options['height'] = Tools::getValue('height');
-        else
-            $options['height'] = 300;
-        if (!empty(Tools::getValue('rotate')))
-        {
-            $options['rotate_degree'] = Tools::getValue('rotate');
-            /*if($options['rotate_degree'] < 0){
-                $options['rotate_degree'] = $options['rotate_degree'] * -1;
-            }*/
+        
+        //echo '----' . __LINE__ . '----' . __FILE__;
+        $select = "SELECT * FROM "._DB_PREFIX_."options WHERE 1 and status = 'pending' limit 5";
+        //$select = "SELECT * FROM "._DB_PREFIX_."options WHERE 1 limit 5";
+        $results = Db::getInstance()->ExecuteS($select);
+        //echo '----' . __LINE__ . '----' . __FILE__ . '<pre>' . print_r($results, true) . '</pre>';
+        foreach($results as $k => $row){
+            $id = $row['id'];
+            $orderId = $row['order_id'];
+            $productId = $row['product_id'];
+            $customOptions = json_decode($row['options']);
+            //echo '----' . __LINE__ . '----' . __FILE__ . '<pre>' . print_r($customOptions, true) . '</pre>';
+            $options = array();
+            $options['hd_image_url'] = 'http://localhost/afdc/wallpapper.jpg';
+            $options['crop_x'] = $customOptions->x;
+            $options['crop_y'] = $customOptions->y;
+            $options['width'] = $customOptions->width;
+            $options['height'] = $customOptions->height;
+            $options['rotate_degree'] = $customOptions->rotate;
+            if($customOptions->scaleX == '-1' || $customOptions->scaleY == '-1'){
+                $options['mirror_effect'] = 1;
+            }else{
+                $options['mirror_effect'] = 0;
+            }
+            
+            if(isset($customOptions->stripe) && $customOptions->stripe == '1'){
+                $options['stripe_filename'] = 'modules/custommade/stripe.png';
+            }
+            $options['output_filename'] = 'modules/custommade/output/'.$id.'.png';
+            $updateStatus = 'UPDATE '._DB_PREFIX_.'options SET status = "processing" WHERE 1 and id = "'.$id.'"';
+                DB::getInstance()->Execute($updateStatus);
+            if($this->generateFinalImage($options)){
+                $updateStatus = 'UPDATE '._DB_PREFIX_.'options SET status = "completed" WHERE 1 and id = "'.$id.'"';
+                DB::getInstance()->Execute($updateStatus);
+            }else{
+                $updateStatus = 'UPDATE '._DB_PREFIX_.'options SET status = "error" WHERE 1 and id = "'.$id.'"';
+                DB::getInstance()->Execute($updateStatus);
+            }
+            
         }
-        else
-            $options['rotate_degree'] = 0;
-        if (Tools::getValue('mirror') == '1')
-            $options['mirror_effect'] = TRUE;
-        else
-            $options['mirror_effect'] = FALSE;
-        if (!empty(Tools::getValue('stripe')))
-            $options['stripe_filename'] = Tools::getValue('stripe');
-        else
-            $options['stripe_filename'] = FALSE;
-        //if (!empty(Tools::getValue('output_file')))
-            $options['output_filename'] = 'ex-cropped.png';
-
-
-        $this->generateFinalImage($options);
+        //$this->generateFinalImage($options);
+        die;
     }
 
     private function generateFinalImage($config) {
@@ -78,9 +74,9 @@ class CustomMadeGenerateimageModuleFrontController extends ModuleFrontController
             file_put_contents($tmpFileName, $imageData);
             //$size = 200;
             $im = imagecreatefromjpeg($tmpFileName);
-            /*imagealphablending($im, true);
-            $transparentcolour = imagecolorallocate($im, 255, 255, 255);
-            imagecolortransparent($im, $transparentcolour);*/
+            /* imagealphablending($im, true);
+              $transparentcolour = imagecolorallocate($im, 255, 255, 255);
+              imagecolortransparent($im, $transparentcolour); */
             //$size = min(imagesx($im), imagesy($im));
 
 
@@ -101,18 +97,19 @@ class CustomMadeGenerateimageModuleFrontController extends ModuleFrontController
             if (isset($config['stripe_filename']) && trim($config['stripe_filename']) != '') {
 
                 $sim = imagecreatefrompng($config['stripe_filename']);
-                imagecopyresampled($im, $sim, $config['crop_x'], $config['crop_y'], 0, 0, $config['width'], $config['height'], $config['width'], $config['height']);
+                imagecopyresampled($im, $sim, 0, 0, 0, 0, $config['width'], $config['height'], $config['width'], $config['height']);
             }
             /* Stop : Merge Stripe */
             //generate final output image
             if ($im !== FALSE) {
                 imagepng($im, $config['output_filename']);
-                echo $config['output_filename'];
-                die;
+                //echo $config['output_filename'];
+                return true;
             }
             return false;
         } else {
-            die('invalid image url');
+            //die('invalid image url');
+            return false;
         }
     }
 
