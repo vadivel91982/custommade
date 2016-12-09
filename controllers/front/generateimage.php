@@ -21,45 +21,58 @@ class CustomMadeGenerateimageModuleFrontController extends ModuleFrontController
 
     public function __construct() {
         parent::__construct();
-        
+
         //echo '----' . __LINE__ . '----' . __FILE__;
-        $select = "SELECT * FROM "._DB_PREFIX_."options WHERE 1 and status = 'pending' limit 5";
-        //$select = "SELECT * FROM "._DB_PREFIX_."options WHERE 1 limit 5";
+        //$select = "SELECT * FROM "._DB_PREFIX_."options WHERE 1 and status = 'pending' limit 5";
+        $select = "SELECT * FROM " . _DB_PREFIX_ . "options WHERE 1 limit 5";
         $results = Db::getInstance()->ExecuteS($select);
         //echo '----' . __LINE__ . '----' . __FILE__ . '<pre>' . print_r($results, true) . '</pre>';
-        foreach($results as $k => $row){
+        foreach ($results as $k => $row) {
             $id = $row['id'];
             $orderId = $row['order_id'];
             $productId = $row['product_id'];
             $customOptions = json_decode($row['options']);
+
+            $id_image = Product::getCover($productId);
+// get Image by id
+            if (sizeof($id_image) > 0) {
+                $image = new Image($id_image['id_image']);
+                // get image full URL
+                $image_url = _PS_BASE_URL_ . _THEME_PROD_DIR_ . $image->getExistingImgPath() . ".jpg";
+                $options = array();
+                //$options['hd_image_url'] = 'http://localhost/afdc/wallpapper.jpg';
+                $options['hd_image_url'] = $image_url;
+                $options['crop_x'] = $customOptions->x;
+                $options['crop_y'] = $customOptions->y;
+                $options['width'] = $customOptions->width;
+                $options['height'] = $customOptions->height;
+                $options['rotate_degree'] = $customOptions->rotate;
+                if ($customOptions->scaleX == '-1' || $customOptions->scaleY == '-1') {
+                    $options['mirror_effect'] = 1;
+                } else {
+                    $options['mirror_effect'] = 0;
+                }
+
+                if (isset($customOptions->stripe) && $customOptions->stripe == '1') {
+                    $options['stripe_filename'] = 'modules/custommade/stripe.png';
+                }
+                $options['output_filename'] = 'modules/custommade/output/' . $id . '.png';
+                $updateStatus = 'UPDATE ' . _DB_PREFIX_ . 'options SET status = "processing" WHERE 1 and id = "' . $id . '"';
+                DB::getInstance()->Execute($updateStatus);
+                if ($this->generateFinalImage($options)) {
+                    $updateStatus = 'UPDATE ' . _DB_PREFIX_ . 'options SET status = "completed" WHERE 1 and id = "' . $id . '"';
+                    DB::getInstance()->Execute($updateStatus);
+                } else {
+                    $updateStatus = 'UPDATE ' . _DB_PREFIX_ . 'options SET status = "error" WHERE 1 and id = "' . $id . '"';
+                    DB::getInstance()->Execute($updateStatus);
+                }
+            } else {
+                $updateStatus = 'UPDATE ' . _DB_PREFIX_ . 'options SET status = "image_error" WHERE 1 and id = "' . $id . '"';
+                DB::getInstance()->Execute($updateStatus);
+            }
+            //$productObj = new Product($productId);
+            //echo '----' . __LINE__ . '----' . __FILE__ . '<pre>' . print_r($productObj, true) . '</pre>';
             //echo '----' . __LINE__ . '----' . __FILE__ . '<pre>' . print_r($customOptions, true) . '</pre>';
-            $options = array();
-            $options['hd_image_url'] = 'http://localhost/afdc/wallpapper.jpg';
-            $options['crop_x'] = $customOptions->x;
-            $options['crop_y'] = $customOptions->y;
-            $options['width'] = $customOptions->width;
-            $options['height'] = $customOptions->height;
-            $options['rotate_degree'] = $customOptions->rotate;
-            if($customOptions->scaleX == '-1' || $customOptions->scaleY == '-1'){
-                $options['mirror_effect'] = 1;
-            }else{
-                $options['mirror_effect'] = 0;
-            }
-            
-            if(isset($customOptions->stripe) && $customOptions->stripe == '1'){
-                $options['stripe_filename'] = 'modules/custommade/stripe.png';
-            }
-            $options['output_filename'] = 'modules/custommade/output/'.$id.'.png';
-            $updateStatus = 'UPDATE '._DB_PREFIX_.'options SET status = "processing" WHERE 1 and id = "'.$id.'"';
-                DB::getInstance()->Execute($updateStatus);
-            if($this->generateFinalImage($options)){
-                $updateStatus = 'UPDATE '._DB_PREFIX_.'options SET status = "completed" WHERE 1 and id = "'.$id.'"';
-                DB::getInstance()->Execute($updateStatus);
-            }else{
-                $updateStatus = 'UPDATE '._DB_PREFIX_.'options SET status = "error" WHERE 1 and id = "'.$id.'"';
-                DB::getInstance()->Execute($updateStatus);
-            }
-            
         }
         //$this->generateFinalImage($options);
         die;
