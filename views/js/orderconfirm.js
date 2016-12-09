@@ -1,4 +1,4 @@
-if (window.location.hostname == '192.168.3.127' || window.location.hostname == 'localhost') {
+if (window.location.hostname == '192.168.3.127' || window.location.hostname == 'localhost' || window.location.hostname == 'localprojects.com') {
     var getUrl = window.location;
     var baseUrl = getUrl .protocol + "//" + getUrl.host + "/" + getUrl.pathname.split('/')[1]+"/";
     var rootUrl = baseUrl;
