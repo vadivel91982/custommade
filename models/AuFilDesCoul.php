@@ -99,4 +99,36 @@ class AuFilDesCoul extends ObjectModel
         return Db::getInstance()->executeS($query);
     }
 
+    /**
+     * Get by id_product
+     * @param  int $id_product ID Product
+     * @return getHDOrderByIDProduct Instanciation of this class
+     */
+    public static function getHDOrderByIDProduct($moduleName)
+    {
+        $select = 'SELECT * FROM `'._DB_PREFIX_.'options` ORDER BY id ASC';
+        $results = Db::getInstance()->ExecuteS($select);
+        foreach ($results as $k => $row) {
+            $id = $row['id'];
+            $orderId = $row['order_id'];
+            $productId = $row['product_id'];
+            $customOptions = json_decode($row['options']);
+            $product = new Product((int)$productId);
+            
+            $image = $moduleName."/output/".$productId.".png";
+            $ext = pathinfo($image, PATHINFO_EXTENSION);
+            $image_url = ImageManager::thumbnail($image, $productId.".png", 50, $ext, true, true);            
+            $options['product_name'][] = $product->name['1'].'<br>Reference: '.$product->reference;
+            $options['hd_image_url'][] = $image_url;
+            $options['productId'][] = $productId;
+            /*$options['crop_x'][] = $customOptions->x;
+            $options['crop_y'][] = $customOptions->y;
+            $options['width'][] = $customOptions->width;
+            $options['height'][] = $customOptions->height;
+            $options['rotate_degree'][] = $customOptions->rotate;*/
+            $options['crop_options'][] = $customOptions;
+        }
+        return $options;
+        //echo '----' . __LINE__ . '----' . __FILE__ . '<pre>' . print_r($product->name['1'], true) . '</pre>';
+    }
 }

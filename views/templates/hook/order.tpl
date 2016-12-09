@@ -25,7 +25,7 @@
 
 <div class="panel">
 	<h3><i class="icon-shopping-cart"></i> {l s='HD Image' mod='custommade'}</h3>
-	<table class="table" id="documents_table">
+	<table class="table" id="orderProducts">
 		<thead>
 			<tr>
 				<th>
@@ -35,27 +35,38 @@
 					<span class="title_box ">{l s='Product Name'}</span>
 				</th>
 				<th>
-					<span class="title_box ">{l s='Height'}</span>
+					<span class="title_box ">{l s='Options'}</span>
 				</th>
 				<th>
-					<span class="title_box ">{l s='Width'}</span>
+					<span class="title_box ">{l s='View'}</span>
 				</th>
 				<th></th>
 			</tr>
 		</thead>
-		<tbody>			
-			<tr id="orderslip_{$document->id}">
-				<td></td>
-				<td>
-					
-				</td>
-				<td>
-					
-				</td>
-				<td>
-				
-				</td>
-			</tr>
+		<tbody>
+			{foreach $getHDDetails['product_name'] as $key => $hdorder}	
+				<tr class="product-line-row">
+					<td>{$getHDDetails['hd_image_url'][$key]}</td>
+					<td>{$getHDDetails['product_name'][$key]}</td>
+					<td>
+						X: {$getHDDetails['crop_options'][$key]->x}</br>
+						Y: {$getHDDetails['crop_options'][$key]->y}</br>
+						Width: {$getHDDetails['crop_options'][$key]->width}</br>
+						Height: {$getHDDetails['crop_options'][$key]->height}</br>
+						Rotate: {$getHDDetails['crop_options'][$key]->rotate}</br>
+					</td>
+					<td>
+						{* edit/delete controls *}
+						<div class="btn-group">
+							<button type="button" class="btn btn-default edit_product_change_link">
+								<i class="icon-search-plus"></i>
+								{l s='View'}
+							</button>
+						</div>
+						{* Update controls *}
+					</td>
+				</tr>
+			{/foreach}
 		</tbody>
 	</table>	
 </div>
