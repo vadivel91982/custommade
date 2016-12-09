@@ -419,3 +419,27 @@ button.image-grid {
     }
 }
 
+.accessories {
+	padding:60px 0px 30px 0px;
+}
+.overall-container {
+	border: 1px solid #7f7f7e;
+	padding: 60px 0px 0px 0px;
+}
+.accessories .list_accessories li {
+	float: left;
+	margin-right: 15px;
+	margin-top: 20px;
+	border: 1px solid;
+}
+.accessories .col-md-8 h3 {
+	margin:0px;    
+	font-family: 'Conv_Book Antiqua Regular';
+}
+.title-module-preview {
+	background: #f2f3f4;
+	padding: 20px;
+	font-size: 24px;
+	font-family: 'Conv_Book Antiqua Regular';
+	margin: 20px 0px 30px 0px;
+}
