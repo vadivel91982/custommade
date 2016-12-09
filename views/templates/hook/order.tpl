@@ -66,6 +66,15 @@
 						{* Update controls *}
 					</td>
 				</tr>
+			{foreachelse}
+				<tr>
+					<td colspan="4" class="list-empty">
+						<div class="list-empty-msg">
+							<i class="icon-warning-sign list-empty-icon"></i>
+							{l s='There is no available document'}
+						</div>
+					</td>
+				</tr>
 			{/foreach}
 		</tbody>
 	</table>	

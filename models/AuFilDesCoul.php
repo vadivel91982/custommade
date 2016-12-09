@@ -104,9 +104,9 @@ class AuFilDesCoul extends ObjectModel
      * @param  int $id_product ID Product
      * @return getHDOrderByIDProduct Instanciation of this class
      */
-    public static function getHDOrderByIDProduct($moduleName)
+    public static function getHDOrderByIDProduct($moduleName,$orderId)
     {
-        $select = 'SELECT * FROM `'._DB_PREFIX_.'options` ORDER BY id ASC';
+        $select = 'SELECT * FROM `'._DB_PREFIX_.'options` WHERE `order_id` = '.$orderId.' ORDER BY id ASC';
         $results = Db::getInstance()->ExecuteS($select);
         foreach ($results as $k => $row) {
             $id = $row['id'];

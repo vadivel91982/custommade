@@ -317,12 +317,13 @@ class Custommade extends Module {
      */
     public function hookdisplayAdminOrder($params) {
         $this->custommadeObj = new Custommade();
-        $this->custModuleFolderName = _PS_MODULE_DIR_.$this->custommadeObj->name;
+        $this->custModuleFolderName = _PS_MODULE_DIR_.$this->custommadeObj->name;        
+        $order = new Order ($params['id_order']);
         $datas = array(
             'name' => $this->displayName,
-            'getHDDetails' => AuFilDesCoul::getHDOrderByIDProduct($this->custModuleFolderName)
+            'getHDDetails' => AuFilDesCoul::getHDOrderByIDProduct($this->custModuleFolderName,$order->id)
         );
-        //echo '----' . __LINE__ . '----' . __FILE__ . '<pre>' . print_r($datas['getHDDetails']['crop_options'][0]->x, true) . '</pre>';
+        //echo '----' . __LINE__ . '----' . __FILE__ . '<pre>' . print_r($order->id) . '</pre>';
         $this->context->smarty->assign($datas);
         return $this->display(__FILE__, 'order.tpl');
     }
