@@ -318,8 +318,8 @@
                             <div class="accessories">
                                 <div class="col-md-8">
                                     <p>Au fil des Couleurs - Volume 1</p>
-                                    <h3>Référence : AFDC5/2</h3>
-                                    <p>Emeraude, une des teintes proposées par le motif KUBE issu de la collection Volume I signée Au Fil des Couleurs. Ici, deux couleurs s’opposent en un dégradé allant du blanc, vers le bleu. Le tout imprimé sur un motif de cube 3D qui s’estompe avec la couleur. 
+                                    <h3>Référence : {$product->reference}</h3>
+                                    <p>{$product->description}</p>
                                 </div>
                                 <div class="col-md-4">
                                     <p>
@@ -406,6 +406,7 @@
     //window.onload = function () {
 
     //'use strict';
+    var newCustomPrice = '';
     var rootUrl = '{$rootUrl}';
     var Cropper = window.Cropper;
     var URL = window.URL || window.webkitURL;
@@ -441,6 +442,7 @@
             }
             dynamicImage = image.cropper.getCroppedCanvas().toDataURL('image/jpeg', 1);
             $('.preview').attr('src', dynamicImage);
+            setNewCustomPrice();
         },
         cropstart: function (e) {
             //console.log(e.type, e.detail.action);
@@ -732,12 +734,13 @@
     jQuery(document).on('click', '#addcartbtn', function () {
         var finalData = cropper.getData();
         finalData.stripe = sessionStorage.hasGrid;
+        finalData.customPrice = newCustomPrice;
         var finalDataString = JSON.stringify(finalData);
         jQuery.post(rootUrl + 'module/custommade/cropper?action=setdata&pid=' + id_product, {
             data: finalDataString
         }, function () {
-            jQuery('#buy_block').submit();
-            //ajaxCart.add(id_product, '', true, null, 1, null);
+            //jQuery('#buy_block').submit();
+            ajaxCart.add(id_product, '', true, null, 1, null);
         });
 
     });
@@ -745,6 +748,14 @@
     function setCropToSession() {
         var currentCropData = cropper.getData();
         sessionStorage.cropData = JSON.stringify(currentCropData);
+        setNewCustomPrice();
+    }
+    
+    function setNewCustomPrice(){
+        newCustomPrice = ((cropper.getData(true).width) * (cropper.getData(true).height)) / 10000;
+        newCustomPrice = newCustomPrice.toFixed(2);
+        jQuery('#our_price_display').html('$'+newCustomPrice);
+        console.log(newCustomPrice.toFixed(2));
     }
 
 

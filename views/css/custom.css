@@ -32,10 +32,7 @@ img {
         width: 1100px;
         margin: 30px auto
 }*/
-.container {
-    max-width: 988px;
-    width: 988px;
-}
+
 .row-eq-height {
     display: -webkit-box;
     display: -webkit-flex;
@@ -315,7 +312,6 @@ ul.share-buttons li { display: inline; }
     text-transform: uppercase;
     border-color: #afb2b4;
     margin-bottom: 10px;
-    width: 200px;
     padding-left: 0;
     font-weight: normal;
     font-size: 14px;
@@ -325,6 +321,7 @@ ul.share-buttons li { display: inline; }
     float: left;
     padding-left: 10px;
     font-weight: normal;
+	padding-right: 40px;s
 }
 .price-section{padding: 5px 0 5px;clear:both}
 .price-section .our_price_display {
@@ -442,4 +439,17 @@ button.image-grid {
 	font-size: 24px;
 	font-family: 'Conv_Book Antiqua Regular';
 	margin: 20px 0px 30px 0px;
+}
+
+
+@media(min-width:768px) {
+	.overall-container #left-col.col-md-3 {
+		width:25%;
+		float:left;
+	}
+	.overall-container #right-col.col-md-9 {
+		width:75%;
+		float:left;
+	}
+	
 }

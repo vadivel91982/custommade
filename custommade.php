@@ -146,6 +146,7 @@ class Custommade extends Module {
     }
 
     public function uninstall() {
+        //return true;
         Configuration::deleteByName('CUSTOMMADE_LIVE_MODE');
         if (!parent::uninstall() || !$this->unregisterHook('header')) {
             return false;

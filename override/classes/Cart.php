@@ -53,7 +53,7 @@ class Cart extends CartCore {
                             $product['id_product'], !Product::getTaxCalculationMethod(), $product['id_product_attribute'], 6, null, false, false
             );
             
-            $product['price'] = '99.99';
+            //$product['price'] = '99.99';
             
             if ($product['reduction_type'] == 'amount') {
                 $reduction = (!Product::getTaxCalculationMethod() ? (float) $product['price_wt'] : (float) $product['price']) - (float) $product['price_without_quantity_discount'];
