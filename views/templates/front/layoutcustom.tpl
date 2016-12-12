@@ -736,8 +736,8 @@
         jQuery.post(rootUrl + 'module/custommade/cropper?action=setdata&pid=' + id_product, {
             data: finalDataString
         }, function () {
-            //jQuery('#buy_block').submit();
-            ajaxCart.add(id_product, '', true, null, 1, null);
+            jQuery('#buy_block').submit();
+            //ajaxCart.add(id_product, '', true, null, 1, null);
         });
 
     });
