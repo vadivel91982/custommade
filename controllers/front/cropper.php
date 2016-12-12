@@ -122,6 +122,8 @@ class CustomMadeCropperModuleFrontController extends ModuleFrontController {
                 DB::getInstance()->Execute($insertOption);
             }
         }
+        
+        $this->removeCropDataFromSession();
     }
 
 }
