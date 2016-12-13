@@ -116,12 +116,15 @@ class AuFilDesCoul extends ObjectModel
             $customOptions = Tools::jsonDecode($row['options']);
             $product = new Product((int)$productId);
 
-            $image = $moduleName."/output/".$productId.".png";
+            //$image = $moduleName."/output/".$productId.".png";
+            //echo '----' . __LINE__ . '----' . __FILE__ . Tools::getHttpHost(true).__PS_BASE_URI__."modules/custommade/output/".$id.".png";
+            $image = $moduleName."/output/".$id.".png";
             $ext = pathinfo($image, PATHINFO_EXTENSION);
             $image_url = ImageManager::thumbnail($image, $productId.".png", 50, $ext, true, true);
             $options['product_name'][] = $product->name['1'].'<br>Reference: '.$product->reference;
             $options['hd_image_url'][] = $image_url;
             $options['productId'][] = $productId;
+            $options['image_link'][] = Tools::getHttpHost(true).__PS_BASE_URI__."modules/custommade/output/".$id.".png";
             /*$options['crop_x'][] = $customOptions->x;
             $options['crop_y'][] = $customOptions->y;
             $options['width'][] = $customOptions->width;

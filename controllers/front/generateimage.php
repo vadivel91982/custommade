@@ -26,7 +26,7 @@ class CustomMadeGenerateimageModuleFrontController extends ModuleFrontController
 
         //echo '----' . __LINE__ . '----' . __FILE__;
         //$select = "SELECT * FROM "._DB_PREFIX_."options WHERE 1 and status = 'pending' limit 5";
-        $select = "SELECT * FROM " . _DB_PREFIX_ . "options WHERE 1 limit 5";
+        $select = "SELECT * FROM " . _DB_PREFIX_ . "options WHERE 1 order by id desc limit 1";
         $results = Db::getInstance()->ExecuteS($select);
         //echo '----' . __LINE__ . '----' . __FILE__ . '<pre>' . print_r($results, true) . '</pre>';
         foreach ($results as $k => $row) {
@@ -34,13 +34,14 @@ class CustomMadeGenerateimageModuleFrontController extends ModuleFrontController
             $orderId = $row['order_id'];
             $productId = $row['product_id'];
             $customOptions = Tools::jsonDecode($row['options']);
-
+            
             $id_image = Product::getCover($productId);
 // get Image by id
             if (sizeof($id_image) > 0) {
                 $image = new Image($id_image['id_image']);
                 // get image full URL
                 $image_url = _PS_BASE_URL_ . _THEME_PROD_DIR_ . $image->getExistingImgPath() . ".jpg";
+                //echo '----' . __LINE__ . '----' . __FILE__ . $image_url;
                 $options = array();
                 //$options['hd_image_url'] = 'http://localhost/afdc/wallpapper.jpg';
                 $options['hd_image_url'] = $image_url;
@@ -56,7 +57,7 @@ class CustomMadeGenerateimageModuleFrontController extends ModuleFrontController
                 }
 
                 if (isset($customOptions->stripe) && $customOptions->stripe == '1') {
-                    $options['stripe_filename'] = 'modules/custommade/stripe.png';
+                    $options['stripe_filename'] = 'modules/custommade/views/img/grid-line.png';
                 }
                 $options['output_filename'] = 'modules/custommade/output/' . $id . '.png';
                 $updateStatus = 'UPDATE ' . _DB_PREFIX_ . 'options SET status = "processing" WHERE 1 and id = "' . $id . '"';

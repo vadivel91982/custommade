@@ -391,7 +391,7 @@
                                 <div class="tab-pane {if (1 == $k+1)}active{/if}" id="scene{$k+1}">
                                     <div class="backdrop" style="height:76%;max-height:76%;" >
                                         <img class="preview" src="" style="left:0;top:0;">
-										<span class="gridlayout"></span>
+                                        <span class="gridlayout"></span>
                                     </div>
                                     <div class="overlay">
                                         <img src="{$img_dir|escape:'html':'UTF-8'}{$universeImage['image']|escape:'html':'UTF-8'}">
@@ -479,8 +479,8 @@
             //console.log(e.type);
             dataX.value = Math.round(data.x);
             dataY.value = Math.round(data.y);
-            dataHeight.value = Math.round(data.height);
-            dataWidth.value = Math.round(data.width);
+            // dataHeight.value = Math.round(data.height);
+            //dataWidth.value = Math.round(data.width);
             //dataRotate.value = typeof data.rotate !== 'undefined' ? data.rotate : '';
             //dataScaleX.value = typeof data.scaleX !== 'undefined' ? data.scaleX : '';
             //dataScaleY.value = typeof data.scaleY !== 'undefined' ? data.scaleY : '';
@@ -743,7 +743,7 @@
     });
 
     jQuery(document).on('click', '#addcartbtn', function () {
-        var finalData = cropper.getData();
+        var finalData = cropper.getData(true);
         finalData.stripe = sessionStorage.hasGrid;
         finalData.customPrice = newCustomPrice;
         var finalDataString = JSON.stringify(finalData);
@@ -757,7 +757,7 @@
     });
 
     function setCropToSession() {
-        var currentCropData = cropper.getData();
+        var currentCropData = cropper.getData(true);
         sessionStorage.cropData = JSON.stringify(currentCropData);
         setIndicatorPosition();
         setNewCustomPrice();
@@ -769,18 +769,18 @@
         jQuery('#our_price_display').html('$' + newCustomPrice);
         //console.log(newCustomPrice.toFixed(2));
     }
-    
-    function setIndicatorPosition(){
+
+    function setIndicatorPosition() {
         jQuery('.imr_top').width(cropper.getData().width);
-        jQuery('.imr_top').css('margin-left',cropper.getCropBoxData().left+'px');
+        jQuery('.imr_top').css('margin-left', cropper.getCropBoxData().left + 'px');
         jQuery('#dimension_indicator').width(cropper.getData().width);
-        jQuery('.imr_top .cmvalue').text(cropper.getData(true).width+'cm');
-        
-        
+        jQuery('.imr_top .cmvalue').text(cropper.getData(true).width + 'cm');
+
+
         jQuery('.imr_right').height(cropper.getData().height);
-        jQuery('.imr_right').css('margin-top',cropper.getCropBoxData().top+'px');
+        jQuery('.imr_right').css('margin-top', cropper.getCropBoxData().top + 'px');
         jQuery('#dimension_indicator_right').height(cropper.getData().height);
-        jQuery('.imr_right .cmvalue').text(cropper.getData(true).height+'cm');
+        jQuery('.imr_right .cmvalue').text(cropper.getData(true).height + 'cm');
     }
 
 
