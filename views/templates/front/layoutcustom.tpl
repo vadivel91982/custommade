@@ -215,14 +215,14 @@
                                         <div id="actions">
                                             <div class="docs-buttons">		
                                                 <button type="button" data-method="rotate" data-option="90" class="btn btn-default image-rotate-left">
-                                                    <i class="fa fa-undo" aria-hidden="true"></i> Rotation 90&deg;
-                                                </button><br />
+                                                    <i class="fa fa-undo" aria-hidden="true"></i> Rotation 90&deg;<br />
+                                                </button>
 
                                                 <button type="button" class="btn btn-default flipbtns image-flip-horizontally" data-method="scaleX" data-option="-1">
-                                                    <i class="fa fa-arrows-h" aria-hidden="true"></i> Effet Mirror
-                                                </button><br />
+                                                    <i class="fa fa-arrows-h" aria-hidden="true"></i> Effet Mirror<br />
+                                                </button>
                                                 <button type="button" class="btn btn-default flipbtns image-flip-vertically" data-method="scaleY" data-option="-1" style="display:none;">
-                                                    <i class="fa fa-arrows-h" aria-hidden="true"></i> Effet Mirror
+                                                    <i class="fa fa-arrows-h" aria-hidden="true"></i> Effet Mirror<br />
                                                 </button>
                                                 <button type="button" class="btn btn-default image-grid"><i class="fa fa-align-justify" aria-hidden="true"></i>
                                                     Montrer les l&eacute;s
@@ -389,8 +389,9 @@
                         <div class="tab-content">
                             {foreach from=$getUnivers1 key=k item=universeImage}
                                 <div class="tab-pane {if (1 == $k+1)}active{/if}" id="scene{$k+1}">
-                                    <div class="backdrop" style="height:100%;max-height:100%;" >
+                                    <div class="backdrop" style="height:76%;max-height:100%;" >
                                         <img class="preview" src="" style="left:0;top:0;">
+										<span class="gridlayout"></span>
                                     </div>
                                     <div class="overlay">
                                         <img src="{$img_dir|escape:'html':'UTF-8'}{$universeImage['image']|escape:'html':'UTF-8'}">
