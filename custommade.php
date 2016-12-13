@@ -47,7 +47,7 @@ class Custommade extends Module {
          * Set $this->bootstrap to true if your module is compliant with bootstrap (PrestaShop 1.6)
          */
         $this->bootstrap = true;
-       
+
         parent::__construct();
 
         $this->displayName = $this->l('Custom Made Wall Mural');
@@ -56,8 +56,6 @@ class Custommade extends Module {
         $this->confirmUninstall = $this->l('Are you sure you want to uninstall custom made your wall mural?');
 
         $this->ps_versions_compliancy = array('min' => '1.6', 'max' => _PS_VERSION_);
-
-        
     }
 
     /**
@@ -318,11 +316,11 @@ class Custommade extends Module {
      */
     public function hookdisplayAdminOrder($params) {
         $this->custommadeObj = new Custommade();
-        $this->custModuleFolderName = _PS_MODULE_DIR_.$this->custommadeObj->name;        
-        $order = new Order ($params['id_order']);
+        $this->custModuleFolderName = _PS_MODULE_DIR_ . $this->custommadeObj->name;
+        $order = new Order($params['id_order']);
         $datas = array(
             'name' => $this->displayName,
-            'getHDDetails' => AuFilDesCoul::getHDOrderByIDProduct($this->custModuleFolderName,$order->id)
+            'getHDDetails' => AuFilDesCoul::getHDOrderByIDProduct($this->custModuleFolderName, $order->id)
         );
         //echo '----' . __LINE__ . '----' . __FILE__ . '<pre>' . print_r($order->id) . '</pre>';
         $this->context->smarty->assign($datas);
@@ -337,9 +335,16 @@ class Custommade extends Module {
     public function hookdisplayRightColumnProduct($params) {
         $product = new Product((int) Tools::getValue('id_product'));
         $prod_det = AuFilDesCoul::getAuFilDesByIDProduct((int) $product->id, true);
+        //echo '----' . __LINE__ . '----' . __FILE__ . $prod_det->prod_customize;
+
         if (Validate::isLoadedObject($product)) {
             $customize = ($prod_det->prod_customize != '' || $prod_det->prod_customize != '0') ? (int) $prod_det->prod_customize : '0';
-            if ($customize != '' || $customize != '0') {
+            //if ($customize != '' || $customize != '0') {
+            if ($customize == '1') {
+                if ($this->context->controller instanceof ProductController) {
+                    $redirectPath = Context::getContext()->link->getModuleLink('custommade', 'default', array('id_product' => $product->id));
+                    Tools::redirect($redirectPath);
+                }
                 $this->smarty->assign(
                         array(
                             'prodCustomizeStatus' => (int) $customize,
