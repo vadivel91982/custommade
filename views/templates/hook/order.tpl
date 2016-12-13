@@ -24,21 +24,21 @@
 *}
 
 <div class="panel">
-	<h3><i class="icon-shopping-cart"></i> {l s='HD Image'}</h3>
+	<h3><i class="icon-shopping-cart"></i> {l s='HD Image' mod='custommade'}</h3>
 	<table class="table" id="orderProducts">
 		<thead>
 			<tr>
 				<th>
-					<span class="title_box ">{l s=''}</span>
+					<span class="title_box ">{l s='' mod='custommade'}</span>
 				</th>
 				<th>
-					<span class="title_box ">{l s='Product Name'}</span>
+					<span class="title_box ">{l s='Product Name' mod='custommade'}</span>
 				</th>
 				<th>
-					<span class="title_box ">{l s='Options'}</span>
+					<span class="title_box ">{l s='Options' mod='custommade'}</span>
 				</th>
 				<th>
-					<span class="title_box ">{l s='View'}</span>
+					<span class="title_box ">{l s='View' mod='custommade'}</span>
 				</th>
 				<th></th>
 			</tr>
@@ -60,7 +60,7 @@
 						<div class="btn-group">
 							<button type="button" class="btn btn-default edit_product_change_link">
 								<i class="icon-search-plus"></i>
-								{l s='View'}
+								{l s='View' mod='custommade'}
 							</button>
 						</div>
 						{* Update controls *}
@@ -71,7 +71,7 @@
 					<td colspan="4" class="list-empty">
 						<div class="list-empty-msg">
 							<i class="icon-warning-sign list-empty-icon"></i>
-							{l s='There is no available document'}
+							{l s='There is no available document' mod='custommade'}
 						</div>
 					</td>
 				</tr>
