@@ -27,7 +27,7 @@
 class Cart extends CartCore
 {
     
-    public function getSummaryDetails($id_lang = null, $refresh = false) 
+    public function getSummaryDetails($id_lang = null, $refresh = false)
     {
         $context = Context::getContext();
         if (!$id_lang) {
@@ -48,11 +48,11 @@ class Cart extends CartCore
         $currency = new Currency($this->id_currency);
         $products = $this->getProducts($refresh);
         foreach ($products as $key => &$product) {
-            $product['price_without_quantity_discount'] = Product::getPriceStatic($product['id_product'], 
+            $product['price_without_quantity_discount'] = Product::getPriceStatic($product['id_product'],
                 !Product::getTaxCalculationMethod(), $product['id_product_attribute'], 6, null,false, false);
             //$product['price'] = '11.11';
             if ($product['reduction_type'] == 'amount') {
-                $reduction = (!Product::getTaxCalculationMethod() ? (float) $product['price_wt'] : 
+                $reduction = (!Product::getTaxCalculationMethod() ? (float) $product['price_wt'] :
                     (float) $product['price']) - (float) $product['price_without_quantity_discount'];
                 $product['reduction_formatted'] = Tools::displayPrice($reduction);
             }
