@@ -755,7 +755,7 @@
         newCustomPrice = ((cropper.getData(true).width) * (cropper.getData(true).height)) / 10000;
         newCustomPrice = newCustomPrice.toFixed(2);
         jQuery('#our_price_display').html('$'+newCustomPrice);
-        console.log(newCustomPrice.toFixed(2));
+        //console.log(newCustomPrice.toFixed(2));
     }
 
 
