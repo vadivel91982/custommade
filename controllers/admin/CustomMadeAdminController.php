@@ -21,8 +21,10 @@ require_once _PS_MODULE_DIR_.'custommade/classes/Universe.php';
 class CustomMadeAdminController extends ModuleAdminController
 {
 
-    var $custommadeObj;
-    var $custModuleFolderName;
+    //var $custommadeObj;
+    //var $custModuleFolderName;
+    public $custommadeObj;
+    public $custModuleFolderName;
     public function __construct()
     {
         $this->bootstrap = true;
@@ -32,7 +34,7 @@ class CustomMadeAdminController extends ModuleAdminController
         $this->className = 'Universe';
         $this->_defaultOrderBy = 'id_universe';
         $this->show_toolbar_options = true;
-        $this->lang = FALSE;
+        $this->lang = false;
         $this->addRowAction('edit');
         //$this->addRowAction('view');
         $this->addRowAction('delete');
@@ -107,9 +109,9 @@ class CustomMadeAdminController extends ModuleAdminController
                     'type' => 'radio',
                     'label' => $this->l('Displayed:'),
                     'name' => 'active',
-                    'required' => FALSE,
+                    'required' => false,
                     'class' => 't',
-                    'is_bool' => FALSE,
+                    'is_bool' => false,
                     'values' => array(
                         array(
                             'id' => 'require_on',
@@ -162,7 +164,7 @@ class CustomMadeAdminController extends ModuleAdminController
                             (int)$image_type['height']
                         )) {
                             $this->errors = Tools::displayError('An error occurred while uploading thumbnail image.');
-                        } else {                            
+                        } else {
                             if (isset($id_universe) && !empty($id_universe) && $id_universe != 0) {
 
                                 $count_cover_image = Db::getInstance()->getValue('
@@ -182,7 +184,7 @@ class CustomMadeAdminController extends ModuleAdminController
                         if (count($this->errors)) {
                             $ret = false;
                         }
-                        
+
                         $universe_name = (string)Tools::getValue('universe_name');
                         $thump = 'universe-'.Tools::stripslashes($imageName[0]).'.'.$imageType[1];
                         $image = $imgName;
@@ -210,8 +212,8 @@ class CustomMadeAdminController extends ModuleAdminController
                 Tools::redirectAdmin(self::$currentIndex.'&token='.Tools::getAdminTokenLite('CustomMadeAdmin'));
             } else {
                 return false;
-            }            
-        } else {            
+            }
+        } else {
             $sql =' INSERT INTO `'._DB_PREFIX_.Tools::strtolower($this->table).'` (`universe_name`, `image`, `thump`, `active`) VALUES ("'.$universe_name.'", "'.$image.'","'.$thump.'", "'.$active.'")';
             if (Db::getInstance()->execute($sql)) {
                 Tools::redirectAdmin(self::$currentIndex.'&token='.Tools::getAdminTokenLite('CustomMadeAdmin'));

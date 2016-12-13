@@ -24,7 +24,7 @@
  *  International Registered Trademark & Property of PrestaShop SA
  */
 
-class Cart extends CartCore 
+class Cart extends CartCore
 {
     
     public function getSummaryDetails($id_lang = null, $refresh = false) 

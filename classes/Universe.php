@@ -24,25 +24,22 @@
 *  International Registered Trademark & Property of PrestaShop SA
 */
 
-if (!defined('_PS_VERSION_'))
-	exit;
-
 class Universe extends ObjectModel
 {
-	public $universe_name;
-	public $image;
-	public $thump;
-	public $active;
+    public $universe_name;
+    public $image;
+    public $thump;
+    public $active;
 
-	/**
-	 * @see ObjectModel::$definition
-	 */
-	public static $definition = array(
-		'table' => 'universe',
-		'primary' => 'id_universe',
-		'fields' => array(
-			'universe_name' =>	array('type' => self::TYPE_STRING, 'validate' => 'isString', 'required' => true),
-			'active' 		=>  array('type' => self::TYPE_BOOL),
-		)
-	);
+    /**
+     * @see ObjectModel::$definition
+     */
+    public static $definition = array(
+        'table' => 'universe',
+        'primary' => 'id_universe',
+        'fields' => array(
+            'universe_name' =>  array('type' => self::TYPE_STRING, 'validate' => 'isString', 'required' => true),
+            'active'        =>  array('type' => self::TYPE_BOOL),
+        )
+    );
 }
