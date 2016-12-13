@@ -32,7 +32,7 @@
                             var reduction_price = {if $product->specificPrice AND $product->specificPrice.reduction AND $product->specificPrice.reduction_type == 'amount'}{$product->specificPrice.reduction|floatval}{else}0{/if};
                                 var specific_price = {if $product->specificPrice AND $product->specificPrice.price}{$product->specificPrice.price}{else}0{/if};
                                     var product_specific_price = new Array();
-        {foreach from=$product->specificPrice key='key_specific_price' item='specific_price_value'}
+    {foreach from=$product->specificPrice key='key_specific_price' item='specific_price_value'}
                                     product_specific_price['{$key_specific_price}'] = '{$specific_price_value}';
     {/foreach}
                                     var specific_currency = {if $product->specificPrice AND $product->specificPrice.id_currency}true{else}false{/if};
@@ -83,9 +83,9 @@
                                                                     var combinationImages = new Array();
 
     {if isset($combinationImages)}
-            {foreach from=$combinationImages item='combination' key='combinationId' name='f_combinationImages'}
+        {foreach from=$combinationImages item='combination' key='combinationId' name='f_combinationImages'}
                                                                     combinationImages[{$combinationId}] = new Array();
-                {foreach from=$combination item='image' name='f_combinationImage'}
+            {foreach from=$combination item='image' name='f_combinationImage'}
                                                                     combinationImages[{$combinationId}][{$smarty.foreach.f_combinationImage.index}] = {$image.id_image|intval};
             {/foreach}
         {/foreach}
@@ -93,7 +93,7 @@
 
                                                                     combinationImages[0] = new Array();
     {if isset($images)}
-            {foreach from=$images item='image' name='f_defaultImages'}
+        {foreach from=$images item='image' name='f_defaultImages'}
                                                                     combinationImages[0][{$smarty.foreach.f_defaultImages.index}] = {$image.id_image};
         {/foreach}
     {/if}
@@ -290,7 +290,7 @@
                                         {/if}
                                         <p>Livraison sous {$getPriceDetails->cust_delivery} jours</p>
                                         <a href="javascript:void(0)" id="sampleButton" onclick="addSampleToCart(this);
-                                        return false;">Commander un échantillon</a>
+                                                return false;">Commander un échantillon</a>
                                     </div>
 
                                     {assign var="color_feature" value=""}
@@ -308,8 +308,16 @@
                         </div>
 
                         <div class="col-md-9" id="right-col"> 
+                            <div class="img-resize imr_top">
+                                <img id="dimension_indicator" src="{$rootUrl}modules/custommade/views/img/top.png">
+                                <span class="length-cm">200cm</span>
+                            </div>
                             <div class="img-container">
                                 <img src="{$link->getImageLink($product->link_rewrite, $cover.id_image, 'large_default')}" alt="Picture">
+                            </div>
+                            <div class="img-resize-right">
+                                <img id="dimension_indicator_right" src="{$rootUrl}modules/custommade/views/img/right.png">
+                                <span class="length-cm-right">200cm</span>
                             </div>
                         </div><div class="clearfix"></div>
 
@@ -442,6 +450,7 @@
             }
             dynamicImage = image.cropper.getCroppedCanvas().toDataURL('image/jpeg', 1);
             $('.preview').attr('src', dynamicImage);
+            setCropToSession();
             setNewCustomPrice();
         },
         cropstart: function (e) {
@@ -748,13 +757,16 @@
     function setCropToSession() {
         var currentCropData = cropper.getData();
         sessionStorage.cropData = JSON.stringify(currentCropData);
+        jQuery('.imr_top').width(currentCropData.width)
+        jQuery('#dimension_indicator').width(currentCropData.width);
+        jQuery('#dimension_indicator').css('margin-left', currentCropData.x + 'px');
         setNewCustomPrice();
     }
-    
-    function setNewCustomPrice(){
+
+    function setNewCustomPrice() {
         newCustomPrice = ((cropper.getData(true).width) * (cropper.getData(true).height)) / 10000;
         newCustomPrice = newCustomPrice.toFixed(2);
-        jQuery('#our_price_display').html('$'+newCustomPrice);
+        jQuery('#our_price_display').html('$' + newCustomPrice);
         //console.log(newCustomPrice.toFixed(2));
     }
 
