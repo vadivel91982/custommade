@@ -24,7 +24,8 @@
  *  International Registered Trademark & Property of PrestaShop SA
  */
 
-class Product extends ProductCore {
+class Product extends ProductCore 
+{
 
     public static function priceCalculation($id_shop, $id_product, $id_product_attribute, $id_country, $id_state, $zipcode, $id_currency, $id_group, $quantity, $use_tax, $decimals, $only_reduc, $use_reduc, $with_ecotax, &$specific_price, $use_group_reduction, $id_customer = 0, $use_customer_price = true, $id_cart = 0, $real_quantity = 0) 
     {
@@ -49,8 +50,7 @@ class Product extends ProductCore {
                 '-' . (int) $quantity . '-' . (int) $id_product_attribute .
                 '-' . (int) $with_ecotax . '-' . (int) $id_customer . '-' . (int) $use_group_reduction . '-' . (int) $id_cart . '-' . (int) $real_quantity .
                 '-' . ($only_reduc ? '1' : '0') . '-' . ($use_reduc ? '1' : '0') . '-' . ($use_tax ? '1' : '0') . '-' . (int) $decimals;
-        $specific_price = SpecificPrice::getSpecificPrice(
-                        (int) $id_product, $id_shop, $id_currency, $id_country, $id_group, $quantity, $id_product_attribute, $id_customer, $id_cart, $real_quantity
+        $specific_price = SpecificPrice::getSpecificPrice((int) $id_product, $id_shop, $id_currency, $id_country, $id_group, $quantity, $id_product_attribute, $id_customer, $id_cart, $real_quantity
         );
         if (isset(self::$_prices[$cache_id])) {
 
@@ -86,7 +86,7 @@ class Product extends ProductCore {
 
                         $cropSessionData = unserialize($cookie->product_crop_data);
                         
-                        if(isset($cropSessionData[$id_product]) && trim($cropSessionData[$id_product]) != ''){
+                        if (isset($cropSessionData[$id_product]) && trim($cropSessionData[$id_product]) != '') {
                             $customJsonData = Tools::jsonDecode($cropSessionData[$id_product]);
                             $customPrice = $customJsonData->customPrice;
                         }
@@ -147,9 +147,7 @@ class Product extends ProductCore {
                 $ecotax = Tools::convertPrice($ecotax, $id_currency);
             }
             if ($use_tax) {
-                $tax_manager = TaxManagerFactory::getManager(
-                                $address, (int) Configuration::get('PS_ECOTAX_TAX_RULES_GROUP_ID')
-                );
+                $tax_manager = TaxManagerFactory::getManager($address, (int) Configuration::get('PS_ECOTAX_TAX_RULES_GROUP_ID'));
                 $ecotax_tax_calculator = $tax_manager->getTaxCalculator();
                 $price += $ecotax_tax_calculator->addTaxes($ecotax);
             } else {
@@ -196,7 +194,4 @@ class Product extends ProductCore {
         self::$_prices[$cache_id] = $price;
         return self::$_prices[$cache_id];
     }
-
 }
-
-?>
