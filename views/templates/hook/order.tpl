@@ -24,7 +24,7 @@
 *}
 
 <div class="panel">
-	<h3><i class="icon-shopping-cart"></i> {l s='HD Image' mod='custommade'}</h3>
+	<h3><i class="icon-shopping-cart"></i> {l s='HD Image'}</h3>
 	<table class="table" id="orderProducts">
 		<thead>
 			<tr>

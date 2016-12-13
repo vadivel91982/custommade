@@ -216,11 +216,11 @@
                                             <div class="docs-buttons">		
                                                 <button type="button" data-method="rotate" data-option="90" class="btn btn-default image-rotate-left">
                                                     <i class="fa fa-undo" aria-hidden="true"></i> Rotation 90&deg;
-                                                </button>
+                                                </button><br />
 
                                                 <button type="button" class="btn btn-default flipbtns image-flip-horizontally" data-method="scaleX" data-option="-1">
                                                     <i class="fa fa-arrows-h" aria-hidden="true"></i> Effet Mirror
-                                                </button>
+                                                </button><br />
                                                 <button type="button" class="btn btn-default flipbtns image-flip-vertically" data-method="scaleY" data-option="-1" style="display:none;">
                                                     <i class="fa fa-arrows-h" aria-hidden="true"></i> Effet Mirror
                                                 </button>
