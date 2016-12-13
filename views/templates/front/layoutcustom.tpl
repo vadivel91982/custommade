@@ -389,7 +389,7 @@
                         <div class="tab-content">
                             {foreach from=$getUnivers1 key=k item=universeImage}
                                 <div class="tab-pane {if (1 == $k+1)}active{/if}" id="scene{$k+1}">
-                                    <div class="backdrop" style="height:76%;max-height:100%;" >
+                                    <div class="backdrop" style="height:76%;max-height:76%;" >
                                         <img class="preview" src="" style="left:0;top:0;">
 										<span class="gridlayout"></span>
                                     </div>
