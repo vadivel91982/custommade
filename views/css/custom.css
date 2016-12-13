@@ -269,12 +269,7 @@ ul.share-buttons li { display: inline; }
     padding-bottom: 10px;
     margin-bottom: 40px;
 }
-.prod_desc h2{
-    font-size: 30px;
-    font-family: 'Conv_Book Antiqua Regular';
-    font-weight: normal;
-    padding-bottom: 20px;
-}
+
 .prod_desc{ padding-bottom: 30px; }
 .form-horizontal .control-label {
     margin-bottom: 5px;
@@ -384,13 +379,7 @@ button.image-grid {
 	margin:0px;    
 	font-family: 'Conv_Book Antiqua Regular';
 }
-.title-module-preview {
-	background: #f2f3f4;
-	padding: 20px;
-	font-size: 24px;
-	font-family: 'Conv_Book Antiqua Regular';
-	margin: 20px 0px 30px 0px;
-}
+
 
 .customise-section .btn-default i{
     font-size: 18px;
@@ -435,6 +424,7 @@ button.image-grid {
 }
 .cart-section.wall-dimensions {
 	width:175px;
+	margin: 0px auto;
 }
 .cart-section .form-horizontal.docs-data {
 	width:174px;
@@ -455,6 +445,20 @@ button.image-grid {
     color: #990000;
     font-weight: bold;
 }
+.prod_desc h2{
+    font-family: 'Conv_Book Antiqua Regular';
+    font-weight: normal;
+    padding-bottom: 20px;
+}
+.title-module-preview {
+	background: #f2f3f4;
+	padding: 20px;
+	font-family: 'Conv_Book Antiqua Regular';
+	margin: 20px 0px 30px 0px;
+}
+.no-gutter .tabs-left  li a img {
+	
+}
 @media(min-width:320px) {
 	.cart-section input, #sampleButton{
 		width: 174px !important;
@@ -464,10 +468,16 @@ button.image-grid {
 		font-size: 13px;
 	}
 	.price-section .our_price_display {
-		font-size: 30px;
+		font-size: 25px;
+	}
+	.prod_desc h2{
+		font-size: 20px;
 	}
 	.customise-section .btn-default { 
 		width:174px;
+	}
+	.title-module-preview {
+		font-size: 19px;
 	}
 }
 @media(min-width:768px) {
@@ -493,10 +503,16 @@ button.image-grid {
 		border: 1px solid #7f7f7e;
 		padding: 60px 0px 0px 0px;
 	}
+	.title-module-preview {
+		font-size: 24px;
+	}
 }
 @media(min-width:1024px) {
 	.customise-section .btn-default i{
 		padding-right: 0px;
+	}
+	.prod_desc h2{
+		font-size: 30px;
 	}
 	.customise-section .btn-default {
 		width:200px;
