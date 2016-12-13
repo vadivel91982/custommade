@@ -108,6 +108,7 @@ class AuFilDesCoul extends ObjectModel
     {
         $select = 'SELECT * FROM `'._DB_PREFIX_.'options` WHERE `order_id` = '.$orderId.' ORDER BY id ASC';
         $results = Db::getInstance()->ExecuteS($select);
+        $options = array();
         foreach ($results as $k => $row) {
             $id = $row['id'];
             $orderId = $row['order_id'];

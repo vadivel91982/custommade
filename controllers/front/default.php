@@ -413,6 +413,8 @@ class CustomMadeDefaultModuleFrontController extends ModuleFrontController
     {
         $colors = array();
         $groups = array();
+        $combinations = array();
+        $combination_specific_price = '';
 
         // @todo (RM) should only get groups and not all declination ?
         $attributes_groups = $this->product->getAttributesGroups($this->context->language->id);
