@@ -422,10 +422,7 @@ button.image-grid {
 	padding: 2px 0px;
 	height: 27px;
 }
-.cart-section.wall-dimensions {
-	width:175px;
-	margin: 0px auto;
-}
+
 .cart-section .form-horizontal.docs-data {
 	width:174px;
 }
@@ -457,6 +454,45 @@ button.image-grid {
 	margin: 20px 0px 30px 0px;
 }
 
+
+.length-cm-right {
+	position: absolute;
+	top: 50%;
+	bottom: 50%;
+	-webkit-transform: rotate(90deg);
+	-moz-transform: rotate(90deg);
+	-o-transform: rotate(90deg);
+	writing-mode: lr-tb;
+	color: #9e191d;
+    font-weight: 600;
+    font-size: 17px;
+	left: -7px;
+}
+.length-cm {
+	position: absolute;
+	left: 0px;
+	right: 0px;
+	color: #9e191d;
+    font-weight: 600;
+    font-size: 17px;
+}
+.img-resize {
+	text-align: center;
+    width: 95%;
+    margin-top: -28px;
+    margin-bottom: 10px;
+    position: relative;
+}
+.img-resize-right {
+	float: left;
+    width: 19px;
+    position: relative;
+}
+.overall-container .img-container {
+	float: left;
+	width: 95%;
+	margin-right: 10px;
+}
 @media(min-width:320px) {
 	.cart-section input, #sampleButton{
 		width: 174px !important;
@@ -481,6 +517,30 @@ button.image-grid {
 		width: 65px;
 		height: auto;
 	}
+	.no-gutter .tabs-left {
+		text-align:center;
+	}
+	.section-content-start .previews {
+		max-height:100% !important;
+	}
+	.cart-section.wall-dimensions {
+		width:175px;
+		margin: 0px auto;
+	}
+}
+@media(min-width:640px) { 
+	.no-gutter .tabs-left li a img {
+		width: 80px;
+	}
+	.overall-container .col-md-3 {
+		width:25%;
+		float:left;	
+	}
+	.overall-container .col-md-9 {
+		width:70%;
+		float:left;	
+		margin-left:25px;
+	}
 }
 @media(min-width:768px) {
 	.overall-container #left-col.col-md-3 {
@@ -490,6 +550,8 @@ button.image-grid {
 	.overall-container #right-col.col-md-9 {
 		width:75%;
 		float:left;
+		margin-left:0px;
+		padding-right: 0px;
 	}
 	.customise-section .btn-default i{
 		padding-right: 40px;
@@ -508,10 +570,12 @@ button.image-grid {
 	.title-module-preview {
 		font-size: 24px;
 	}
-	.tabs-left li a img {
-    width: 96px;
-    height: 90px;
-}
+	.no-gutter .tabs-left li a img {
+		width: 96px;
+		height: 90px;
+	}
+	
+	
 }
 @media(min-width:1024px) {
 	.customise-section .btn-default i{
@@ -534,6 +598,10 @@ button.image-grid {
 	}
 	.price-section .our_price_display {
 		font-size: 30px;
+	}
+	.cart-section.wall-dimensions {
+		margin: 0px;
+		width:auto;
 	}
 }
 @media(min-width:1200px) {	
