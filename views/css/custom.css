@@ -472,6 +472,7 @@ button.image-grid {
 	position: absolute;
 	left: 0px;
 	right: 0px;
+	top:0px;
 	color: #9e191d;
     font-weight: 600;
     font-size: 17px;

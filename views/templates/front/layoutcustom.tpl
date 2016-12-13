@@ -310,14 +310,14 @@
                         <div class="col-md-9" id="right-col"> 
                             <div class="img-resize imr_top">
                                 <img id="dimension_indicator" src="{$rootUrl}modules/custommade/views/img/top.png">
-                                <span class="length-cm">200cm</span>
+                                <span class="length-cm cmvalue">200cm</span>
                             </div>
                             <div class="img-container">
                                 <img src="{$link->getImageLink($product->link_rewrite, $cover.id_image, 'large_default')}" alt="Picture">
                             </div>
-                            <div class="img-resize-right">
+                            <div class="img-resize-right imr_right">
                                 <img id="dimension_indicator_right" src="{$rootUrl}modules/custommade/views/img/right.png">
-                                <span class="length-cm-right">200cm</span>
+                                <span class="length-cm-right cmvalue">200cm</span>
                             </div>
                         </div><div class="clearfix"></div>
 
@@ -757,9 +757,7 @@
     function setCropToSession() {
         var currentCropData = cropper.getData();
         sessionStorage.cropData = JSON.stringify(currentCropData);
-        jQuery('.imr_top').width(currentCropData.width)
-        jQuery('#dimension_indicator').width(currentCropData.width);
-        jQuery('#dimension_indicator').css('margin-left', currentCropData.x + 'px');
+        setIndicatorPosition();
         setNewCustomPrice();
     }
 
@@ -768,6 +766,19 @@
         newCustomPrice = newCustomPrice.toFixed(2);
         jQuery('#our_price_display').html('$' + newCustomPrice);
         //console.log(newCustomPrice.toFixed(2));
+    }
+    
+    function setIndicatorPosition(){
+        jQuery('.imr_top').width(cropper.getData().width);
+        jQuery('.imr_top').css('margin-left',cropper.getCropBoxData().left+'px');
+        jQuery('#dimension_indicator').width(cropper.getData().width);
+        jQuery('.imr_top .cmvalue').text(cropper.getData().width+'cm');
+        
+        
+        jQuery('.imr_right').height(cropper.getData().height);
+        jQuery('.imr_right').css('margin-top',cropper.getCropBoxData().top+'px');
+        jQuery('#dimension_indicator_right').height(cropper.getData().height);
+        jQuery('.imr_right .cmvalue').text(cropper.getData().height+'cm');
     }
 
 
