@@ -415,6 +415,7 @@
 
     //'use strict';
     var newCustomPrice = '';
+    var pricePerMeterSq = {$getPriceDetails->sq_meter_price};
     var rootUrl = '{$rootUrl}';
     var Cropper = window.Cropper;
     var URL = window.URL || window.webkitURL;
@@ -762,7 +763,7 @@
     }
 
     function setNewCustomPrice() {
-        newCustomPrice = ((cropper.getData(true).width) * (cropper.getData(true).height)) / 10000;
+        newCustomPrice = (((cropper.getData(true).width) * (cropper.getData(true).height)) / 10000) * pricePerMeterSq;
         newCustomPrice = newCustomPrice.toFixed(2);
         jQuery('#our_price_display').html('$' + newCustomPrice);
         //console.log(newCustomPrice.toFixed(2));
@@ -772,13 +773,13 @@
         jQuery('.imr_top').width(cropper.getData().width);
         jQuery('.imr_top').css('margin-left',cropper.getCropBoxData().left+'px');
         jQuery('#dimension_indicator').width(cropper.getData().width);
-        jQuery('.imr_top .cmvalue').text(cropper.getData().width+'cm');
+        jQuery('.imr_top .cmvalue').text(cropper.getData(true).width+'cm');
         
         
         jQuery('.imr_right').height(cropper.getData().height);
         jQuery('.imr_right').css('margin-top',cropper.getCropBoxData().top+'px');
         jQuery('#dimension_indicator_right').height(cropper.getData().height);
-        jQuery('.imr_right .cmvalue').text(cropper.getData().height+'cm');
+        jQuery('.imr_right .cmvalue').text(cropper.getData(true).height+'cm');
     }
 
 
