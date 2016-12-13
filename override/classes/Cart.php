@@ -23,13 +23,15 @@
  *  @license    http://opensource.org/licenses/osl-3.0.php  Open Software License (OSL 3.0)
  *  International Registered Trademark & Property of PrestaShop SA
  */
-class Cart extends CartCore {
+class Cart extends CartCore
+{
     /*
     * module: custommade
     * date: 2016-12-11 23:08:40
     * version: 1.0.0
     */
-    public function getSummaryDetails($id_lang = null, $refresh = false) {
+    public function getSummaryDetails($id_lang = null, $refresh = false)
+    {
         $context = Context::getContext();
         if (!$id_lang) {
             $id_lang = $context->language->id;
@@ -50,7 +52,7 @@ class Cart extends CartCore {
         $products = $this->getProducts($refresh);
         foreach ($products as $key => &$product) {
             $product['price_without_quantity_discount'] = Product::getPriceStatic(
-                            $product['id_product'], !Product::getTaxCalculationMethod(), $product['id_product_attribute'], 6, null, false, false
+                $product['id_product'], !Product::getTaxCalculationMethod(), $product['id_product_attribute'], 6, null, false, false
             );
             
             //$product['price'] = '99.99';

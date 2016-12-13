@@ -17,9 +17,11 @@ if (!defined('_PS_VERSION_')) {
     die(header('HTTP/1.0 404 Not Found'));
 }
 
-class CustomMadeGenerateimageModuleFrontController extends ModuleFrontController {
+class CustomMadeGenerateimageModuleFrontController extends ModuleFrontController
+{
 
-    public function __construct() {
+    public function __construct()
+    {
         parent::__construct();
 
         //echo '----' . __LINE__ . '----' . __FILE__;
@@ -78,7 +80,8 @@ class CustomMadeGenerateimageModuleFrontController extends ModuleFrontController
         die;
     }
 
-    private function generateFinalImage($config) {
+    private function generateFinalImage($config)
+    {
         if (isset($config['hd_image_url']) && filter_var($config['hd_image_url'], FILTER_VALIDATE_URL)) {
             $imageData = Tools::file_get_contents($config['hd_image_url']);
             //echo '----' . __LINE__ . '----' . __FILE__ . $imageData;
@@ -114,7 +117,7 @@ class CustomMadeGenerateimageModuleFrontController extends ModuleFrontController
             }
             /* Stop : Merge Stripe */
             //generate final output image
-            if ($im !== FALSE) {
+            if ($im !== false) {
                 imagepng($im, $config['output_filename']);
                 //echo $config['output_filename'];
                 return true;
@@ -125,5 +128,4 @@ class CustomMadeGenerateimageModuleFrontController extends ModuleFrontController
             return false;
         }
     }
-
 }

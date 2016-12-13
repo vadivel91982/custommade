@@ -17,7 +17,8 @@ if (!defined('_PS_VERSION_')) {
     die(header('HTTP/1.0 404 Not Found'));
 }
 
-class CustomMadeCropperModuleFrontController extends ModuleFrontController {
+class CustomMadeCropperModuleFrontController extends ModuleFrontController
+{
     //public $php_self = 'product';
 
     /** @var Product */
@@ -26,7 +27,8 @@ class CustomMadeCropperModuleFrontController extends ModuleFrontController {
     /** @var Category */
     protected $category;
 
-    public function __construct() {
+    public function __construct()
+    {
         $this->auth = true;
         parent::__construct();
         $this->context = Context::getContext();
@@ -38,7 +40,8 @@ class CustomMadeCropperModuleFrontController extends ModuleFrontController {
      * Initialize product controller
      * @see FrontController::init()
      */
-    public function init() {
+    public function init()
+    {
         $action = Tools::getValue('action');
         if ($action == 'setdata') {
             $this->setCropDataToSession();
@@ -56,7 +59,8 @@ class CustomMadeCropperModuleFrontController extends ModuleFrontController {
         die;
     }
 
-    public function setCropDataToSession() {
+    public function setCropDataToSession()
+    {
         //to write
         if (trim(Tools::getValue('pid')) != '') {
             $cookie = new Cookie('crop_data'); //make your own cookie
@@ -79,7 +83,8 @@ class CustomMadeCropperModuleFrontController extends ModuleFrontController {
         //echo '----' . __LINE__ . '----' . __FILE__ . '<pre>---' . print_r(unserialize($cookie->product_crop_data), true) . '</pre>';
     }
 
-    public function saveUserCartIdToSession() {
+    public function saveUserCartIdToSession()
+    {
         //to write
         $cookie = new Cookie('crop_data'); //make your own cookie
         //$cookie->setExpire(time() + 20 * 60); // 20 minutes for example
@@ -91,13 +96,15 @@ class CustomMadeCropperModuleFrontController extends ModuleFrontController {
         //echo '----' . __LINE__ . '----' . __FILE__ . '<pre>' . print_r($cookie->user_cart_id, true) . '</pre>';
     }
 
-    public function removeCropDataFromSession() {
+    public function removeCropDataFromSession()
+    {
         $cookie = new Cookie('crop_data');
         unset($cookie->product_crop_data);
         //echo '----' . __LINE__ . '----' . __FILE__ . '<pre>---' . print_r(unserialize($cookie->product_crop_data), true) . '</pre>';
     }
 
-    public function updateCropDataToOrder() {
+    public function updateCropDataToOrder()
+    {
         $cookie = new Cookie('crop_data');
         //echo '----' . __LINE__ . '----' . __FILE__ . '<pre>' . print_r($cookie->user_cart_id, true) . '</pre>';
         
@@ -125,5 +132,4 @@ class CustomMadeCropperModuleFrontController extends ModuleFrontController {
         
         $this->removeCropDataFromSession();
     }
-
 }

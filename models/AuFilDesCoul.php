@@ -104,7 +104,7 @@ class AuFilDesCoul extends ObjectModel
      * @param  int $id_product ID Product
      * @return getHDOrderByIDProduct Instanciation of this class
      */
-    public static function getHDOrderByIDProduct($moduleName,$orderId)
+    public static function getHDOrderByIDProduct($moduleName, $orderId)
     {
         $select = 'SELECT * FROM `'._DB_PREFIX_.'options` WHERE `order_id` = '.$orderId.' ORDER BY id ASC';
         $results = Db::getInstance()->ExecuteS($select);
@@ -115,10 +115,10 @@ class AuFilDesCoul extends ObjectModel
             $productId = $row['product_id'];
             $customOptions = Tools::jsonDecode($row['options']);
             $product = new Product((int)$productId);
-            
+
             $image = $moduleName."/output/".$productId.".png";
             $ext = pathinfo($image, PATHINFO_EXTENSION);
-            $image_url = ImageManager::thumbnail($image, $productId.".png", 50, $ext, true, true);            
+            $image_url = ImageManager::thumbnail($image, $productId.".png", 50, $ext, true, true);
             $options['product_name'][] = $product->name['1'].'<br>Reference: '.$product->reference;
             $options['hd_image_url'][] = $image_url;
             $options['productId'][] = $productId;

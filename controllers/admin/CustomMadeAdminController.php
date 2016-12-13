@@ -71,7 +71,7 @@ class CustomMadeAdminController extends ModuleAdminController
         } else {
             $image = '';
             $image_url = '';
-        }        
+        }
         $image_size = file_exists($image) ? filesize($image) / 1000 : false;
 
         $helper = new HelperForm();
@@ -190,7 +190,7 @@ class CustomMadeAdminController extends ModuleAdminController
                         $image = $imgName;
                         
                         $active = (int)Tools::getValue('active');
-                        $this->imageupload($id_universe,$universe_name,$image,$thump,$active);
+                        $this->imageupload($id_universe, $universe_name, $image, $thump, $active);
                         $ret = true;
                     }
                 }
@@ -199,7 +199,7 @@ class CustomMadeAdminController extends ModuleAdminController
         return parent::postProcess();
     }
 
-    private function imageupload($id_universe=false,$universe_name,$image,$thump,$active)
+    private function imageupload($id_universe, $universe_name, $image, $thump, $active)
     {
         if (isset($id_universe) && !empty($id_universe) && $id_universe != 0) {
             $sql = "UPDATE `"._DB_PREFIX_.Tools::strtolower($this->table)."` SET 
