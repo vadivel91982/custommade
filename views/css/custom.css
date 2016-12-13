@@ -456,9 +456,7 @@ button.image-grid {
 	font-family: 'Conv_Book Antiqua Regular';
 	margin: 20px 0px 30px 0px;
 }
-.no-gutter .tabs-left  li a img {
-	
-}
+
 @media(min-width:320px) {
 	.cart-section input, #sampleButton{
 		width: 174px !important;
@@ -478,6 +476,10 @@ button.image-grid {
 	}
 	.title-module-preview {
 		font-size: 19px;
+	}
+	.no-gutter .tabs-left  li a img {
+		width: 65px;
+		height: auto;
 	}
 }
 @media(min-width:768px) {
@@ -506,6 +508,10 @@ button.image-grid {
 	.title-module-preview {
 		font-size: 24px;
 	}
+	.tabs-left li a img {
+    width: 96px;
+    height: 90px;
+}
 }
 @media(min-width:1024px) {
 	.customise-section .btn-default i{
