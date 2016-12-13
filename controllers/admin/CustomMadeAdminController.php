@@ -130,9 +130,6 @@ class CustomMadeAdminController extends ModuleAdminController
 
     public function postProcess()
     {
-        if (!($obj = $this->loadObject(true))) {
-            return;
-        }
         if (Tools::getIsset('cancel')) {
             Tools::redirectAdmin(self::$currentIndex.'&token='.Tools::getAdminTokenLite('CustomMadeAdmin'));
         }

@@ -99,11 +99,11 @@
     {/if}
 
 // Translations
-                                                                    var doesntExist = '{l s='This combination does not exist for this product. Please choose another.' js=1}';
-                                                                    var doesntExistNoMore = '{l s='This product is no longer in stock' js=1}';
-                                                                    var doesntExistNoMoreBut = '{l s='with those attributes but is available with others' js=1}';
-                                                                    var uploading_in_progress = '{l s='Uploading in progress, please wait...' js=1}';
-                                                                    var fieldRequired = '{l s='Please fill in all required fields, then save the customization.' js=1}';
+                                                                    var doesntExist = '{l s='This combination does not exist for this product. Please choose another.' mod='custommade' js=1}';
+                                                                    var doesntExistNoMore = '{l s='This product is no longer in stock' mod='custommade' js=1}';
+                                                                    var doesntExistNoMoreBut = '{l s='with those attributes but is available with others' mod='custommade'  js=1}';
+                                                                    var uploading_in_progress = '{l s='Uploading in progress, please wait...' mod='custommade' js=1}';
+                                                                    var fieldRequired = '{l s='Please fill in all required fields, then save the customization.' mod='custommade' js=1}';
 
     {if isset($groups)}
                                                                     // Combinations
@@ -134,10 +134,10 @@
 
 {if isset($adminActionDisplay) && $adminActionDisplay}
     <div id="admin-action">
-        <p>{l s='This product is not visible to your customers.'}
+        <p>{l s='This product is not visible to your customers.' mod='custommade'}
             <input type="hidden" id="admin-action-product-id" value="{$product->id}" />
-            <input type="submit" value="{l s='Publish'}" class="exclusive" onclick="submitPublishProduct('{$base_dir}{$smarty.get.ad|escape:'htmlall':'UTF-8'}', 0, '{$smarty.get.adtoken|escape:'htmlall':'UTF-8'}')"/>
-            <input type="submit" value="{l s='Back'}" class="exclusive" onclick="submitPublishProduct('{$base_dir}{$smarty.get.ad|escape:'htmlall':'UTF-8'}', 1, '{$smarty.get.adtoken|escape:'htmlall':'UTF-8'}')"/>
+            <input type="submit" value="{l s='Publish' mod='custommade'}" class="exclusive" onclick="submitPublishProduct('{$base_dir}{$smarty.get.ad|escape:'htmlall':'UTF-8'}', 0, '{$smarty.get.adtoken|escape:'htmlall':'UTF-8'}')"/>
+            <input type="submit" value="{l s='Back' mod='custommade'}" class="exclusive" onclick="submitPublishProduct('{$base_dir}{$smarty.get.ad|escape:'htmlall':'UTF-8'}', 1, '{$smarty.get.adtoken|escape:'htmlall':'UTF-8'}')"/>
         </p>
         <p id="admin-action-result"></p>    
     </div>
@@ -280,12 +280,12 @@
                                         {if (!$allow_oosp && $product->quantity <= 0) OR !$product->available_for_order OR (isset($restricted_country_mode) AND $restricted_country_mode) OR $PS_CATALOG_MODE}
                                             <p id="add_to_cart" class="buttons_bottom_block">
                                                 <span class="exclusive">
-                                                    {l s='Ajouter au panier'}
+                                                    {l s='Ajouter au panier' mod='custommade'}
                                                 </span>
                                             </p>
                                         {else}
                                             <p id="add_to_cart" class="buttons_bottom_block">
-                                                <input type="button" id="addcartbtn" name="Submit" value="{l s='Ajouter au panier'}" class="exclusive" />
+                                                <input type="button" id="addcartbtn" name="Submit" value="{l s='Ajouter au panier' mod='custommade'}" class="exclusive" />
                                             </p>
                                         {/if}
                                         <p>Livraison sous {$getPriceDetails->cust_delivery} jours</p>
@@ -331,11 +331,11 @@
                                 </div>
                                 <div class="col-md-4">
                                     <p>
-                                        <span style="padding-right:10px;float:left;">{l s='Coloris'}</span> 
+                                        <span style="padding-right:10px;float:left;">{l s='Coloris' mod='custommade'}</span> 
                                         <select style="width:250px" onchange="javascript:document.location.href = this.value">
-                                            <option value="">{$color_feature|escape:'UTF-8':'htmlall'} - {l s='Ref.'} {$product->reference|escape:'UTF-8':'htmlall'}</option>
+                                            <option value="">{$color_feature|escape:'UTF-8':'htmlall'} - {l s='Ref.' mod='custommade'} {$product->reference|escape:'UTF-8':'htmlall'}</option>
                                             {foreach from=$accessories item=accessoire}
-                                                <option value="{$tempModuleUrl}?id_product={$accessoire['id_product']|intval}">{foreach from=$accessoire.features item=feature}{if $feature.id_feature==1}{$feature.value}{/if}{/foreach} - {l s='Ref.'} {$accessoire.reference}</option>
+                                                <option value="{$tempModuleUrl}?id_product={$accessoire['id_product']|intval}">{foreach from=$accessoire.features item=feature}{if $feature.id_feature==1}{$feature.value}{/if}{/foreach} - {l s='Ref.' mod='custommade'} {$accessoire.reference}</option>
                                             {/foreach}
                                         </select>
                                     </p>
@@ -360,7 +360,7 @@
                                                 {/foreach}
                                     </ul>
                                     {if $accessories|@count > 5}
-                                        <span class="attributes_more">{l s='Voir plus'}</span>
+                                        <span class="attributes_more">{l s='Voir plus' mod='custommade'}</span>
                                     {/if}
                                     <div class="clear"></div>
                                 </div><div class="clearfix"></div>
