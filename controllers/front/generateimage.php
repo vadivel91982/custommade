@@ -31,7 +31,7 @@ class CustomMadeGenerateimageModuleFrontController extends ModuleFrontController
             $id = $row['id'];
             $orderId = $row['order_id'];
             $productId = $row['product_id'];
-            $customOptions = json_decode($row['options']);
+            $customOptions = Tools::jsonDecode($row['options']);
 
             $id_image = Product::getCover($productId);
 // get Image by id
@@ -80,7 +80,7 @@ class CustomMadeGenerateimageModuleFrontController extends ModuleFrontController
 
     private function generateFinalImage($config) {
         if (isset($config['hd_image_url']) && filter_var($config['hd_image_url'], FILTER_VALIDATE_URL)) {
-            $imageData = file_get_contents($config['hd_image_url']);
+            $imageData = Tools::file_get_contents($config['hd_image_url']);
             //echo '----' . __LINE__ . '----' . __FILE__ . $imageData;
             //echo '----' . __LINE__ . '----' . __FILE__ . '<pre>' . print_r($config, true) . '</pre>';
             $tmpFileName = 'tmp_image.jpg';

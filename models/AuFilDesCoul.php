@@ -112,7 +112,7 @@ class AuFilDesCoul extends ObjectModel
             $id = $row['id'];
             $orderId = $row['order_id'];
             $productId = $row['product_id'];
-            $customOptions = json_decode($row['options']);
+            $customOptions = Tools::jsonDecode($row['options']);
             $product = new Product((int)$productId);
             
             $image = $moduleName."/output/".$productId.".png";
