@@ -126,7 +126,8 @@
 .cropper-face {
     top: 0;
     left: 0;
-    background-color: #fff
+    background-color: #fff;
+	z-index:2;
 }
 .cropper-line,
 .cropper-point {

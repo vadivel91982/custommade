@@ -193,7 +193,8 @@
                                             <div class="input-group-addon">
                                                 <i class="fa fa-arrows-h" aria-hidden="true"></i>
                                             </div>										
-                                            <input value="{$getPriceDetails->cust_width}" class="form-control" id="dataWidth" type="number" placeholder="300 cm max">										
+                                            <!--<input value="{$getPriceDetails->cust_width}" class="form-control" id="dataWidth" type="number" placeholder="300 cm max">-->
+                                            <input value="200" class="form-control" id="dataWidth" type="number" placeholder="{$getPriceDetails->cust_width} cm max">
                                         </div>
                                     </div>
                                     <div class="form-group heightbox">
@@ -202,7 +203,8 @@
                                             <div class="input-group-addon">
                                                 <i class="fa fa-arrows-v" aria-hidden="true"></i>
                                             </div>
-                                            <input value="{$getPriceDetails->cust_height}" class="form-control" id="dataHeight" type="number"  placeholder="300 cm max">
+                                            <!--<input value="{$getPriceDetails->cust_height}" class="form-control" id="dataHeight" type="number"  placeholder="300 cm max">-->
+                                            <input value="200" class="form-control" id="dataHeight" type="number"  placeholder="{$getPriceDetails->cust_height} cm max">
                                         </div>
                                     </div>
                                     <div><a id="button-scroll" title="Autres dimensions?">Autres dimensions?</a></div>
@@ -431,6 +433,8 @@
     //'use strict';
     var newCustomPrice = '';
     var pricePerMeterSq = {$getPriceDetails->sq_meter_price};
+    var allowedMaxWidth = {$getPriceDetails->cust_width};
+    var allowedMaxHeight = {$getPriceDetails->cust_height};
     var rootUrl = '{$rootUrl}';
     var Cropper = window.Cropper;
     var URL = window.URL || window.webkitURL;
@@ -454,6 +458,7 @@
         zoomOnWheel: false,
         zoomable: false,
         guides: false,
+        cropBoxResizable:false,
 
         ready: function (e) {
             if (jQuery.trim(sessionStorage.cropData) != '') {
@@ -726,34 +731,50 @@
         setCropToSession();
         dynamicImage = image.cropper.getCroppedCanvas().toDataURL('image/jpeg', 1);
         $('.preview').attr('src', dynamicImage);
+        setIndicatorPosition();
+        setNewCustomPrice();
     });
 
     jQuery(document).on('click', '.flipbtns', function () {
         setCropToSession();
         dynamicImage = image.cropper.getCroppedCanvas().toDataURL('image/jpeg', 1);
         $('.preview').attr('src', dynamicImage);
+        setIndicatorPosition();
+        setNewCustomPrice();
     });
 
     jQuery(document).on('keyup', '#dataWidth', function () {
         var curVal = jQuery.trim(jQuery(this).val());
         curVal = curVal * 1;
+        if(curVal > allowedMaxWidth){
+            curVal = allowedMaxWidth;
+            jQuery(this).val(allowedMaxWidth);
+        }
         var newOpt = {
             width: curVal
         };
         cropper.setData(newOpt);
         dynamicImage = image.cropper.getCroppedCanvas().toDataURL('image/jpeg', 1);
         $('.preview').attr('src', dynamicImage);
+        setIndicatorPosition();
+        setNewCustomPrice();
     });
 
     jQuery(document).on('keyup', '#dataHeight', function () {
         var curVal = jQuery.trim(jQuery(this).val());
         curVal = curVal * 1;
+        if(curVal > allowedMaxHeight){
+            curVal = allowedMaxHeight;
+            jQuery(this).val(allowedMaxHeight);
+        }
         var newOpt = {
-            width: curVal
+            height: curVal
         };
         cropper.setData(newOpt);
         dynamicImage = image.cropper.getCroppedCanvas().toDataURL('image/jpeg', 1);
         $('.preview').attr('src', dynamicImage);
+        setIndicatorPosition();
+        setNewCustomPrice();
     });
 
     jQuery(document).on('click', '#addcartbtn', function () {
