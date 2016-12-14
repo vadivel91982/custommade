@@ -490,7 +490,25 @@ button.image-grid {
     width: 19px;
     position: relative;
 }
-
+.custom-product-detail .title-module-preview {
+	text-transform:uppercase;
+}
+.buttons_bottom_block1 a {
+	background: #891812;
+	padding: 0;
+	padding: 15px;
+	text-align: center;
+	color: #ffffff;
+	text-transform: uppercase;
+	font-weight: normal;
+	font-size: 14px;
+	text-decoration: none;
+	border-radius: 5px;
+	border:0px;	
+	width: 200px;
+	margin-top:25px;
+}
+#button-scroll {cursor:pointer;}
 @media(min-width:320px) {
 	.cart-section input, #sampleButton{
 		width: 174px !important;

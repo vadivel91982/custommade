@@ -205,7 +205,7 @@
                                             <input value="{$getPriceDetails->cust_height}" class="form-control" id="dataHeight" type="number"  placeholder="300 cm max">
                                         </div>
                                     </div>
-                                    <div><a href="#" title="Autres dimensions?">Autres dimensions?</a></div>
+                                    <div><a id="button-scroll" title="Autres dimensions?">Autres dimensions?</a></div>
                                 </div>
 
 
@@ -400,8 +400,21 @@
                                 </div>
                             {/foreach}
                         </div>
-                    </div>
+                    </div><div class="clearfix"></div>
                 </div>
+				
+				<div class="custom-product-detail" id="custom-product-detail">
+                    <h1 class="title-module-preview">projets speciaux</h1>
+                    <div class="col-xs-12">
+                        <p>Notre studio de création vous aide  à trouver le decor de vos rêve, à le personnaliser ou le créer. Que vous soyez un particulier ou un professionnel,N’hésitez pas à nous contacter !</p>
+						<p class="buttons_bottom_block1">
+							<a href="#" class="exclusive">EN SAVOIR PLUS</a>
+						</p>
+                    </div>                    
+                </div>				
+				
+				
+				
             </div>
         </div>
     </form>
@@ -785,7 +798,11 @@
     }
 
 
-
+	$("#button-scroll").click(function() {
+		$('html, body').animate({
+			scrollTop: $("#custom-product-detail").offset().top
+		}, 2000);
+	});
 
     /*setInterval(function () {
      var currentCropData = cropper.getData();
