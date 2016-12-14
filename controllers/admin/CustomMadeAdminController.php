@@ -117,7 +117,7 @@ class CustomMadeAdminController extends ModuleAdminController
                             'id' => 'require_on',
                             'value' => 1,
                             'label' => $this->l('Yes')
-                        ), 
+                        ),
                         array(
                             'id' => 'require_off',
                             'value' => 0,

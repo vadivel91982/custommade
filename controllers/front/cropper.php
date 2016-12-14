@@ -116,10 +116,10 @@ class CustomMadeCropperModuleFrontController extends ModuleFrontController
         $order = new Order($id_order);
         $products = $order->getProducts();
         
-        foreach($products as $key => $row){
+        foreach ($products as $key => $row) {
             $orderId = $row['id_order'];
             $productId = $row['id_product'];
-            if(isset($cropSessionData[$productId])){
+            if (isset($cropSessionData[$productId])) {
                 $options = $cropSessionData[$productId];
                 $insertOption = "insert into "._DB_PREFIX_."options set "
                         . "order_id     =   '".$orderId."',"

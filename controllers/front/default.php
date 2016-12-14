@@ -17,7 +17,8 @@ if (!defined('_PS_VERSION_')) {
     die(header('HTTP/1.0 404 Not Found'));
 }
 
-class CustomMadeDefaultModuleFrontController extends ModuleFrontController {
+class CustomMadeDefaultModuleFrontController extends ModuleFrontController
+{
     //public $php_self = 'product';
 
     /** @var Product */
@@ -26,7 +27,8 @@ class CustomMadeDefaultModuleFrontController extends ModuleFrontController {
     /** @var Category */
     protected $category;
 
-    public function __construct() {
+    public function __construct()
+    {
         $this->auth = true;
         parent::__construct();
         $this->context = Context::getContext();
@@ -38,7 +40,8 @@ class CustomMadeDefaultModuleFrontController extends ModuleFrontController {
      * Initialize product controller
      * @see FrontController::init()
      */
-    public function init() {
+    public function init()
+    {
         parent::init();
 
         if ($id_product = (int) Tools::getValue('id_product')) {
@@ -124,7 +127,8 @@ class CustomMadeDefaultModuleFrontController extends ModuleFrontController {
     /**
      * @see FrontController::initContent()
      */
-    public function initContent() {
+    public function initContent()
+    {
         $this->display_column_left = false;
         parent::initContent();
 
@@ -297,7 +301,8 @@ class CustomMadeDefaultModuleFrontController extends ModuleFrontController {
     /**
      * Assign price and tax to the template
      */
-    protected function assignPriceAndTax() {
+    protected function assignPriceAndTax()
+    {
         $id_customer = (isset($this->context->customer) ? (int) $this->context->customer->id : 0);
         $id_group = (int) Group::getCurrent()->id;
         $id_country = $id_customer ? (int) Customer::getCurrentCountry($id_customer) : (int) Tools::getCountry();
@@ -361,7 +366,8 @@ class CustomMadeDefaultModuleFrontController extends ModuleFrontController {
     /**
      * Assign template vars related to images
      */
-    protected function assignImages() {
+    protected function assignImages()
+    {
         $images = $this->product->getImages((int) $this->context->cookie->id_lang);
         $product_images = array();
 
@@ -410,7 +416,8 @@ class CustomMadeDefaultModuleFrontController extends ModuleFrontController {
     /**
      * Assign template vars related to attribute groups and colors
      */
-    protected function assignAttributesGroups() {
+    protected function assignAttributesGroups()
+    {
         $colors = array();
         $groups = array();
         $combinations = array();
@@ -555,7 +562,8 @@ class CustomMadeDefaultModuleFrontController extends ModuleFrontController {
     /**
      * Get and assign attributes combinations informations
      */
-    protected function assignAttributesCombinations() {
+    protected function assignAttributesCombinations()
+    {
         $attributes_combinations = Product::getAttributesInformationsByProduct($this->product->id);
         if (is_array($attributes_combinations) && count($attributes_combinations)) {
             foreach ($attributes_combinations as &$ac) {
@@ -576,7 +584,8 @@ class CustomMadeDefaultModuleFrontController extends ModuleFrontController {
     /**
      * Assign template vars related to category
      */
-    protected function assignCategory() {
+    protected function assignCategory()
+    {
         // Assign category to the template
         if ($this->category !== false && Validate::isLoadedObject($this->category) && $this->category->inShop() && $this->category->isAssociatedToShop()) {
             $path = Tools::getPath($this->category->id, $this->product->name, true);
@@ -608,7 +617,8 @@ class CustomMadeDefaultModuleFrontController extends ModuleFrontController {
         $this->context->smarty->assign(array('HOOK_PRODUCT_FOOTER' => Hook::exec('displayFooterProduct', array('product' => $this->product, 'category' => $this->category))));
     }
 
-    protected function transformDescriptionWithImg($desc) {
+    protected function transformDescriptionWithImg($desc)
+    {
         $reg = '/\[img\-([0-9]+)\-(left|right)\-([a-zA-Z0-9-_]+)\]/';
         while (preg_match($reg, $desc, $matches)) {
             $link_lmg = $this->context->link->getImageLink($this->product->link_rewrite, $this->product->id . '-' . $matches[1], $matches[3]);
@@ -619,7 +629,8 @@ class CustomMadeDefaultModuleFrontController extends ModuleFrontController {
         return $desc;
     }
 
-    protected function pictureUpload() {
+    protected function pictureUpload()
+    {
         if (!$field_ids = $this->product->getCustomizationFieldIds()) {
             return false;
         }
@@ -646,8 +657,7 @@ class CustomMadeDefaultModuleFrontController extends ModuleFrontController {
                 /* Original file */
                 if (!ImageManager::resize($tmp_name, _PS_UPLOAD_DIR_ . $file_name)) {
                     $this->errors[] = Tools::displayError('An error occurred during the image upload process.');
-                }
-                /* A smaller one */ elseif (!ImageManager::resize($tmp_name, _PS_UPLOAD_DIR_ . $file_name . '_small', $product_picture_width, $product_picture_height)) {
+                } elseif (!ImageManager::resize($tmp_name, _PS_UPLOAD_DIR_ . $file_name . '_small', $product_picture_width, $product_picture_height)) {
                     $this->errors[] = Tools::displayError('An error occurred during the image upload process.');
                 } elseif (!chmod(_PS_UPLOAD_DIR_ . $file_name, 0777) || !chmod(_PS_UPLOAD_DIR_ . $file_name . '_small', 0777)) {
                     $this->errors[] = Tools::displayError('An error occurred during the image upload process.');
@@ -660,7 +670,8 @@ class CustomMadeDefaultModuleFrontController extends ModuleFrontController {
         return true;
     }
 
-    protected function textRecord() {
+    protected function textRecord()
+    {
         if (!$field_ids = $this->product->getCustomizationFieldIds()) {
             return false;
         }
@@ -686,7 +697,8 @@ class CustomMadeDefaultModuleFrontController extends ModuleFrontController {
         }
     }
 
-    protected function formTargetFormat() {
+    protected function formTargetFormat()
+    {
         $customization_form_target = Tools::safeOutput(urldecode($_SERVER['REQUEST_URI']));
         foreach ($_GET as $field => $value) {
             if (strncmp($field, 'group_', 6) == 0) {
@@ -699,7 +711,8 @@ class CustomMadeDefaultModuleFrontController extends ModuleFrontController {
         $this->context->smarty->assign('customizationFormTarget', $customization_form_target);
     }
 
-    protected function formatQuantityDiscounts($specific_prices, $price, $tax_rate, $ecotax_amount) {
+    protected function formatQuantityDiscounts($specific_prices, $price, $tax_rate, $ecotax_amount)
+    {
         foreach ($specific_prices as $key => &$row) {
             $row['quantity'] = &$row['from_quantity'];
             if ($row['price'] >= 0) {
@@ -732,12 +745,13 @@ class CustomMadeDefaultModuleFrontController extends ModuleFrontController {
         return $specific_prices;
     }
 
-    public function getProduct() {
+    public function getProduct()
+    {
         return $this->product;
     }
 
-    public function getCategory() {
+    public function getCategory()
+    {
         return $this->category;
     }
-
 }
