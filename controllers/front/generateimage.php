@@ -25,8 +25,8 @@ class CustomMadeGenerateimageModuleFrontController extends ModuleFrontController
         parent::__construct();
 
         //echo '----' . __LINE__ . '----' . __FILE__;
-        //$select = "SELECT * FROM "._DB_PREFIX_."options WHERE 1 and status = 'pending' limit 5";
-        $select = "SELECT * FROM " . _DB_PREFIX_ . "options WHERE 1 order by id desc limit 1";
+        $select = "SELECT * FROM "._DB_PREFIX_."options WHERE 1 and status = 'pending' limit 5";
+        //$select = "SELECT * FROM " . _DB_PREFIX_ . "options WHERE 1 order by id desc limit 1";
         $results = Db::getInstance()->ExecuteS($select);
         //echo '----' . __LINE__ . '----' . __FILE__ . '<pre>' . print_r($results, true) . '</pre>';
         foreach ($results as $k => $row) {
