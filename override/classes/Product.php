@@ -68,7 +68,7 @@ class Product extends ProductCore
 
                         $cropSessionData = unserialize($cookie->product_crop_data);
                         
-                        if(isset($cropSessionData[$id_product]) && trim($cropSessionData[$id_product]) != ''){
+                        if (isset($cropSessionData[$id_product]) && trim($cropSessionData[$id_product]) != '') {
                             $customJsonData = Tools::jsonDecode($cropSessionData[$id_product]);
                             $customPrice = $customJsonData->customPrice;
                         }
