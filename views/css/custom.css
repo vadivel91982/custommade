@@ -373,8 +373,6 @@ button.image-grid {
 .accessories .list_accessories li {
 	float: left;
 	margin-right: 15px;
-	margin-top: 20px;
-	border: 1px solid;
 }
 .accessories .col-md-8 h3 {
 	margin:0px;    
@@ -421,16 +419,11 @@ button.image-grid {
 	text-align: center;
 	float: left;
 	padding: 2px 0px;
-	height: 27px;
+	height: 32px;
 }
 
-.cart-section .form-horizontal.docs-data {
-	width:174px;
-}
-.cart-section #dataWidth,.cart-section #dataHeight {
-	float: left;
-	width: 144px !important;
-}
+
+
 .cart-section h3 {
     font-size: 14px;
     font-weight: 600;
@@ -496,7 +489,7 @@ button.image-grid {
 .buttons_bottom_block1 a {
 	background: #891812;
 	padding: 0;
-	padding: 15px;
+	padding: 10px;
 	text-align: center;
 	color: #ffffff;
 	text-transform: uppercase;
@@ -507,9 +500,18 @@ button.image-grid {
 	border:0px;	
 	width: 200px;
 	margin-top:25px;
+	margin-bottom: 20px;
+	height: 100%;
 }
 #button-scroll {cursor:pointer;}
 @media(min-width:320px) {
+	.cart-section .form-horizontal.docs-data {
+		width:174px;
+	}
+	.cart-section #dataWidth,.cart-section #dataHeight {
+		float: left;
+		width: 144px !important;
+	}
 	.cart-section input, #sampleButton{
 		width: 174px !important;
 		border-radius: 0 !important;
@@ -585,6 +587,7 @@ button.image-grid {
 	.overall-container {
 		border: 1px solid #7f7f7e;
 		padding: 60px 0px 0px 0px;
+		clear: both;
 	}
 	.title-module-preview {
 		font-size: 24px;
@@ -597,6 +600,13 @@ button.image-grid {
 	
 }
 @media(min-width:1024px) {
+	.cart-section .form-horizontal.docs-data {
+		width:100%;
+	}
+	.cart-section #dataWidth,.cart-section #dataHeight {
+		float: left;
+		width: 170px !important;
+	}
 	.customise-section .btn-default i{
 		padding-right: 0px;
 	}
