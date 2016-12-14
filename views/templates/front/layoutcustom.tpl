@@ -194,7 +194,7 @@
                                                 <i class="fa fa-arrows-h" aria-hidden="true"></i>
                                             </div>										
                                             <!--<input value="{$getPriceDetails->cust_width}" class="form-control" id="dataWidth" type="number" placeholder="300 cm max">-->
-                                            <input value="200" class="form-control" id="dataWidth" type="number" placeholder="{$getPriceDetails->cust_width} cm max">
+                                            <input value="300" class="form-control" id="dataWidth" type="number" placeholder="{$getPriceDetails->cust_width} cm max">
                                         </div>
                                     </div>
                                     <div class="form-group heightbox">
@@ -204,7 +204,7 @@
                                                 <i class="fa fa-arrows-v" aria-hidden="true"></i>
                                             </div>
                                             <!--<input value="{$getPriceDetails->cust_height}" class="form-control" id="dataHeight" type="number"  placeholder="300 cm max">-->
-                                            <input value="200" class="form-control" id="dataHeight" type="number"  placeholder="{$getPriceDetails->cust_height} cm max">
+                                            <input value="300" class="form-control" id="dataHeight" type="number"  placeholder="{$getPriceDetails->cust_height} cm max">
                                         </div>
                                     </div>
                                     <div><a id="button-scroll" title="Autres dimensions?">Autres dimensions?</a></div>
@@ -404,19 +404,19 @@
                         </div>
                     </div><div class="clearfix"></div>
                 </div>
-				
-				<div class="custom-product-detail" id="custom-product-detail">
+
+                <div class="custom-product-detail" id="custom-product-detail">
                     <h1 class="title-module-preview">projets speciaux</h1>
                     <div class="col-xs-12">
                         <p>Notre studio de création vous aide  à trouver le decor de vos rêve, à le personnaliser ou le créer. Que vous soyez un particulier ou un professionnel,N’hésitez pas à nous contacter !</p>
-						<p class="buttons_bottom_block1">
-							<a href="#" class="exclusive">EN SAVOIR PLUS</a>
-						</p>
+                        <p class="buttons_bottom_block1">
+                            <a href="#" class="exclusive">EN SAVOIR PLUS</a>
+                        </p>
                     </div>                    
                 </div>				
-				
-				
-				
+
+
+
             </div>
         </div>
     </form>
@@ -452,13 +452,12 @@
     var options = {
         viewMode: 1,
         aspectRatio: NaN,
-
         dragMode: 'move',
         checkCrossOrigin: false,
         zoomOnWheel: false,
         zoomable: false,
         guides: false,
-        cropBoxResizable:false,
+        cropBoxResizable: false,
 
         ready: function (e) {
             if (jQuery.trim(sessionStorage.cropData) != '') {
@@ -468,6 +467,14 @@
                 if (jQuery.trim(sessionStorage.hasGrid) == '1') {
                     jQuery('.gridlayout').addClass('gridbg');
                 }
+            } else {
+                var newOpt = {
+                    width: 300,
+                    height:300,
+                    x:0,
+                    y:0
+                };
+                cropper.setData(newOpt);
             }
             dynamicImage = image.cropper.getCroppedCanvas().toDataURL('image/jpeg', 1);
             $('.preview').attr('src', dynamicImage);
@@ -746,7 +753,7 @@
     jQuery(document).on('keyup', '#dataWidth', function () {
         var curVal = jQuery.trim(jQuery(this).val());
         curVal = curVal * 1;
-        if(curVal > allowedMaxWidth){
+        if (curVal > allowedMaxWidth) {
             curVal = allowedMaxWidth;
             jQuery(this).val(allowedMaxWidth);
         }
@@ -763,7 +770,7 @@
     jQuery(document).on('keyup', '#dataHeight', function () {
         var curVal = jQuery.trim(jQuery(this).val());
         curVal = curVal * 1;
-        if(curVal > allowedMaxHeight){
+        if (curVal > allowedMaxHeight) {
             curVal = allowedMaxHeight;
             jQuery(this).val(allowedMaxHeight);
         }
@@ -819,11 +826,11 @@
     }
 
 
-	$("#button-scroll").click(function() {
-		$('html, body').animate({
-			scrollTop: $("#custom-product-detail").offset().top
-		}, 2000);
-	});
+    $("#button-scroll").click(function () {
+        $('html, body').animate({
+            scrollTop: $("#custom-product-detail").offset().top
+        }, 2000);
+    });
 
     /*setInterval(function () {
      var currentCropData = cropper.getData();
