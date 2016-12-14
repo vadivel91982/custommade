@@ -76,11 +76,6 @@ class CustomMadeCropperModuleFrontController extends ModuleFrontController
             $cookie->product_crop_data = serialize($oldRecords);
             $cookie->write();
         }
-
-
-        //to read
-        //$cookie = new Cookie('crop_data');
-        //echo '----' . __LINE__ . '----' . __FILE__ . '<pre>---' . print_r(unserialize($cookie->product_crop_data), true) . '</pre>';
     }
 
     public function saveUserCartIdToSession()
@@ -91,27 +86,19 @@ class CustomMadeCropperModuleFrontController extends ModuleFrontController
         $cookie->setExpire(0);
         $cookie->user_cart_id = $this->context->cookie->id_cart;
         $cookie->write();
-
-        //$cookie = new Cookie('crop_data');
-        //echo '----' . __LINE__ . '----' . __FILE__ . '<pre>' . print_r($cookie->user_cart_id, true) . '</pre>';
     }
 
     public function removeCropDataFromSession()
     {
         $cookie = new Cookie('crop_data');
         unset($cookie->product_crop_data);
-        //echo '----' . __LINE__ . '----' . __FILE__ . '<pre>---' . print_r(unserialize($cookie->product_crop_data), true) . '</pre>';
     }
 
     public function updateCropDataToOrder()
     {
         $cookie = new Cookie('crop_data');
-        //echo '----' . __LINE__ . '----' . __FILE__ . '<pre>' . print_r($cookie->user_cart_id, true) . '</pre>';
-        
         $cropSessionData = unserialize($cookie->product_crop_data);
-        //echo '----' . __LINE__ . '----' . __FILE__ . '<pre>' . print_r($cropSessionData, true) . '</pre>';
         $cartId = (int) ($cookie->user_cart_id);
-        //$cartId = 14; //for testing
         $id_order = Order::getOrderByCartId($cartId);
         $order = new Order($id_order);
         $products = $order->getProducts();
@@ -125,11 +112,9 @@ class CustomMadeCropperModuleFrontController extends ModuleFrontController
                         . "order_id     =   '".$orderId."',"
                         . "product_id   =   '".$productId."',"
                         . "options      =   '".$options."'";
-                //echo '----' . __LINE__ . '----' . __FILE__ . $insertOption;
                 DB::getInstance()->Execute($insertOption);
             }
         }
-        
         $this->removeCropDataFromSession();
     }
 }
