@@ -80,7 +80,7 @@ class CustomMadeAdminController extends ModuleAdminController
         $this->fields_form = array(
             'legend' => array(
                 'title' => $this->module->l('Add Universe', 'CustomMadeAdmin'),
-                'image' => dirname(__FILE__).'/logo.gif'
+                'image' => Tools::getHttpHost(true)._PS_MODULE_DIR_.$this->custommadeObj->name..'/logo.gif'
             ),
             'submit' => array(
                 'name' => 'subtmitAddCustommade',

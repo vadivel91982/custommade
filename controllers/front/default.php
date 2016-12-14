@@ -233,15 +233,11 @@ class CustomMadeDefaultModuleFrontController extends ModuleFrontController
                 $baseUrl = "'" . Tools::getHttpHost(true) . __PS_BASE_URI__ . 'module/' . $this->custommadeObj->name . '/' . "'";
                 $tempModuleUrl = Tools::getHttpHost(true) . __PS_BASE_URI__ . 'module/' . $this->custommadeObj->name . '/default';
             }
-            /*echo '----' . __LINE__ . '----' . __FILE__ . Tools::getHttpHost(true).'<br/>';
-            echo '----' . __LINE__ . '----' . __FILE__ . _PS_BASE_URL_.'<br/>';
-            echo '----' . __LINE__ . '----' . __FILE__ . _THEME_PROD_DIR_.'<br/>';*/
             $id_image_direct = Product::getCover($this->product->id);
             $imageDirect = new Image($id_image_direct['id_image']);
             // get image full URL
             $image_url_direct = Tools::getHttpHost(true) . _THEME_PROD_DIR_ . $imageDirect->getExistingImgPath() . ".jpg";
-            
-            
+
             $this->context->smarty->assign(array(
                 'stock_management' => Configuration::get('PS_STOCK_MANAGEMENT'),
                 'customizationFields' => $customization_fields,

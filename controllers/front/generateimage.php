@@ -40,7 +40,7 @@ class CustomMadeGenerateimageModuleFrontController extends ModuleFrontController
             if (sizeof($id_image) > 0) {
                 $image = new Image($id_image['id_image']);
                 // get image full URL
-                $image_url = _PS_BASE_URL_ . _THEME_PROD_DIR_ . $image->getExistingImgPath() . ".jpg";
+                $image_url = Tools::getHttpHost(true) . _THEME_PROD_DIR_ . $image->getExistingImgPath() . ".jpg";
                 //echo '----' . __LINE__ . '----' . __FILE__ . $image_url;
                 $options = array();
                 //$options['hd_image_url'] = 'http://localhost/afdc/wallpapper.jpg';

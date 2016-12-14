@@ -67,7 +67,6 @@ class Custommade extends Module
     public function install()
     {
         Configuration::updateValue('CUSTOMMADE_LIVE_MODE', false);
-
         // Install Tabs
         $parent_tab = new Tab();
         // Need a foreach for the language
@@ -79,7 +78,7 @@ class Custommade extends Module
         foreach ($languages as $lang) {
             switch ($lang['iso_code']) {
                 case 'fr':
-                    $name = 'Afficher la liste des pièces';
+                    $name = 'Afficher la liste des pieces';
                     break;
 
                 default:
@@ -149,9 +148,9 @@ class Custommade extends Module
 
     public function uninstall()
     {
-        //return true;
-        Configuration::deleteByName('CUSTOMMADE_LIVE_MODE');
-        if (!parent::uninstall() || !$this->unregisterHook('header')) {
+        if (!parent::uninstall() 
+            || !$this->unregisterHook('header') 
+            || !Configuration::deleteByName('CUSTOMMADE_LIVE_MODE')) {
             return false;
         }
         //include(dirname(__FILE__).'/sql/uninstall.php');
@@ -164,10 +163,13 @@ class Custommade extends Module
         if (!$tab->delete()) {
             return false;
         }
-        $sql = 'DROP TABLE IF EXISTS `' . _DB_PREFIX_ . Tools::strtolower($this->default_name) . '`';
-        $universesql = 'DROP TABLE IF EXISTS `' . _DB_PREFIX_ . Tools::strtolower($this->universe) . '`';
-        $customoptionsql = 'DROP TABLE IF EXISTS `' . _DB_PREFIX_ . Tools::strtolower($this->customoption) . '`';
-        if (parent::uninstall() === false || DB::getInstance()->Execute($sql) === false || DB::getInstance()->Execute($universesql) === false || DB::getInstance()->Execute($customoptionsql) === false) {
+        $sql = "DROP TABLE IF EXISTS '" . _DB_PREFIX_ . Tools::strtolower($this->default_name) ."'";
+        $universesql = "DROP TABLE IF EXISTS '" . _DB_PREFIX_ . Tools::strtolower($this->universe) ."'";
+        $customoptionsql = "DROP TABLE IF EXISTS '" . _DB_PREFIX_ . Tools::strtolower($this->customoption) ."'";
+        if (parent::uninstall() === false 
+            || DB::getInstance()->Execute($sql) === false 
+            || DB::getInstance()->Execute($universesql) === false 
+            || DB::getInstance()->Execute($customoptionsql) === false) {
             return false;
         }
         return true;
