@@ -772,15 +772,15 @@
     }
 
     function setIndicatorPosition() {
-        jQuery('.imr_top').width(cropper.getData().width);
+        jQuery('.imr_top').width(cropper.getCropBoxData().width);
         jQuery('.imr_top').css('margin-left', cropper.getCropBoxData().left + 'px');
-        jQuery('#dimension_indicator').width(cropper.getData().width);
+        jQuery('#dimension_indicator').width(cropper.getCropBoxData().width);
         jQuery('.imr_top .cmvalue').text(cropper.getData(true).width + 'cm');
 
 
-        jQuery('.imr_right').height(cropper.getData().height);
+        jQuery('.imr_right').height(cropper.getCropBoxData().height);
         jQuery('.imr_right').css('margin-top', cropper.getCropBoxData().top + 'px');
-        jQuery('#dimension_indicator_right').height(cropper.getData().height);
+        jQuery('#dimension_indicator_right').height(cropper.getCropBoxData().height);
         jQuery('.imr_right .cmvalue').text(cropper.getData(true).height + 'cm');
     }
 
