@@ -313,7 +313,8 @@
                                 <span class="length-cm cmvalue">200cm</span>
                             </div>
                             <div class="img-container">
-                                <img src="{$link->getImageLink($product->link_rewrite, $cover.id_image, 'large_default')}" alt="Picture">
+                                <!--<img src="{$link->getImageLink($product->link_rewrite, $cover.id_image, 'large_default')}" alt="Picture">-->
+                                <img src="{$image_direct_url}" alt="Picture"/>
                             </div>
                             <div class="img-resize-right imr_right">
                                 <img id="dimension_indicator_right" src="{$rootUrl}modules/custommade/views/img/right.png">
