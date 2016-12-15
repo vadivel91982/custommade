@@ -9,7 +9,7 @@
 // <![CDATA[
 
 // PrestaShop internal settings
-    var currencySign = "{$currencySign|escape:'htmlall':'UTF-8':html_entity_decode:2}";
+    var currencySign = '{$currencySign|html_entity_decode:2:"UTF-8"}';
     var currencyRate = '{$currencyRate|floatval}';
     var currencyFormat = '{$currencyFormat|intval}';
     var currencyBlank = '{$currencyBlank|intval}';
@@ -23,33 +23,33 @@
         var id_product = '{$product->id|intval}';
         var productHasAttributes = {if isset($groups)}true{else}false{/if};
             var quantitiesDisplayAllowed = {if $display_qties == 1}true{else}false{/if};
-                var quantityAvailable = {if $display_qties == 1 && $product->quantity}{$product->quantity|escape:'htmlall':'UTF-8'}{else}0{/if};
+                var quantityAvailable = {if $display_qties == 1 && $product->quantity}{$product->quantity}{else}0{/if};
                     var allowBuyWhenOutOfStock = {if $allow_oosp == 1}true{else}false{/if};
                         var availableNowValue = '{*{$product->available_now|escape:'quotes':'UTF-8'}*}';
                         var availableLaterValue = '{$product->available_later|escape:'quotes':'UTF-8'}';
-                        var productPriceTaxExcluded = {$product->getPriceWithoutReduct(true)|default:'null'} - {$product->ecotax|escape:'htmlall':'UTF-8'};
-                        var reduction_percent = {if $product->specificPrice AND $product->specificPrice.reduction AND $product->specificPrice.reduction_type == 'percentage'}{$product->specificPrice.reduction*100|escape:'htmlall':'UTF-8'}{else}0{/if};
+                        var productPriceTaxExcluded = {$product->getPriceWithoutReduct(true)|default:'null'} - {$product->ecotax};
+                        var reduction_percent = {if $product->specificPrice AND $product->specificPrice.reduction AND $product->specificPrice.reduction_type == 'percentage'}{$product->specificPrice.reduction*100}{else}0{/if};
                             var reduction_price = {if $product->specificPrice AND $product->specificPrice.reduction AND $product->specificPrice.reduction_type == 'amount'}{$product->specificPrice.reduction|floatval}{else}0{/if};
-                                var specific_price = {if $product->specificPrice AND $product->specificPrice.price}{$product->specificPrice.price|escape:'htmlall':'UTF-8'}{else}0{/if};
+                                var specific_price = {if $product->specificPrice AND $product->specificPrice.price}{$product->specificPrice.price}{else}0{/if};
                                     var product_specific_price = new Array();
     {foreach from=$product->specificPrice key='key_specific_price' item='specific_price_value'}
-                                    product_specific_price["{$key_specific_price|escape:'htmlall':'UTF-8'}"] = "{$specific_price_value|escape:'htmlall':'UTF-8'}";
+                                    product_specific_price['{$key_specific_price}'] = '{$specific_price_value}';
     {/foreach}
                                     var specific_currency = {if $product->specificPrice AND $product->specificPrice.id_currency}true{else}false{/if};
-                                        var group_reduction = '{$group_reduction|escape:"htmlall":"UTF-8"}';
-                                        var default_eco_tax = {$product->ecotax|escape:"htmlall":"UTF-8"};
-                                        var ecotaxTax_rate = {$ecotaxTax_rate|escape:"htmlall":"UTF-8"};
-                                        var currentDate = '{$smarty.now|escape:"htmlall":"UTF-8":date_format:'%Y-%m-%d %H:%M:%S'}';
-                                        var maxQuantityToAllowDisplayOfLastQuantityMessage = {$last_qties|escape:"htmlall":"UTF-8"};
+                                        var group_reduction = '{$group_reduction}';
+                                        var default_eco_tax = {$product->ecotax};
+                                        var ecotaxTax_rate = {$ecotaxTax_rate};
+                                        var currentDate = '{$smarty.now|date_format:'%Y-%m-%d %H:%M:%S'}';
+                                        var maxQuantityToAllowDisplayOfLastQuantityMessage = {$last_qties};
                                         var noTaxForThisProduct = {if $no_tax == 1}true{else}false{/if};
-                                            var displayPrice = {$priceDisplay|escape:"htmlall":"UTF-8"};
+                                            var displayPrice = {$priceDisplay};
                                             var productReference = '{$product->reference|escape:'htmlall':'UTF-8'}';
-                                            var productAvailableForOrder = {if (isset($restricted_country_mode) AND $restricted_country_mode) OR $PS_CATALOG_MODE}'0'{else}'{$product->available_for_order|escape:"htmlall":"UTF-8"}'{/if};
-                                                    var productShowPrice = '{if !$PS_CATALOG_MODE}{$product->show_price|escape:"htmlall":"UTF-8"}{else}0{/if}';
-                                                        var productUnitPriceRatio = '{$product->unit_price_ratio|escape:"htmlall":"UTF-8"}';
-                                                        var idDefaultImage = {if isset($cover.id_image_only)}{$cover.id_image_only|escape:"htmlall":"UTF-8"}{else}0{/if};
+                                            var productAvailableForOrder = {if (isset($restricted_country_mode) AND $restricted_country_mode) OR $PS_CATALOG_MODE}'0'{else}'{$product->available_for_order}'{/if};
+                                                    var productShowPrice = '{if !$PS_CATALOG_MODE}{$product->show_price}{else}0{/if}';
+                                                        var productUnitPriceRatio = '{$product->unit_price_ratio}';
+                                                        var idDefaultImage = {if isset($cover.id_image_only)}{$cover.id_image_only}{else}0{/if};
                                                             var stock_management = {$stock_management|intval};
-                                                            //var baseDir = '{$customBaseurl|escape:"htmlall":"UTF-8"}';
+                                                            //var baseDir = '{$customBaseurl}';
 
     {if !isset($priceDisplayPrecision)}
         {assign var='priceDisplayPrecision' value=2}
@@ -62,11 +62,11 @@
         {assign var='productPriceWithoutReduction' value=$product->getPriceWithoutReduct(true, $smarty.const.NULL)}
     {/if}
 
-                                                            var productPriceWithoutReduction = '{$productPriceWithoutReduction|escape:"htmlall":"UTF-8"}';
-                                                            var productPrice = '{$productPrice|escape:"htmlall":"UTF-8"}';
+                                                            var productPriceWithoutReduction = '{$productPriceWithoutReduction}';
+                                                            var productPrice = '{$productPrice}';
 
                                                             // Customizable field
-                                                            var img_ps_dir = '{$img_ps_dir|escape:"htmlall":"UTF-8"}';
+                                                            var img_ps_dir = '{$img_ps_dir}';
                                                             var customizationFields = new Array();
 
     {assign var='imgIndex' value=0}
@@ -79,12 +79,12 @@
     {/foreach}
 
                                                                     // Images
-                                                                    var img_prod_dir = '{$img_prod_dir|escape:"htmlall":"UTF-8"}';
+                                                                    var img_prod_dir = '{$img_prod_dir}';
                                                                     var combinationImages = new Array();
 
     {if isset($combinationImages)}
         {foreach from=$combinationImages item='combination' key='combinationId' name='f_combinationImages'}
-                                                                    combinationImages[{$combinationId|escape:"htmlall":"UTF-8"}] = new Array();
+                                                                    combinationImages[{$combinationId}] = new Array();
             {foreach from=$combination item='image' name='f_combinationImage'}
                                                                     combinationImages[{$combinationId}][{$smarty.foreach.f_combinationImage.index}] = {$image.id_image|intval};
             {/foreach}
@@ -113,6 +113,7 @@
                                                                         specific_price_combination['reduction_price'] = {if $combination.specific_price AND $combination.specific_price.reduction AND $combination.specific_price.reduction_type == 'amount'}{$combination.specific_price.reduction}{else}0{/if};
                                                                             specific_price_combination['price'] = {if $combination.specific_price AND $combination.specific_price.price}{$combination.specific_price.price}{else}0{/if};
                                                                                 specific_price_combination['reduction_type'] = '{if $combination.specific_price}{$combination.specific_price.reduction_type}{/if}';
+                                                                                //addCombination({$idCombination|intval}, new Array({$combination.list}), {$combination.quantity}, {$combination.price}, {$combination.ecotax}, {$combination.id_image}, '{$combination.reference|addslashes}', {$combination.unit_impact|floatval}, {$combination.minimal_quantity|floatval}, '{$combination.available_date}', specific_price_combination);
         {/foreach}
     {/if}
 
@@ -144,16 +145,16 @@
 
 {if isset($confirmation) && $confirmation}
     <p class="confirmation">
-        {$confirmation|escape:'htmlall':'UTF-8'}
+        {$confirmation}
     </p>
 {/if}
 {if ($product->show_price AND !isset($restricted_country_mode)) OR isset($groups) OR $product->reference OR (isset($HOOK_PRODUCT_ACTIONS) && $HOOK_PRODUCT_ACTIONS)}
     <!-- add to cart form-->
-    <form id="buy_block" class="span4" {if $PS_CATALOG_MODE AND !isset($groups) AND $product->quantity > 0}class="hidden"{/if} action="{$link->getPageLink('cart')|escape:'htmlall':'UTF-8'}" method="post">
+    <form id="buy_block" class="span4" {if $PS_CATALOG_MODE AND !isset($groups) AND $product->quantity > 0}class="hidden"{/if} action="{$link->getPageLink('cart')}" method="post">
 
         <!-- hidden datas -->
         <p class="hidden">
-            <input type="hidden" name="token" value="{$static_token|escape:'htmlall':'UTF-8'}" />
+            <input type="hidden" name="token" value="{$static_token}" />
             <input type="hidden" name="id_product" value="{$product->id|intval}" id="product_page_product_id" />
             <input type="hidden" name="add" value="1" />
             <input type="hidden" name="id_product_attribute" id="idCombination" value="" />
@@ -191,8 +192,9 @@
                                         <div class="input-group">
                                             <div class="input-group-addon">
                                                 <i class="fa fa-arrows-h" aria-hidden="true"></i>
-                                            </div>
-                                            <input value="300" class="form-control" id="dataWidth" type="number" placeholder="{$getPriceDetails->cust_width|escape:'htmlall':'UTF-8'} cm max">
+                                            </div>										
+                                            <!--<input value="{$getPriceDetails->cust_width}" class="form-control" id="dataWidth" type="number" placeholder="300 cm max">-->
+                                            <input value="300" class="form-control" id="dataWidth" type="number" placeholder="{$getPriceDetails->cust_width} cm max">
                                         </div>
                                     </div>
                                     <div class="form-group heightbox">
@@ -201,7 +203,8 @@
                                             <div class="input-group-addon">
                                                 <i class="fa fa-arrows-v" aria-hidden="true"></i>
                                             </div>
-                                            <input value="300" class="form-control" id="dataHeight" type="number"  placeholder="{$getPriceDetails->cust_height|escape:'htmlall':'UTF-8'} cm max">
+                                            <!--<input value="{$getPriceDetails->cust_height}" class="form-control" id="dataHeight" type="number"  placeholder="300 cm max">-->
+                                            <input value="300" class="form-control" id="dataHeight" type="number"  placeholder="{$getPriceDetails->cust_height} cm max">
                                         </div>
                                     </div>
                                     <div><a id="button-scroll" title="Autres dimensions?">Autres dimensions?</a></div>
@@ -256,7 +259,7 @@
                                             <span class="price our_price_display"> 
                                                 <meta itemprop="currency" content="EUR" />
                                                 {if $priceDisplay >= 0 && $priceDisplay <= 2}
-                                                    <span itemprop="price" style="display: none;">{sprintf("%.02f", $productPrice)|escape:'htmlall':'UTF-8'}</span>
+                                                    <span itemprop="price" style="display: none;">{sprintf("%.02f", $productPrice)}</span>
                                                 {/if}
                                                 <span itemprop="condition" style="display: none;" content="new"></span>
                                                 {if (!$allow_oosp && $product->quantity <= 0) OR !$product->available_for_order OR (isset($restricted_country_mode) AND $restricted_country_mode) OR $PS_CATALOG_MODE}
@@ -269,7 +272,7 @@
                                                 {/if}
                                             </span>
                                         </p>
-                                        <span class="sq-price">{$getPriceDetails->sq_meter_price|escape:'htmlall':'UTF-8'} £/m2</span>
+                                        <span class="sq-price">{$getPriceDetails->sq_meter_price} £/m2</span>
                                     </div>
 
 
@@ -287,7 +290,7 @@
                                                 <input type="button" id="addcartbtn" name="Submit" value="{l s='Ajouter au panier' mod='custommade'}" class="exclusive" />
                                             </p>
                                         {/if}
-                                        <p>Livraison sous {$getPriceDetails->cust_delivery|escape:'htmlall':'UTF-8'} jours</p>
+                                        <p>Livraison sous {$getPriceDetails->cust_delivery} jours</p>
                                         {if ($getPriceDetails->sample_product > 0)}
                                         <a href="javascript:void(0)" id="sampleButton" onclick="addSampleToCart();
                                                 return false;">Commander un échantillon</a>
@@ -310,14 +313,15 @@
 
                         <div class="col-md-9" id="right-col"> 
                             <div class="img-resize imr_top">
-                                <img id="dimension_indicator" src="{$rootUrl|escape:'htmlall':'UTF-8'}modules/custommade/views/img/top.png">
+                                <img id="dimension_indicator" src="{$rootUrl}modules/custommade/views/img/top.png">
                                 <span class="length-cm cmvalue">200cm</span>
                             </div>
                             <div class="img-container">
-                                <img src="{$image_direct_url|escape:'htmlall':'UTF-8'}" alt="Picture"/>
+                                <!--<img src="{$link->getImageLink($product->link_rewrite, $cover.id_image, 'large_default')}" alt="Picture">-->
+                                <img src="{$image_direct_url}" alt="Picture"/>
                             </div>
                             <div class="img-resize-right imr_right">
-                                <img id="dimension_indicator_right" src="{$rootUrl|escape:'htmlall':'UTF-8'}modules/custommade/views/img/right.png">
+                                <img id="dimension_indicator_right" src="{$rootUrl}modules/custommade/views/img/right.png">
                                 <span class="length-cm-right cmvalue">200cm</span>
                             </div>
                         </div><div class="clearfix"></div>
@@ -327,8 +331,8 @@
                             <div class="accessories">
                                 <div class="col-md-8">
                                     <p>Au fil des Couleurs - Volume 1</p>
-                                    <h3>Référence : {$product->reference|escape:'htmlall':'UTF-8'}</h3>
-                                    <p>{$product->description|escape:'htmlall':'UTF-8'}</p>
+                                    <h3>Référence : {$product->reference}</h3>
+                                    <p>{$product->description}</p>
                                 </div>
                                 <div class="col-md-4">
                                     <p>
@@ -336,7 +340,7 @@
                                         <select style="width:250px" onchange="javascript:document.location.href = this.value">
                                             <option value="">{$color_feature|escape:'htmlall':'UTF-8'} - {l s='Ref.' mod='custommade'} {$product->reference|escape:'htmlall':'UTF-8'}</option>
                                             {foreach from=$accessories item=accessoire}
-                                                <option value="{$tempModuleUrl}?id_product={$accessoire['id_product']|intval}">{foreach from=$accessoire.features item=feature}{if $feature.id_feature==1}{$feature.value|escape:'htmlall':'UTF-8'}{/if}{/foreach} - {l s='Ref.' mod='custommade'} {$accessoire.reference|escape:'htmlall':'UTF-8'}</option>
+                                                <option value="{$tempModuleUrl}?id_product={$accessoire['id_product']|intval}">{foreach from=$accessoire.features item=feature}{if $feature.id_feature==1}{$feature.value}{/if}{/foreach} - {l s='Ref.' mod='custommade'} {$accessoire.reference}</option>
                                             {/foreach}
                                         </select>
                                     </p>
@@ -357,7 +361,7 @@
                                         </li>
 
                                         {foreach from=$accessories item=accessoire}
-                                            <li><a href="{$tempModuleUrl|escape:'htmlall':'UTF-8'}?id_product={$accessoire['id_product']|intval}"><img src="{$link->getImageLink($accessoire.link_rewrite, $accessoire.id_image, 'large_default')}" class="img-responsive" width="46" height="46" /></a></li>
+                                            <li><a href="{$tempModuleUrl}?id_product={$accessoire['id_product']|intval}"><img src="{$link->getImageLink($accessoire.link_rewrite, $accessoire.id_image, 'large_default')}" class="img-responsive" width="46" height="46" /></a></li>
                                                 {/foreach}
                                     </ul>
                                     {if $accessories|@count > 5}
@@ -379,7 +383,8 @@
                             <!-- 'tabs-right' for right tabs -->
                             {foreach from=$getUnivers1 key=k item=universeImage}
                                 <li {if (1 == $k+1)}class="active"{/if}>
-                                    <a href="#scene{$k+1|escape:'htmlall':'UTF-8'}" data-toggle="tab"><img src="{$img_dir|escape:'htmlall':'UTF-8'}{$universeImage['image']|escape:'htmlall':'UTF-8'}" width="90px"></a>
+                                   <!-- <a href="#scene{$k+1}" data-toggle="tab">{$universeImage['universe_name']|escape:'html':'UTF-8'}</a>-->
+                                    <a href="#scene{$k+1}" data-toggle="tab"><img src="{$img_dir|escape:'htmlall':'UTF-8'}{$universeImage['image']|escape:'htmlall':'UTF-8'}" width="90px"></a>
                                 </li>
                             {/foreach}
                         </ul>
@@ -388,7 +393,7 @@
                         <!-- Tab panes -->
                         <div class="tab-content">
                             {foreach from=$getUnivers1 key=k item=universeImage}
-                                <div class="tab-pane {if (1 == $k+1)}active{/if}" id="scene{$k+1|escape:'htmlall':'UTF-8'}">
+                                <div class="tab-pane {if (1 == $k+1)}active{/if}" id="scene{$k+1}">
                                     <div class="backdrop" style="height:76%;max-height:76%;" >
                                         <img class="preview" src="" style="left:0;top:0;">
                                         <span class="gridlayout"></span>
@@ -428,11 +433,11 @@
 
     //'use strict';
     var newCustomPrice = '';
-    var pricePerMeterSq = {$getPriceDetails->sq_meter_price|escape:"htmlall":"UTF-8"};
-    var allowedMaxWidth = {$getPriceDetails->cust_width|escape:"htmlall":"UTF-8"};
-    var allowedMaxHeight = {$getPriceDetails->cust_height|escape:"htmlall":"UTF-8"};
-    var sampleProductId = {$getPriceDetails->sample_product|escape:"htmlall":"UTF-8"};
-    var rootUrl = '{$rootUrl|escape:"htmlall":"UTF-8"}';
+    var pricePerMeterSq = {$getPriceDetails->sq_meter_price};
+    var allowedMaxWidth = {$getPriceDetails->cust_width};
+    var allowedMaxHeight = {$getPriceDetails->cust_height};
+    var sampleProductId = {$getPriceDetails->sample_product};
+    var rootUrl = '{$rootUrl}';
     var Cropper = window.Cropper;
     var URL = window.URL || window.webkitURL;
     var container = document.querySelector('.img-container');
