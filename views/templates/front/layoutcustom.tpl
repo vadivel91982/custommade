@@ -36,13 +36,13 @@
                                     product_specific_price['{$key_specific_price}'] = '{$specific_price_value}';
     {/foreach}
                                     var specific_currency = {if $product->specificPrice AND $product->specificPrice.id_currency}true{else}false{/if};
-                                        var group_reduction = '{$group_reduction}';
-                                        var default_eco_tax = {$product->ecotax};
-                                        var ecotaxTax_rate = {$ecotaxTax_rate};
+                                        var group_reduction = '{$group_reduction|escape:"htmlall":"UTF-8"}';
+                                        var default_eco_tax = {$product->ecotax|escape:'htmlall':'UTF-8'};
+                                        var ecotaxTax_rate = {$ecotaxTax_rate|escape:'htmlall':'UTF-8'};
                                         var currentDate = '{$smarty.now|date_format:'%Y-%m-%d %H:%M:%S'}';
                                         var maxQuantityToAllowDisplayOfLastQuantityMessage = {$last_qties};
                                         var noTaxForThisProduct = {if $no_tax == 1}true{else}false{/if};
-                                            var displayPrice = {$priceDisplay};
+                                            var displayPrice = {$priceDisplay|escape:'htmlall':'UTF-8'};
                                             var productReference = '{$product->reference|escape:'htmlall':'UTF-8'}';
                                             var productAvailableForOrder = {if (isset($restricted_country_mode) AND $restricted_country_mode) OR $PS_CATALOG_MODE}'0'{else}'{$product->available_for_order}'{/if};
                                                     var productShowPrice = '{if !$PS_CATALOG_MODE}{$product->show_price}{else}0{/if}';
