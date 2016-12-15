@@ -1,5 +1,4 @@
 <?php
-
 /**
  * NOTICE OF LICENSE
  *
@@ -13,13 +12,16 @@
  *
  * Support <support@202-ecommerce.com>
  */
+
 if (!defined('_PS_VERSION_')) {
     die(header('HTTP/1.0 404 Not Found'));
 }
 
-class CustomMadeGenerateimageModuleFrontController extends ModuleFrontController {
+class CustomMadeGenerateimageModuleFrontController extends ModuleFrontController
+{
 
-    public function __construct() {
+    public function __construct()
+    {
         parent::__construct();
         //$select = "SELECT * FROM "._DB_PREFIX_."options WHERE 1 and status = 'pending' limit 5";
         $select = "SELECT * FROM " . _DB_PREFIX_ . "options WHERE 1";
@@ -69,7 +71,8 @@ class CustomMadeGenerateimageModuleFrontController extends ModuleFrontController
         die;
     }
 
-    private function generateFinalImage($config) {
+    private function generateFinalImage($config)
+    {
         if (isset($config['hd_image_url']) && filter_var($config['hd_image_url'], FILTER_VALIDATE_URL)) {
             //$imageData = Tools::file_get_contents($config['hd_image_url']);
             $imageData = $this->grab_image($config['hd_image_url']);
@@ -105,7 +108,8 @@ class CustomMadeGenerateimageModuleFrontController extends ModuleFrontController
         }
     }
 
-    public function grab_image($url) {
+    public function grab_image($url)
+    {
         $ch = curl_init();
         curl_setopt($ch, CURLOPT_URL, $url);
         curl_setopt($ch, CURLOPT_HEADER, false);
