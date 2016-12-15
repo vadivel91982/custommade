@@ -46,7 +46,7 @@
                                             var productReference = '{$product->reference|escape:'htmlall':'UTF-8'}';
                                             var productAvailableForOrder = {if (isset($restricted_country_mode) AND $restricted_country_mode) OR $PS_CATALOG_MODE}'0'{else}'{$product->available_for_order}'{/if};
                                                     var productShowPrice = '{if !$PS_CATALOG_MODE}{$product->show_price}{else}0{/if}';
-                                                        var productUnitPriceRatio = '{$product->unit_price_ratio}';
+                                                        var productUnitPriceRatio = '{$product->unit_price_ratio|escape:"htmlall":"UTF-8"}';
                                                         var idDefaultImage = {if isset($cover.id_image_only)}{$cover.id_image_only}{else}0{/if};
                                                             var stock_management = {$stock_management|intval};
 
@@ -61,11 +61,11 @@
         {assign var='productPriceWithoutReduction' value=$product->getPriceWithoutReduct(true, $smarty.const.NULL)}
     {/if}
 
-                                                            var productPriceWithoutReduction = '{$productPriceWithoutReduction}';
-                                                            var productPrice = '{$productPrice}';
+                                                            var productPriceWithoutReduction = '{$productPriceWithoutReduction|escape:"htmlall":"UTF-8"}';
+                                                            var productPrice = '{$productPrice|escape:"htmlall":"UTF-8"}';
 
                                                             // Customizable field
-                                                            var img_ps_dir = '{$img_ps_dir}';
+                                                            var img_ps_dir = '{$img_ps_dir|escape:"htmlall":"UTF-8"}';
                                                             var customizationFields = new Array();
 
     {assign var='imgIndex' value=0}
