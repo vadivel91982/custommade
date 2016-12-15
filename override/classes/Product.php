@@ -45,15 +45,15 @@ class Product extends ProductCore
                 '-' . (int) $with_ecotax . '-' . (int) $id_customer . '-' . (int) $use_group_reduction . '-' . (int) $id_cart . '-' . (int) $real_quantity .
                 '-' . ($only_reduc ? '1' : '0') . '-' . ($use_reduc ? '1' : '0') . '-' . ($use_tax ? '1' : '0') . '-' . (int) $decimals;
         $specific_price = SpecificPrice::getSpecificPrice(
-            (int) $id_product, 
-            $id_shop, 
-            $id_currency, 
-            $id_country, 
-            $id_group, 
-            $quantity, 
-            $id_product_attribute, 
-            $id_customer, 
-            $id_cart, 
+            (int) $id_product,
+            $id_shop,
+            $id_currency,
+            $id_country,
+            $id_group,
+            $quantity,
+            $id_product_attribute,
+            $id_customer,
+            $id_cart,
             $real_quantity
         );
         if (isset(self::$_prices[$cache_id])) {
