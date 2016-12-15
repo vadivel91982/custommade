@@ -69,7 +69,7 @@
                 </select>
             </td>
             <td>
-                <p class="preference_description">{l s=' Days' mod='custommade'}</p>
+                
             </td>
         <p class="preference_description"></p>
         </tr>
