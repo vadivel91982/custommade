@@ -2,9 +2,9 @@
     font-family: 'Conv_Book Antiqua Regular';
     src: url('fonts/Book Antiqua Regular.eot');
     src: local('â˜º'), 
-        url('../fonts/Book Antiqua Regular.woff') format('woff'), 
-        url('../fonts/Book Antiqua Regular.ttf') format('truetype'), 
-        url('../fonts/Book Antiqua Regular.svg') format('svg');
+        url('fonts/Book Antiqua Regular.woff') format('woff'), 
+        url('fonts/Book Antiqua Regular.ttf') format('truetype'), 
+        url('fonts/Book Antiqua Regular.svg') format('svg');
     font-weight: normal;
     font-style: normal;
 }
