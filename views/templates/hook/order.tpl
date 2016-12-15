@@ -48,17 +48,17 @@
                 <tr class="product-line-row">
                         <!--<td>{$getHDDetails['hd_image_url'][$key]}</td>-->
                     <td>
-                        <a href="{$getHDDetails['image_link'][$key]}" target="_blank">
-                            <img style="width:50px;height:50px;" src="{$getHDDetails['image_link'][$key]}"/>
+                        <a href="{$getHDDetails['image_link'][$key]|escape:'htmlall':'UTF-8'}" target="_blank">
+                            <img style="width:50px;height:50px;" src="{$getHDDetails['image_link'][$key]|escape:'htmlall':'UTF-8'}"/>
                         </a>
                     </td>
                     <td>{$getHDDetails['product_name'][$key]}</td>
                     <td>
-                        X: {$getHDDetails['crop_options'][$key]->x}</br>
-                        Y: {$getHDDetails['crop_options'][$key]->y}</br>
-                        Width: {$getHDDetails['crop_options'][$key]->width}</br>
-                        Height: {$getHDDetails['crop_options'][$key]->height}</br>
-                        Rotate: {$getHDDetails['crop_options'][$key]->rotate}</br>
+                        X: {$getHDDetails['crop_options'][$key]->x|escape:'htmlall':'UTF-8'}</br>
+                        Y: {$getHDDetails['crop_options'][$key]->y|escape:'htmlall':'UTF-8'}</br>
+                        Width: {$getHDDetails['crop_options'][$key]->width|escape:'htmlall':'UTF-8'}</br>
+                        Height: {$getHDDetails['crop_options'][$key]->height|escape:'htmlall':'UTF-8'}</br>
+                        Rotate: {$getHDDetails['crop_options'][$key]->rotate|escape:'htmlall':'UTF-8'}</br>
                     </td>
                     <td>
                         {* edit/delete controls *}

@@ -64,7 +64,7 @@
                 <select name="sample_product" id="sample_product">
                     <option value="0">{l s='Please Select' mod='custommade'}</option>
                     {foreach from=$productList item=pdt}
-                        <option value="{$pdt['id_product']}" {if $pdt['id_product'] == $getCustomize->sample_product}selected{/if}>{$pdt['name']}</option>
+                        <option value="{$pdt['id_product']|escape:'htmlall':'UTF-8'}" {if $pdt['id_product'] == $getCustomize->sample_product}selected{/if}>{$pdt['name']|escape:'htmlall':'UTF-8'}</option>
                     {/foreach}
                 </select>
             </td>
