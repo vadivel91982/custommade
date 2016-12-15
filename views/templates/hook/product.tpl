@@ -24,7 +24,7 @@
 *}
 {if $prodCustomizeStatus == 1}
 	<p class="align_justify">
-		<a  href="{$link->getModuleLink('custommade', 'default', ['id_product' => {$id_product}])|escape:'htmlall':'UTF-8'}" title="{l s='Customize Wall Mural' mod='custommade'}">		
+		<a  href="{$link->getModuleLink('custommade', 'default', ['id_product' => {$id_product|escape:'htmlall':'UTF-8'}])}" title="{l s='Customize Wall Mural' mod='custommade'}">		
 			<button type="button" class="btn btn-success">Customize Wall Mural</button>
 		</a>
 	</p>
