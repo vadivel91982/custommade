@@ -1,4 +1,5 @@
 <?php
+
 /**
  * NOTICE OF LICENSE
  *
@@ -12,19 +13,16 @@
  *
  * Support <support@202-ecommerce.com>
  */
-
 if (!defined('_PS_VERSION_')) {
     die(header('HTTP/1.0 404 Not Found'));
 }
 
-class CustomMadeGenerateimageModuleFrontController extends ModuleFrontController
-{
+class CustomMadeGenerateimageModuleFrontController extends ModuleFrontController {
 
-    public function __construct()
-    {
+    public function __construct() {
         parent::__construct();
         //$select = "SELECT * FROM "._DB_PREFIX_."options WHERE 1 and status = 'pending' limit 5";
-        $select = "SELECT * FROM "._DB_PREFIX_."options WHERE 1";
+        $select = "SELECT * FROM " . _DB_PREFIX_ . "options WHERE 1";
         $results = Db::getInstance()->ExecuteS($select);
         foreach ($results as $row) {
             $id = $row['id'];
@@ -71,10 +69,10 @@ class CustomMadeGenerateimageModuleFrontController extends ModuleFrontController
         die;
     }
 
-    private function generateFinalImage($config)
-    {
+    private function generateFinalImage($config) {
         if (isset($config['hd_image_url']) && filter_var($config['hd_image_url'], FILTER_VALIDATE_URL)) {
-            $imageData = Tools::file_get_contents($config['hd_image_url']);
+            //$imageData = Tools::file_get_contents($config['hd_image_url']);
+            $imageData = grab_image($config['hd_image_url']);
             $tmpFileName = 'modules/custommade/tmp/tmp_image.jpg';
             file_put_contents($tmpFileName, $imageData);
             $im = imagecreatefromjpeg($tmpFileName);
@@ -106,4 +104,18 @@ class CustomMadeGenerateimageModuleFrontController extends ModuleFrontController
             return false;
         }
     }
+
+    public function grab_image($url) {
+        $ch = curl_init();
+        curl_setopt($ch, CURLOPT_URL, $url);
+        curl_setopt($ch, CURLOPT_HEADER, false);
+        curl_setopt($ch, CURLOPT_RETURNTRANSFER, true);
+        curl_setopt($ch, CURLOPT_SSL_VERIFYPEER, false);
+        curl_setopt($ch, CURLOPT_USERAGENT, 'Mozilla/5.0 (Windows NT 6.1) AppleWebKit/537.11 (KHTML, like Gecko) Chrome/23.0.1271.1 Safari/537.11');
+        $res = curl_exec($ch);
+        $rescode = curl_getinfo($ch, CURLINFO_HTTP_CODE);
+        curl_close($ch);
+        return $res;
+    }
+
 }
