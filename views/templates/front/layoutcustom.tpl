@@ -49,7 +49,6 @@
                                                         var productUnitPriceRatio = '{$product->unit_price_ratio}';
                                                         var idDefaultImage = {if isset($cover.id_image_only)}{$cover.id_image_only}{else}0{/if};
                                                             var stock_management = {$stock_management|intval};
-                                                            //var baseDir = '{$customBaseurl}';
 
     {if !isset($priceDisplayPrecision)}
         {assign var='priceDisplayPrecision' value=2}
@@ -191,8 +190,7 @@
                                         <div class="input-group">
                                             <div class="input-group-addon">
                                                 <i class="fa fa-arrows-h" aria-hidden="true"></i>
-                                            </div>										
-                                            <!--<input value="{$getPriceDetails->cust_width}" class="form-control" id="dataWidth" type="number" placeholder="300 cm max">-->
+                                            </div>
                                             <input value="300" class="form-control" id="dataWidth" type="number" placeholder="{$getPriceDetails->cust_width} cm max">
                                         </div>
                                     </div>
@@ -202,7 +200,6 @@
                                             <div class="input-group-addon">
                                                 <i class="fa fa-arrows-v" aria-hidden="true"></i>
                                             </div>
-                                            <!--<input value="{$getPriceDetails->cust_height}" class="form-control" id="dataHeight" type="number"  placeholder="300 cm max">-->
                                             <input value="300" class="form-control" id="dataHeight" type="number"  placeholder="{$getPriceDetails->cust_height} cm max">
                                         </div>
                                     </div>
@@ -316,7 +313,6 @@
                                 <span class="length-cm cmvalue">200cm</span>
                             </div>
                             <div class="img-container">
-                                <!--<img src="{$link->getImageLink($product->link_rewrite, $cover.id_image, 'large_default')}" alt="Picture">-->
                                 <img src="{$image_direct_url}" alt="Picture"/>
                             </div>
                             <div class="img-resize-right imr_right">
@@ -382,7 +378,6 @@
                             <!-- 'tabs-right' for right tabs -->
                             {foreach from=$getUnivers1 key=k item=universeImage}
                                 <li {if (1 == $k+1)}class="active"{/if}>
-                                   <!-- <a href="#scene{$k+1}" data-toggle="tab">{$universeImage['universe_name']|escape:'html':'UTF-8'}</a>-->
                                     <a href="#scene{$k+1}" data-toggle="tab"><img src="{$img_dir|escape:'htmlall':'UTF-8'}{$universeImage['image']|escape:'htmlall':'UTF-8'}" width="90px"></a>
                                 </li>
                             {/foreach}
@@ -414,17 +409,11 @@
                             <a href="#" class="exclusive">EN SAVOIR PLUS</a>
                         </p>
                     </div>                    
-                </div>				
-
-
-
+                </div>
             </div>
         </div>
     </form>
 {/if}
-
-
-
 
 <script>
 
