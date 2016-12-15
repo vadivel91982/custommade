@@ -393,8 +393,8 @@
                         <!-- Tab panes -->
                         <div class="tab-content">
                             {foreach from=$getUnivers1 key=k item=universeImage}
-                                <div class="tab-pane {if (1 == $k+1)}active{/if}" id="scene{$k+1}">
-                                    <div class="backdrop" style="height:76%;max-height:76%;" >
+                                <div class="tab-pane {if (1 == $k+1)}active{/if} docs-preview" id="scene{$k+1}">
+                                    <div class="backdrop" style="height:76%;">
                                         <img class="preview" src="" style="left:0;top:0;">
                                         <span class="gridlayout"></span> 										
                                     </div>
@@ -811,12 +811,18 @@
         }, function () {
             //jQuery('#buy_block').submit();
             ajaxCart.add(id_product, '', true, null, 1, null);
+            setTimeout(function () {
+
+                if (jQuery('.popin-product .product-img').length > 0) {
+                    jQuery('.popin-product .product-img').attr('src', '{$image_direct_url}');
+                }
+            }, 1000);
         });
 
     });
-    
-    jQuery(document).on('click','.attributes_more',function(){
-        jQuery('.list_accessories').css('height','auto');
+
+    jQuery(document).on('click', '.attributes_more', function () {
+        jQuery('.list_accessories').css('height', 'auto');
         jQuery(this).hide();
     });
 
