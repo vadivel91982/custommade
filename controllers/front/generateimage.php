@@ -72,7 +72,7 @@ class CustomMadeGenerateimageModuleFrontController extends ModuleFrontController
     private function generateFinalImage($config) {
         if (isset($config['hd_image_url']) && filter_var($config['hd_image_url'], FILTER_VALIDATE_URL)) {
             //$imageData = Tools::file_get_contents($config['hd_image_url']);
-            $imageData = grab_image($config['hd_image_url']);
+            $imageData = $this->grab_image($config['hd_image_url']);
             $tmpFileName = 'modules/custommade/tmp/tmp_image.jpg';
             file_put_contents($tmpFileName, $imageData);
             $im = imagecreatefromjpeg($tmpFileName);
