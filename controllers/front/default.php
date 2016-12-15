@@ -572,10 +572,11 @@ class CustomMadeDefaultModuleFrontController extends ModuleFrontController
         } else {
             $attributes_combinations = array();
         }
-        $this->context->smarty->assign(array(
-            'attributesCombinations' => $attributes_combinations,
-            'attribute_anchor_separator' => Configuration::get('PS_ATTRIBUTE_ANCHOR_SEPARATOR')
-                )
+        $this->context->smarty->assign(
+            array(
+                'attributesCombinations' => $attributes_combinations,
+                'attribute_anchor_separator' => Configuration::get('PS_ATTRIBUTE_ANCHOR_SEPARATOR')
+            )
         );
     }
 
