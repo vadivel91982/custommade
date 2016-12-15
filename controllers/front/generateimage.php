@@ -25,12 +25,11 @@ class CustomMadeGenerateimageModuleFrontController extends ModuleFrontController
         parent::__construct();
         $select = "SELECT * FROM "._DB_PREFIX_."options WHERE 1 and status = 'pending' limit 5";
         $results = Db::getInstance()->ExecuteS($select);
-        foreach ($results as $k => $row) {
+        foreach ($results as $row) {
             $id = $row['id'];
-            $orderId = $row['order_id'];
             $productId = $row['product_id'];
             $customOptions = Tools::jsonDecode($row['options']);
-            
+
             $id_image = Product::getCover($productId);
 // get Image by id
             if (sizeof($id_image) > 0) {
