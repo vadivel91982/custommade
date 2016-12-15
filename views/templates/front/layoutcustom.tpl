@@ -460,6 +460,7 @@
         zoomable: false,
         guides: false,
         cropBoxResizable: false,
+		movable: false,
 
         ready: function (e) {
             if (jQuery.trim(sessionStorage.cropData) != '') {
