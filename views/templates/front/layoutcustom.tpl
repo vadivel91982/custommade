@@ -815,6 +815,8 @@
 
                 if (jQuery('.popin-product .product-img').length > 0) {
                     jQuery('.popin-product .product-img').attr('src', '{$image_direct_url}');
+                    jQuery('.popin-title').html('1 x <strong>{$product->name}</strong>');
+                    jQuery('.popin-reference').html('Référence : {$product->reference}');
                 }
             }, 1000);
         });
