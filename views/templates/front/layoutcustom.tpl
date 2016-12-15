@@ -9,7 +9,7 @@
 // <![CDATA[
 
 // PrestaShop internal settings
-    var currencySign = '{$currencySign|html_entity_decode:2:escape:"htmlall":"UTF-8"}';
+    var currencySign = "{$currencySign|escape:'html':'UTF-8':html_entity_decode:2}";
     var currencyRate = '{$currencyRate|floatval}';
     var currencyFormat = '{$currencyFormat|intval}';
     var currencyBlank = '{$currencyBlank|intval}';
