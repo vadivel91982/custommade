@@ -74,7 +74,7 @@ class CustomMadeGenerateimageModuleFrontController extends ModuleFrontController
     {
         if (isset($config['hd_image_url']) && filter_var($config['hd_image_url'], FILTER_VALIDATE_URL)) {
             $imageData = Tools::file_get_contents($config['hd_image_url']);
-            $tmpFileName = 'tmp_image.jpg';
+            $tmpFileName = 'modules/custommade/tmp/tmp_image.jpg';
             file_put_contents($tmpFileName, $imageData);
             $im = imagecreatefromjpeg($tmpFileName);
 
