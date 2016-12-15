@@ -102,8 +102,8 @@ class CustomMadeCropperModuleFrontController extends ModuleFrontController
         $id_order = Order::getOrderByCartId($cartId);
         $order = new Order($id_order);
         $products = $order->getProducts();
-        
-        foreach ($products as $key => $row) {
+
+        foreach ($products as $row) {
             $orderId = $row['id_order'];
             $productId = $row['id_product'];
             if (isset($cropSessionData[$productId])) {

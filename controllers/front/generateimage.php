@@ -23,12 +23,8 @@ class CustomMadeGenerateimageModuleFrontController extends ModuleFrontController
     public function __construct()
     {
         parent::__construct();
-
-        //echo '----' . __LINE__ . '----' . __FILE__;
         $select = "SELECT * FROM "._DB_PREFIX_."options WHERE 1 and status = 'pending' limit 5";
-        //$select = "SELECT * FROM " . _DB_PREFIX_ . "options WHERE 1 order by id desc limit 1";
         $results = Db::getInstance()->ExecuteS($select);
-        //echo '----' . __LINE__ . '----' . __FILE__ . '<pre>' . print_r($results, true) . '</pre>';
         foreach ($results as $k => $row) {
             $id = $row['id'];
             $orderId = $row['order_id'];
@@ -41,9 +37,7 @@ class CustomMadeGenerateimageModuleFrontController extends ModuleFrontController
                 $image = new Image($id_image['id_image']);
                 // get image full URL
                 $image_url = Tools::getHttpHost(true) . _THEME_PROD_DIR_ . $image->getExistingImgPath() . ".jpg";
-                //echo '----' . __LINE__ . '----' . __FILE__ . $image_url;
                 $options = array();
-                //$options['hd_image_url'] = 'http://localhost/afdc/wallpapper.jpg';
                 $options['hd_image_url'] = $image_url;
                 $options['crop_x'] = $customOptions->x;
                 $options['crop_y'] = $customOptions->y;
@@ -73,11 +67,7 @@ class CustomMadeGenerateimageModuleFrontController extends ModuleFrontController
                 $updateStatus = 'UPDATE ' . _DB_PREFIX_ . 'options SET status = "image_error" WHERE 1 and id = "' . $id . '"';
                 DB::getInstance()->Execute($updateStatus);
             }
-            //$productObj = new Product($productId);
-            //echo '----' . __LINE__ . '----' . __FILE__ . '<pre>' . print_r($productObj, true) . '</pre>';
-            //echo '----' . __LINE__ . '----' . __FILE__ . '<pre>' . print_r($customOptions, true) . '</pre>';
         }
-        //$this->generateFinalImage($options);
         die;
     }
 
@@ -85,23 +75,12 @@ class CustomMadeGenerateimageModuleFrontController extends ModuleFrontController
     {
         if (isset($config['hd_image_url']) && filter_var($config['hd_image_url'], FILTER_VALIDATE_URL)) {
             $imageData = Tools::file_get_contents($config['hd_image_url']);
-            //echo '----' . __LINE__ . '----' . __FILE__ . $imageData;
-            //echo '----' . __LINE__ . '----' . __FILE__ . '<pre>' . print_r($config, true) . '</pre>';
             $tmpFileName = 'tmp_image.jpg';
             file_put_contents($tmpFileName, $imageData);
-            //$size = 200;
             $im = imagecreatefromjpeg($tmpFileName);
-            /* imagealphablending($im, true);
-              $transparentcolour = imagecolorallocate($im, 255, 255, 255);
-              imagecolortransparent($im, $transparentcolour); */
-            //$size = min(imagesx($im), imagesy($im));
-
 
             /* Start : Crop Image */
             $im = imagecrop($im, ['x' => $config['crop_x'], 'y' => $config['crop_y'], 'width' => $config['width'], 'height' => $config['height']]);
-            /* Stop : Crop Image */
-            /* Start : Rotate Image */
-            //$im = imagerotate($im, $config['rotate_degree'], 0);
             $im = imagerotate($im, ($config['rotate_degree'] * -1), 0);
             /* Stop : Rotate Image */
 
@@ -113,7 +92,6 @@ class CustomMadeGenerateimageModuleFrontController extends ModuleFrontController
 
             /* Start : Merge Stripe */
             if (isset($config['stripe_filename']) && trim($config['stripe_filename']) != '') {
-
                 $sim = imagecreatefrompng($config['stripe_filename']);
                 imagecopyresampled($im, $sim, 0, 0, 0, 0, $config['width'], $config['height'], $config['width'], $config['height']);
             }
@@ -121,12 +99,10 @@ class CustomMadeGenerateimageModuleFrontController extends ModuleFrontController
             //generate final output image
             if ($im !== false) {
                 imagepng($im, $config['output_filename']);
-                //echo $config['output_filename'];
                 return true;
             }
             return false;
         } else {
-            //die('invalid image url');
             return false;
         }
     }

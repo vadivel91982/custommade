@@ -299,7 +299,6 @@ class Custommade extends Module
      */
     public function hookdisplayAdminProductsExtra($params)
     {
-        $ver = _PS_VERSION_;
         $category = new Category(Context::getContext()->shop->getCategory(), (int) Context::getContext()->language->id);
         $nb = (int) (Configuration::get('MOD_NBR'));
         $productsList = $category->getProducts((int) Context::getContext()->language->id, 1, ($nb ? $nb : 10));

@@ -12,6 +12,7 @@
  *
  * Support <support@202-ecommerce.com>
  */
+
 if (!defined('_PS_VERSION_')) {
     die(header('HTTP/1.0 404 Not Found'));
 }
@@ -371,7 +372,7 @@ class CustomMadeDefaultModuleFrontController extends ModuleFrontController
         if (isset($images[0])) {
             $this->context->smarty->assign('mainImage', $images[0]);
         }
-        foreach ($images as $k => $image) {
+        foreach ($images as $image) {
             if ($image['cover']) {
                 $this->context->smarty->assign('mainImage', $image);
                 $cover = $image;
@@ -425,7 +426,7 @@ class CustomMadeDefaultModuleFrontController extends ModuleFrontController
         if (is_array($attributes_groups) && $attributes_groups) {
             $combination_images = $this->product->getCombinationImages($this->context->language->id);
             $combination_prices_set = array();
-            foreach ($attributes_groups as $k => $row) {
+            foreach ($attributes_groups as $row) {
                 // Color management
                 if (isset($row['is_color_group']) && $row['is_color_group'] && (isset($row['attribute_color']) && $row['attribute_color']) || (file_exists(_PS_COL_IMG_DIR_ . $row['id_attribute'] . '.jpg'))) {
                     $colors[$row['id_attribute']]['value'] = $row['attribute_color'];

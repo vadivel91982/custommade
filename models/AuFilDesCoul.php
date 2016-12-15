@@ -69,7 +69,6 @@ class AuFilDesCoul extends ObjectModel
         if (is_null($id_product) === false) {
             $sql .= " AND a.id_product = '".(int)$id_product."' ";
         }
-            //$sql .= " AND a.prod_customize = '".(int)$id_product."' ";
 
         $objs_ids = Db::getInstance()->ExecuteS($sql);
 
@@ -113,15 +112,12 @@ class AuFilDesCoul extends ObjectModel
         $select = 'SELECT * FROM `'._DB_PREFIX_.'options` WHERE `order_id` = '.$orderId.' ORDER BY id ASC';
         $results = Db::getInstance()->ExecuteS($select);
         $options = array();
-        foreach ($results as $k => $row) {
+        foreach ($results as $row) {
             $id = $row['id'];
             $orderId = $row['order_id'];
             $productId = $row['product_id'];
             $customOptions = Tools::jsonDecode($row['options']);
             $product = new Product((int)$productId);
-
-            //$image = $moduleName."/output/".$productId.".png";
-            //echo '----' . __LINE__ . '----' . __FILE__ . Tools::getHttpHost(true).__PS_BASE_URI__."modules/custommade/output/".$id.".png";
             $image = $moduleName."/output/".$id.".png";
             $ext = pathinfo($image, PATHINFO_EXTENSION);
             $image_url = ImageManager::thumbnail($image, $productId.".png", 50, $ext, true, true);
@@ -129,14 +125,8 @@ class AuFilDesCoul extends ObjectModel
             $options['hd_image_url'][] = $image_url;
             $options['productId'][] = $productId;
             $options['image_link'][] = Tools::getHttpHost(true).__PS_BASE_URI__."modules/custommade/output/".$id.".png";
-            /*$options['crop_x'][] = $customOptions->x;
-            $options['crop_y'][] = $customOptions->y;
-            $options['width'][] = $customOptions->width;
-            $options['height'][] = $customOptions->height;
-            $options['rotate_degree'][] = $customOptions->rotate;*/
             $options['crop_options'][] = $customOptions;
         }
         return $options;
-        //echo '----' . __LINE__ . '----' . __FILE__ . '<pre>' . print_r($product->name['1'], true) . '</pre>';
     }
 }

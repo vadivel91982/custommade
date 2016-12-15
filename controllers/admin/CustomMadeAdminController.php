@@ -21,8 +21,6 @@ require_once _PS_MODULE_DIR_.'custommade/classes/Universe.php';
 class CustomMadeAdminController extends ModuleAdminController
 {
 
-    //var $custommadeObj;
-    //var $custModuleFolderName;
     public $custommadeObj;
     public $custModuleFolderName;
     public function __construct()
@@ -36,7 +34,6 @@ class CustomMadeAdminController extends ModuleAdminController
         $this->show_toolbar_options = true;
         $this->lang = false;
         $this->addRowAction('edit');
-        //$this->addRowAction('view');
         $this->addRowAction('delete');
         $this->custommadeObj = new Custommade();
         $this->custModuleFolderName = _PS_MODULE_DIR_.$this->custommadeObj->name.'/views/img/';
@@ -181,17 +178,13 @@ class CustomMadeAdminController extends ModuleAdminController
                                 }
                             }
                         }
-                        if (count($this->errors)) {
-                            $ret = false;
-                        }
 
                         $universe_name = (string)Tools::getValue('universe_name');
                         $thump = 'universe-'.Tools::stripslashes($imageName[0]).'.'.$imageType[1];
                         $image = $imgName;
-                        
+
                         $active = (int)Tools::getValue('active');
                         $this->imageupload($id_universe, $universe_name, $image, $thump, $active);
-                        $ret = true;
                     }
                 }
             }
