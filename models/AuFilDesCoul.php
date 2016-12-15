@@ -26,6 +26,7 @@ class AuFilDesCoul extends ObjectModel
     public $cust_width;
     public $sq_meter_price;
     public $cust_delivery;
+    public $sample_product;
 
     public static $definition = array(
         'table'     => 'aufildes',
@@ -49,6 +50,9 @@ class AuFilDesCoul extends ObjectModel
                 'type' => parent::TYPE_STRING
             ),
             'cust_delivery' => array(
+                'type' => parent::TYPE_INT
+            ),
+            'sample_product' => array(
                 'type' => parent::TYPE_INT
             ),
         )

@@ -291,8 +291,10 @@
                                             </p>
                                         {/if}
                                         <p>Livraison sous {$getPriceDetails->cust_delivery} jours</p>
-                                        <a href="javascript:void(0)" id="sampleButton" onclick="addSampleToCart(this);
+                                        {if ($getPriceDetails->sample_product > 0)}
+                                        <a href="javascript:void(0)" id="sampleButton" onclick="addSampleToCart();
                                                 return false;">Commander un échantillon</a>
+                                        {/if}
                                     </div>
 
                                     {assign var="color_feature" value=""}
@@ -427,7 +429,6 @@
 
 <script>
 
-
     //window.onload = function () {
 
     //'use strict';
@@ -435,6 +436,7 @@
     var pricePerMeterSq = {$getPriceDetails->sq_meter_price};
     var allowedMaxWidth = {$getPriceDetails->cust_width};
     var allowedMaxHeight = {$getPriceDetails->cust_height};
+    var sampleProductId = {$getPriceDetails->sample_product};
     var rootUrl = '{$rootUrl}';
     var Cropper = window.Cropper;
     var URL = window.URL || window.webkitURL;
@@ -823,6 +825,12 @@
         jQuery('.imr_right').css('margin-top', cropper.getCropBoxData().top + 'px');
         jQuery('#dimension_indicator_right').height(cropper.getCropBoxData().height);
         jQuery('.imr_right .cmvalue').text(cropper.getData(true).height + 'cm');
+    }
+    
+    function addSampleToCart(){
+        if(sampleProductId > 0){
+            ajaxCart.add(sampleProductId, '', true, null, 1, null);
+        }
     }
 
 
