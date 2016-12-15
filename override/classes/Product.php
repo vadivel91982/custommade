@@ -45,7 +45,16 @@ class Product extends ProductCore
                 '-' . (int) $with_ecotax . '-' . (int) $id_customer . '-' . (int) $use_group_reduction . '-' . (int) $id_cart . '-' . (int) $real_quantity .
                 '-' . ($only_reduc ? '1' : '0') . '-' . ($use_reduc ? '1' : '0') . '-' . ($use_tax ? '1' : '0') . '-' . (int) $decimals;
         $specific_price = SpecificPrice::getSpecificPrice(
-            (int) $id_product, $id_shop, $id_currency, $id_country, $id_group, $quantity, $id_product_attribute, $id_customer, $id_cart, $real_quantity
+            (int) $id_product, 
+            $id_shop, 
+            $id_currency, 
+            $id_country, 
+            $id_group, 
+            $quantity, 
+            $id_product_attribute, 
+            $id_customer, 
+            $id_cart, 
+            $real_quantity
         );
         if (isset(self::$_prices[$cache_id])) {
 
@@ -69,34 +78,26 @@ class Product extends ProductCore
             }
             $res = Db::getInstance(_PS_USE_SQL_SLAVE_)->executeS($sql);
             if (is_array($res) && count($res)) {
-                //echo '----' . __LINE__ . '----' . __FILE__ . '<pre>' . print_r($res, true) . '</pre>';
                 foreach ($res as $row) {
                     $customPrice = $row['price'];
                     if ($row['id_product_attribute'] == 0) {
-                        //$cookie = new Cookie('psAdmin');
-                        //echo '----' . __LINE__ . '----' . __FILE__ . $cookie->id_employee;
-                        //echo '----' . __LINE__ . '----' . __FILE__ . $id_product;
                         $cookie = new Cookie('crop_data');
-                        //echo '----' . __LINE__ . '----' . __FILE__ . '<pre>' . print_r($cookie->user_cart_id, true) . '</pre>';
-
                         $cropSessionData = unserialize($cookie->product_crop_data);
-                        
+
                         if (isset($cropSessionData[$id_product]) && trim($cropSessionData[$id_product]) != '') {
                             $customJsonData = Tools::jsonDecode($cropSessionData[$id_product]);
                             $customPrice = $customJsonData->customPrice;
                         }
-                        
+
                     } else {
                         $customPrice = $row['price'];
                     }
 
                     $array_tmp = array(
                         'price' => $customPrice,
-                        //'price' => $row['price'],
                         'ecotax' => $row['ecotax'],
                         'attribute_price' => (isset($row['attribute_price']) ? $row['attribute_price'] : null)
                     );
-                    //echo '----' . __LINE__ . '----' . __FILE__ . '<pre>' . print_r($array_tmp, true) . '</pre>';
                     self::$_pricesLevel2[$cache_id_2][(int) $row['id_product_attribute']] = $array_tmp;
                     if (isset($row['default_on']) && $row['default_on'] == 1) {
                         self::$_pricesLevel2[$cache_id_2][0] = $array_tmp;
@@ -143,7 +144,8 @@ class Product extends ProductCore
             }
             if ($use_tax) {
                 $tax_manager = TaxManagerFactory::getManager(
-                    $address, (int) Configuration::get('PS_ECOTAX_TAX_RULES_GROUP_ID')
+                    $address,
+                    (int) Configuration::get('PS_ECOTAX_TAX_RULES_GROUP_ID')
                 );
                 $ecotax_tax_calculator = $tax_manager->getTaxCalculator();
                 $price += $ecotax_tax_calculator->addTaxes($ecotax);
