@@ -62,7 +62,7 @@
             <td valign="top"><label for="productlist_custom" style="width:300px;">{l s='Sample Product :' mod='custommade'}</label></td>
             <td>
                 <select name="sample_product" id="sample_product">
-                    <option value="0">{l s='Please Select'}</option>
+                    <option value="0">{l s='Please Select' mod='custommade'}</option>
                     {foreach from=$productList item=pdt}
                         <option value="{$pdt['id_product']}" {if $pdt['id_product'] == $getCustomize->sample_product}selected{/if}>{$pdt['name']}</option>
                     {/foreach}
