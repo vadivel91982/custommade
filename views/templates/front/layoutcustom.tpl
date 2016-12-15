@@ -292,8 +292,8 @@
                                         {/if}
                                         <p>Livraison sous {$getPriceDetails->cust_delivery} jours</p>
                                         {if ($getPriceDetails->sample_product > 0)}
-                                        <a href="javascript:void(0)" id="sampleButton" onclick="addSampleToCart();
-                                                return false;">Commander un échantillon</a>
+                                            <a href="javascript:void(0)" id="sampleButton" onclick="addSampleToCart();
+                                                    return false;">Commander un échantillon</a>
                                         {/if}
                                     </div>
 
@@ -396,7 +396,7 @@
                                 <div class="tab-pane {if (1 == $k+1)}active{/if}" id="scene{$k+1}">
                                     <div class="backdrop" style="height:76%;max-height:76%;" >
                                         <img class="preview" src="" style="left:0;top:0;">
-                                        <span class="gridlayout"></span>
+                                        <span class="gridlayout"></span> 										
                                     </div>
                                     <div class="overlay">
                                         <img src="{$img_dir|escape:'htmlall':'UTF-8'}{$universeImage['image']|escape:'htmlall':'UTF-8'}">
@@ -460,7 +460,7 @@
         zoomable: false,
         guides: false,
         cropBoxResizable: false,
-		movable: false,
+        movable: false,
 
         ready: function (e) {
             if (jQuery.trim(sessionStorage.cropData) != '') {
@@ -469,15 +469,21 @@
                 //console.log(cropper.getData());
                 if (jQuery.trim(sessionStorage.hasGrid) == '1') {
                     jQuery('.gridlayout').addClass('gridbg');
+                    setTimeout(function () {
+                        var previewWidth = jQuery('.backdrop .preview').width();
+                        var previewHeight = jQuery('.backdrop .preview').height();
+                        $('.backdrop .gridlayout').css('width', previewWidth + 'px');
+                        $('.backdrop .gridlayout').css('height', previewHeight + 'px');
+                    }, 500);
                 }
                 jQuery('#dataWidth').val(prevCropDataOrg.width);
                 jQuery('#dataHeight').val(prevCropDataOrg.height);
             } else {
                 var newOpt = {
                     width: 300,
-                    height:300,
-                    x:0,
-                    y:0
+                    height: 300,
+                    x: 0,
+                    y: 0
                 };
                 cropper.setData(newOpt);
             }
@@ -691,6 +697,10 @@
 
         if ($('.gridlayout').hasClass('gridbg')) {
             sessionStorage.hasGrid = '1';
+            var previewWidth = jQuery('.backdrop .preview').width();
+            var previewHeight = jQuery('.backdrop .preview').height();
+            $('.backdrop .gridlayout').css('width', previewWidth + 'px');
+            $('.backdrop .gridlayout').css('height', previewHeight + 'px');
         } else {
             sessionStorage.hasGrid = '0';
         }
@@ -831,12 +841,13 @@
         jQuery('#dimension_indicator_right').height(cropper.getCropBoxData().height);
         jQuery('.imr_right .cmvalue').text(cropper.getData(true).height + 'cm');
     }
-    
-    function addSampleToCart(){
-        if(sampleProductId > 0){
+
+    function addSampleToCart() {
+        if (sampleProductId > 0) {
             ajaxCart.add(sampleProductId, '', true, null, 1, null);
         }
     }
+
 
 
     $("#button-scroll").click(function () {

@@ -635,3 +635,9 @@ button.image-grid {
 @media(min-width:1200px) {	
 
 }
+
+.gridlayout {
+	margin:auto;
+	left:0px;
+	right:0px;
+}
