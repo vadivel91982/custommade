@@ -37,9 +37,6 @@
                 <th>
                     <span class="title_box ">{l s='Options' mod='custommade'}</span>
                 </th>
-                <th>
-                    <span class="title_box ">{l s='View' mod='custommade'}</span>
-                </th>
                 <th><span class="title_box ">{l s='Print' mod='custommade'}</span></th>
             </tr>
         </thead>
@@ -58,17 +55,7 @@
                         Width: {$getHDDetails['crop_options'][$key]->width|escape:'htmlall':'UTF-8'}</br>
                         Height: {$getHDDetails['crop_options'][$key]->height|escape:'htmlall':'UTF-8'}</br>
                         Rotate: {$getHDDetails['crop_options'][$key]->rotate|escape:'htmlall':'UTF-8'}</br>
-                    </td>
-                    <td>
-                        {* edit/delete controls *}
-                        <div class="btn-group">
-                            <button type="button" class="btn btn-default edit_product_change_link">
-                                <i class="icon-search-plus"></i>
-                                {l s='View' mod='custommade'}
-                            </button>
-                        </div>
-                        {* Update controls *}
-                    </td>
+                    </td>                    
                     <td>
                         {* edit/delete controls *}
                         <div class="btn-group">

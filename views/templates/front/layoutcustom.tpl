@@ -165,7 +165,7 @@
                         <div class="prod_desc">
                             <h2>PERSONNALISEZ LE PAPIER PEINT KUBE</h2>
                             <p>
-                                {$product->description_short|escape:'htmlall':'UTF-8'}
+                                {$product->description_short}
                             </p>
                         </div>
                     </div>
