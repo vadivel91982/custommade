@@ -470,6 +470,8 @@
                 if (jQuery.trim(sessionStorage.hasGrid) == '1') {
                     jQuery('.gridlayout').addClass('gridbg');
                 }
+                jQuery('#dataWidth').val(prevCropDataOrg.width);
+                jQuery('#dataHeight').val(prevCropDataOrg.height);
             } else {
                 var newOpt = {
                     width: 300,
@@ -766,6 +768,7 @@
         cropper.setData(newOpt);
         dynamicImage = image.cropper.getCroppedCanvas().toDataURL('image/jpeg', 1);
         $('.preview').attr('src', dynamicImage);
+        setCropToSession();
         setIndicatorPosition();
         setNewCustomPrice();
     });
@@ -783,6 +786,7 @@
         cropper.setData(newOpt);
         dynamicImage = image.cropper.getCroppedCanvas().toDataURL('image/jpeg', 1);
         $('.preview').attr('src', dynamicImage);
+        setCropToSession();
         setIndicatorPosition();
         setNewCustomPrice();
     });
