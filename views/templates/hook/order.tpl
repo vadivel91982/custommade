@@ -46,13 +46,12 @@
         <tbody>
             {foreach $getHDDetails['product_name'] as $key => $hdorder}	
                 <tr class="product-line-row">
-                        <!--<td>{$getHDDetails['hd_image_url'][$key]}</td>-->
                     <td>
                         <a href="{$getHDDetails['image_link'][$key]|escape:'htmlall':'UTF-8'}" target="_blank">
                             <img style="width:50px;height:50px;" src="{$getHDDetails['image_link'][$key]|escape:'htmlall':'UTF-8'}"/>
                         </a>
                     </td>
-                    <td>{$getHDDetails['product_name'][$key]}</td>
+                    <td>{$getHDDetails['product_name'][$key]|escape:'htmlall':'UTF-8'}</td>
                     <td>
                         X: {$getHDDetails['crop_options'][$key]->x|escape:'htmlall':'UTF-8'}</br>
                         Y: {$getHDDetails['crop_options'][$key]->y|escape:'htmlall':'UTF-8'}</br>
