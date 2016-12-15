@@ -29,11 +29,13 @@ if (!defined('_PS_VERSION_')) {
 }
 require_once dirname(__FILE__) . '/models/AuFilDesCoul.php';
 
-class Custommade extends Module {
+class Custommade extends Module
+{
 
     protected $config_form = false;
 
-    public function __construct() {
+    public function __construct()
+    {
         $this->name = 'custommade';
         $this->default_name = 'aufildes';
         $this->universe = 'universe';
@@ -62,7 +64,8 @@ class Custommade extends Module {
      * Don't forget to create update methods if needed:
      * http://doc.prestashop.com/display/PS16/Enabling+the+Auto-Update
      */
-    public function install() {
+    public function install()
+    {
         Configuration::updateValue('CUSTOMMADE_LIVE_MODE', false);
         // Install Tabs
         $parent_tab = new Tab();
@@ -104,7 +107,8 @@ class Custommade extends Module {
      * Install SQL
      * @return boolean
      */
-    private function installSQL() {
+    private function installSQL()
+    {
         $sql = 'CREATE TABLE IF NOT EXISTS `' . _DB_PREFIX_ . Tools::strtolower($this->default_name) . '` (
                 `id_afdc` INT UNSIGNED NOT NULL AUTO_INCREMENT,
                 `id_product` INT UNSIGNED NOT NULL DEFAULT 1,
@@ -143,7 +147,8 @@ class Custommade extends Module {
         return $return;
     }
 
-    public function uninstall() {
+    public function uninstall()
+    {
         if (!parent::uninstall() || !$this->unregisterHook('header') || !Configuration::deleteByName('CUSTOMMADE_LIVE_MODE')) {
             return false;
         }
@@ -169,7 +174,8 @@ class Custommade extends Module {
     /**
      * Load the configuration form
      */
-    public function getContent() {
+    public function getContent()
+    {
         /**
          * If values have been submitted in the form, process.
          */
@@ -185,7 +191,8 @@ class Custommade extends Module {
     /**
      * Create the form that will be displayed in the configuration of your module.
      */
-    protected function renderForm() {
+    protected function renderForm()
+    {
         $helper = new HelperForm();
 
         $helper->show_toolbar = false;
@@ -212,7 +219,8 @@ class Custommade extends Module {
     /**
      * Create the structure of your form.
      */
-    protected function getConfigForm() {
+    protected function getConfigForm()
+    {
         return array(
             'form' => array(
                 'legend' => array(
@@ -263,7 +271,8 @@ class Custommade extends Module {
     /**
      * Set values for the inputs.
      */
-    protected function getConfigFormValues() {
+    protected function getConfigFormValues()
+    {
         return array(
             'CUSTOMMADE_LIVE_MODE' => Configuration::get('CUSTOMMADE_LIVE_MODE', true),
             'CUSTOMMADE_ACCOUNT_EMAIL' => Configuration::get('CUSTOMMADE_ACCOUNT_EMAIL', 'contact@prestashop.com'),
@@ -274,7 +283,8 @@ class Custommade extends Module {
     /**
      * Save form data.
      */
-    protected function postProcess() {
+    protected function postProcess()
+    {
         $form_values = $this->getConfigFormValues();
 
         foreach (array_keys($form_values) as $key) {
@@ -285,7 +295,8 @@ class Custommade extends Module {
     /**
      * Add the CSS & JavaScript files you want to be loaded in the BO.
      */
-    public function hookBackOfficeHeader() {
+    public function hookBackOfficeHeader()
+    {
         if (Tools::getValue('module_name') == $this->name) {
             $this->context->controller->addJS($this->_path . 'views/js/back.js');
             $this->context->controller->addCSS($this->_path . 'views/css/back.css');
@@ -297,7 +308,8 @@ class Custommade extends Module {
      * @param array params
      * @return boolean
      */
-    public function hookdisplayAdminProductsExtra($params) {
+    public function hookdisplayAdminProductsExtra($params)
+    {
         $ver = _PS_VERSION_;
         $category = new Category(Context::getContext()->shop->getCategory(), (int) Context::getContext()->language->id);
         $nb = (int) (Configuration::get('MOD_NBR'));
@@ -316,7 +328,8 @@ class Custommade extends Module {
      * @param array params
      * @return boolean
      */
-    public function hookdisplayAdminOrder($params) {
+    public function hookdisplayAdminOrder($params)
+    {
         $this->custommadeObj = new Custommade();
         $this->custModuleFolderName = _PS_MODULE_DIR_ . $this->custommadeObj->name;
         $order = new Order($params['id_order']);
@@ -334,7 +347,8 @@ class Custommade extends Module {
      * @param array params
      * @return boolean
      */
-    public function hookdisplayRightColumnProduct($params) {
+    public function hookdisplayRightColumnProduct($params)
+    {
         $product = new Product((int) Tools::getValue('id_product'));
         $prod_det = AuFilDesCoul::getAuFilDesByIDProduct((int) $product->id, true);
         //echo '----' . __LINE__ . '----' . __FILE__ . $prod_det->prod_customize;
@@ -358,18 +372,21 @@ class Custommade extends Module {
         return false;
     }
 
-    public function hookdisplayShoppingCartFooter($params) {
+    public function hookdisplayShoppingCartFooter($params)
+    {
         $this->context->controller->addJS($this->_path . 'views/js/croptosession.js');
     }
 
-    public function hookdisplayOrderConfirmation($params) {
+    public function hookdisplayOrderConfirmation($params)
+    {
         $this->context->controller->addJS($this->_path . 'views/js/orderconfirm.js');
     }
 
     /**
      * Add the CSS & JavaScript files you want to be added on the FO.
      */
-    public function hookHeader() {
+    public function hookHeader()
+    {
         $this->context->controller->addJS($this->_path . '/views/js/front.js');
         $this->context->controller->addCSS($this->_path . '/views/css/front.css');
     }
@@ -379,7 +396,8 @@ class Custommade extends Module {
      * @param array
      * @return boolean
      */
-    public function hookactionProductSave($product) {
+    public function hookactionProductSave($product)
+    {
         return $this->saveAndUpdate($_POST);
     }
 
@@ -388,7 +406,8 @@ class Custommade extends Module {
      * @param array
      * @return boolean
      */
-    private function saveAndUpdate($product) {
+    private function saveAndUpdate($product)
+    {
         $prod_save = AuFilDesCoul::getAuFilDesByIDProduct($product['id_product']);
         $customize = ($prod_save->id_product) ? $prod_save->id_product : '';
         if ($customize == '') {
@@ -410,5 +429,4 @@ class Custommade extends Module {
             }
         }
     }
-
 }
