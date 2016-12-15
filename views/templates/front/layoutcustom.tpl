@@ -9,7 +9,7 @@
 // <![CDATA[
 
 // PrestaShop internal settings
-    var currencySign = "{$currencySign|escape:'html':'UTF-8':html_entity_decode:2}";
+    var currencySign = "{$currencySign|escape:'htmlall':'UTF-8':html_entity_decode:2}";
     var currencyRate = '{$currencyRate|floatval}';
     var currencyFormat = '{$currencyFormat|intval}';
     var currencyBlank = '{$currencyBlank|intval}';
@@ -23,22 +23,22 @@
         var id_product = '{$product->id|intval}';
         var productHasAttributes = {if isset($groups)}true{else}false{/if};
             var quantitiesDisplayAllowed = {if $display_qties == 1}true{else}false{/if};
-                var quantityAvailable = {if $display_qties == 1 && $product->quantity}{$product->quantity}{else}0{/if};
+                var quantityAvailable = {if $display_qties == 1 && $product->quantity}{$product->quantity|escape:'htmlall':'UTF-8'}{else}0{/if};
                     var allowBuyWhenOutOfStock = {if $allow_oosp == 1}true{else}false{/if};
                         var availableNowValue = '{*{$product->available_now|escape:'quotes':'UTF-8'}*}';
                         var availableLaterValue = '{$product->available_later|escape:'quotes':'UTF-8'}';
-                        var productPriceTaxExcluded = {$product->getPriceWithoutReduct(true)|default:'null'} - {$product->ecotax};
-                        var reduction_percent = {if $product->specificPrice AND $product->specificPrice.reduction AND $product->specificPrice.reduction_type == 'percentage'}{$product->specificPrice.reduction*100}{else}0{/if};
+                        var productPriceTaxExcluded = {$product->getPriceWithoutReduct(true)|default:'null'} - {$product->ecotax|escape:'htmlall':'UTF-8'};
+                        var reduction_percent = {if $product->specificPrice AND $product->specificPrice.reduction AND $product->specificPrice.reduction_type == 'percentage'}{$product->specificPrice.reduction*100|escape:'htmlall':'UTF-8'}{else}0{/if};
                             var reduction_price = {if $product->specificPrice AND $product->specificPrice.reduction AND $product->specificPrice.reduction_type == 'amount'}{$product->specificPrice.reduction|floatval}{else}0{/if};
-                                var specific_price = {if $product->specificPrice AND $product->specificPrice.price}{$product->specificPrice.price}{else}0{/if};
+                                var specific_price = {if $product->specificPrice AND $product->specificPrice.price}{$product->specificPrice.price|escape:'htmlall':'UTF-8'}{else}0{/if};
                                     var product_specific_price = new Array();
     {foreach from=$product->specificPrice key='key_specific_price' item='specific_price_value'}
-                                    product_specific_price['{$key_specific_price}'] = '{$specific_price_value}';
+                                    product_specific_price["{$key_specific_price|escape:'htmlall':'UTF-8'}"] = "{$specific_price_value|escape:'htmlall':'UTF-8'}";
     {/foreach}
                                     var specific_currency = {if $product->specificPrice AND $product->specificPrice.id_currency}true{else}false{/if};
-                                        var group_reduction = '{$group_reduction}';
-                                        var default_eco_tax = {$product->ecotax};
-                                        var ecotaxTax_rate = {$ecotaxTax_rate};
+                                        var group_reduction = '{$group_reduction|escape:"htmlall":"UTF-8"}';
+                                        var default_eco_tax = {$product->ecotax|escape:"htmlall":"UTF-8"};
+                                        var ecotaxTax_rate = {$ecotaxTax_rate|escape:"htmlall":"UTF-8"};
                                         var currentDate = '{$smarty.now|date_format:'%Y-%m-%d %H:%M:%S'}';
                                         var maxQuantityToAllowDisplayOfLastQuantityMessage = {$last_qties};
                                         var noTaxForThisProduct = {if $no_tax == 1}true{else}false{/if};
