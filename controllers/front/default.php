@@ -72,14 +72,14 @@ class CustomMadeDefaultModuleFrontController extends ModuleFrontController
                         case '301':
                             header('HTTP/1.1 301 Moved Permanently');
                             Tools::redirect('Location: ' . $this->context->link->getProductLink($this->product->id_product_redirected));
-                            break;
                             exit;
+                            break;
                         case '302':
                             header('HTTP/1.1 302 Moved Temporarily');
                             header('Cache-Control: no-cache');
                             Tools::redirect('Location: ' . $this->context->link->getProductLink($this->product->id_product_redirected));
-                            break;
                             exit;
+                            break;
                         case '404':
                         default:
                             header('HTTP/1.1 404 Not Found');
