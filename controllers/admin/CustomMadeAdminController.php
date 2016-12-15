@@ -132,10 +132,11 @@ class CustomMadeAdminController extends ModuleAdminController
         if (Tools::getIsset('cancel')) {
             Tools::redirectAdmin(self::$currentIndex.'&token='.Tools::getAdminTokenLite('CustomMadeAdmin'));
         }
+
         $name = 'image';
         if (Tools::isSubmit('submitAdduniverse') || @$_FILES[$name]['name'] != null && @$_FILES['image']['size'] > 0) {
             $images_types = array(array('id_image_type' => 1,
-                                        'name'          => 'medium_default',
+                                        'name'          => ImageType::getFormatedName('medium'),
                                         'width'         => 150,
                                         'height'        => 150
                                         )
@@ -162,6 +163,10 @@ class CustomMadeAdminController extends ModuleAdminController
                         )) {
                             $this->errors = Tools::displayError('An error occurred while uploading thumbnail image.');
                         } else {
+                            $universe_name = (string)Tools::getValue('universe_name');
+                            $thump = 'universe-'.Tools::stripslashes($imageName[0]).'.'.$imageType[1];
+                            $image = $imgName;
+
                             if (isset($id_universe) && !empty($id_universe) && $id_universe != 0) {
 
                                 $count_cover_image = Db::getInstance()->getValue('
@@ -170,18 +175,14 @@ class CustomMadeAdminController extends ModuleAdminController
                                 $count_cover_thump = Db::getInstance()->getValue('
                                     SELECT `thump` FROM `'._DB_PREFIX_.Tools::strtolower($this->table).'` u WHERE u.`id_universe` = '.(int)$id_universe);
 
-                                if (file_exists($this->custModuleFolderName.$count_cover_image)) {
+                                if (file_exists($this->custModuleFolderName.$count_cover_image) && $count_cover_image != $image) {
                                     @unlink($this->custModuleFolderName.$count_cover_image);
                                 }
-                                if (file_exists($this->custModuleFolderName.$count_cover_thump)) {
+                                if (file_exists($this->custModuleFolderName.$count_cover_thump) && $count_cover_thump != $thump) {
                                     @unlink($this->custModuleFolderName.$count_cover_thump);
                                 }
                             }
                         }
-
-                        $universe_name = (string)Tools::getValue('universe_name');
-                        $thump = 'universe-'.Tools::stripslashes($imageName[0]).'.'.$imageType[1];
-                        $image = $imgName;
 
                         $active = (int)Tools::getValue('active');
                         $this->imageupload($id_universe, $universe_name, $image, $thump, $active);
