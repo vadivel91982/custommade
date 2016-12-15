@@ -121,5 +121,4 @@ class CustomMadeGenerateimageModuleFrontController extends ModuleFrontController
         curl_close($ch);
         return $res;
     }
-
 }
