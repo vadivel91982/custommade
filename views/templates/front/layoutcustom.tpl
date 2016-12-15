@@ -822,11 +822,11 @@
         setIndicatorPosition();
         setNewCustomPrice();
     }
-
+    
     function setNewCustomPrice() {
         newCustomPrice = (((cropper.getData(true).width) * (cropper.getData(true).height)) / 10000) * pricePerMeterSq;
         newCustomPrice = newCustomPrice.toFixed(2);
-        jQuery('#our_price_display').html('$' + newCustomPrice);
+        jQuery('#our_price_display').html(currencySign + newCustomPrice);
         //console.log(newCustomPrice.toFixed(2));
 
         setTimeout(function () {
