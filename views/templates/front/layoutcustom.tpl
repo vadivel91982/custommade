@@ -840,6 +840,13 @@
         newCustomPrice = newCustomPrice.toFixed(2);
         jQuery('#our_price_display').html('$' + newCustomPrice);
         //console.log(newCustomPrice.toFixed(2));
+
+        setTimeout(function () {
+            var previewWidth = jQuery('.backdrop .preview').width();
+            var previewHeight = jQuery('.backdrop .preview').height();
+            $('.backdrop .gridlayout').css('width', previewWidth + 'px');
+            $('.backdrop .gridlayout').css('height', previewHeight + 'px');
+        }, 500);
     }
 
     function setIndicatorPosition() {
