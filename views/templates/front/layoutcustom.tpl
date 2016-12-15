@@ -47,9 +47,9 @@
                                             var productAvailableForOrder = {if (isset($restricted_country_mode) AND $restricted_country_mode) OR $PS_CATALOG_MODE}'0'{else}'{$product->available_for_order|escape:"htmlall":"UTF-8"}'{/if};
                                                     var productShowPrice = '{if !$PS_CATALOG_MODE}{$product->show_price|escape:"htmlall":"UTF-8"}{else}0{/if}';
                                                         var productUnitPriceRatio = '{$product->unit_price_ratio|escape:"htmlall":"UTF-8"}';
-                                                        var idDefaultImage = {if isset($cover.id_image_only)}{$cover.id_image_only}{else}0{/if};
+                                                        var idDefaultImage = {if isset($cover.id_image_only)}{$cover.id_image_only|escape:"htmlall":"UTF-8"}{else}0{/if};
                                                             var stock_management = {$stock_management|intval};
-                                                            //var baseDir = '{$customBaseurl}';
+                                                            //var baseDir = '{$customBaseurl|escape:"htmlall":"UTF-8"}';
 
     {if !isset($priceDisplayPrecision)}
         {assign var='priceDisplayPrecision' value=2}
@@ -62,11 +62,11 @@
         {assign var='productPriceWithoutReduction' value=$product->getPriceWithoutReduct(true, $smarty.const.NULL)}
     {/if}
 
-                                                            var productPriceWithoutReduction = '{$productPriceWithoutReduction}';
-                                                            var productPrice = '{$productPrice}';
+                                                            var productPriceWithoutReduction = '{$productPriceWithoutReduction|escape:"htmlall":"UTF-8"}';
+                                                            var productPrice = '{$productPrice|escape:"htmlall":"UTF-8"}';
 
                                                             // Customizable field
-                                                            var img_ps_dir = '{$img_ps_dir}';
+                                                            var img_ps_dir = '{$img_ps_dir|escape:"htmlall":"UTF-8"}';
                                                             var customizationFields = new Array();
 
     {assign var='imgIndex' value=0}
@@ -79,12 +79,12 @@
     {/foreach}
 
                                                                     // Images
-                                                                    var img_prod_dir = '{$img_prod_dir}';
+                                                                    var img_prod_dir = '{$img_prod_dir|escape:"htmlall":"UTF-8"}';
                                                                     var combinationImages = new Array();
 
     {if isset($combinationImages)}
         {foreach from=$combinationImages item='combination' key='combinationId' name='f_combinationImages'}
-                                                                    combinationImages[{$combinationId}] = new Array();
+                                                                    combinationImages[{$combinationId|escape:"htmlall":"UTF-8"}] = new Array();
             {foreach from=$combination item='image' name='f_combinationImage'}
                                                                     combinationImages[{$combinationId}][{$smarty.foreach.f_combinationImage.index}] = {$image.id_image|intval};
             {/foreach}
@@ -113,7 +113,6 @@
                                                                         specific_price_combination['reduction_price'] = {if $combination.specific_price AND $combination.specific_price.reduction AND $combination.specific_price.reduction_type == 'amount'}{$combination.specific_price.reduction}{else}0{/if};
                                                                             specific_price_combination['price'] = {if $combination.specific_price AND $combination.specific_price.price}{$combination.specific_price.price}{else}0{/if};
                                                                                 specific_price_combination['reduction_type'] = '{if $combination.specific_price}{$combination.specific_price.reduction_type}{/if}';
-                                                                                //addCombination({$idCombination|intval}, new Array({$combination.list}), {$combination.quantity}, {$combination.price}, {$combination.ecotax}, {$combination.id_image}, '{$combination.reference|addslashes}', {$combination.unit_impact|floatval}, {$combination.minimal_quantity|floatval}, '{$combination.available_date}', specific_price_combination);
         {/foreach}
     {/if}
 
