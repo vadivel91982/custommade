@@ -853,6 +853,14 @@
     function addSampleToCart() {
         if (sampleProductId > 0) {
             ajaxCart.add(sampleProductId, '', true, null, 1, null);
+            setTimeout(function () {
+
+                if (jQuery('.popin-product .product-img').length > 0) {
+                    jQuery('.popin-product .product-img').attr('src', '{$image_direct_url}');
+                    jQuery('.popin-title').html('1 x <strong>{$sampleProductInfo['name']['1']}</strong>');
+                    jQuery('.popin-reference').html('Référence : {$sampleProductInfo->reference}');
+                }
+            }, 1000);
         }
     }
 

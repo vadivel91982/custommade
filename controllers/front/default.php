@@ -221,6 +221,8 @@ class CustomMadeDefaultModuleFrontController extends ModuleFrontController
             }
             $getUnivers = AuFilDesCoul::getUniversImage();
             $getPriceDetail = AuFilDesCoul::getAuFilDesByIDProduct((int) $this->product->id);
+            $sampleProductInfo = new Product($getPriceDetail->sample_product);
+            
             //echo "<pre>";
             //p($getPriceDetail);
             $iso_code = Language::getIsoById((int) $this->context->language->id);
@@ -277,6 +279,7 @@ class CustomMadeDefaultModuleFrontController extends ModuleFrontController
                 'getPriceDetails' => $getPriceDetail,
                 'tempModuleUrl' => $tempModuleUrl,
                 'image_direct_url' => $image_url_direct,
+                'sampleProductInfo' => $sampleProductInfo,
                 'rootUrl' => Tools::getHttpHost(true) . __PS_BASE_URI__
             ));
         }
