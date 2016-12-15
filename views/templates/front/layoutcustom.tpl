@@ -148,11 +148,11 @@
 {/if}
 {if ($product->show_price AND !isset($restricted_country_mode)) OR isset($groups) OR $product->reference OR (isset($HOOK_PRODUCT_ACTIONS) && $HOOK_PRODUCT_ACTIONS)}
     <!-- add to cart form-->
-    <form id="buy_block" class="span4" {if $PS_CATALOG_MODE AND !isset($groups) AND $product->quantity > 0}class="hidden"{/if} action="{$link->getPageLink('cart')}" method="post">
+    <form id="buy_block" class="span4" {if $PS_CATALOG_MODE AND !isset($groups) AND $product->quantity > 0}class="hidden"{/if} action="{$link->getPageLink('cart')|escape:'htmlall':'UTF-8'}" method="post">
 
         <!-- hidden datas -->
         <p class="hidden">
-            <input type="hidden" name="token" value="{$static_token}" />
+            <input type="hidden" name="token" value="{$static_token|escape:'htmlall':'UTF-8'}" />
             <input type="hidden" name="id_product" value="{$product->id|intval}" id="product_page_product_id" />
             <input type="hidden" name="add" value="1" />
             <input type="hidden" name="id_product_attribute" id="idCombination" value="" />
@@ -165,7 +165,7 @@
                         <div class="prod_desc">
                             <h2>PERSONNALISEZ LE PAPIER PEINT KUBE</h2>
                             <p>
-                                {$product->description_short}
+                                {$product->description_short|escape:'htmlall':'UTF-8'}
                             </p>
                         </div>
                     </div>
