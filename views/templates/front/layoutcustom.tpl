@@ -433,11 +433,11 @@
 
     //'use strict';
     var newCustomPrice = '';
-    var pricePerMeterSq = {$getPriceDetails->sq_meter_price};
-    var allowedMaxWidth = {$getPriceDetails->cust_width};
-    var allowedMaxHeight = {$getPriceDetails->cust_height};
-    var sampleProductId = {$getPriceDetails->sample_product};
-    var rootUrl = '{$rootUrl}';
+    var pricePerMeterSq = {$getPriceDetails->sq_meter_price|escape:'html':'UTF-8'};
+    var allowedMaxWidth = {$getPriceDetails->cust_width|escape:'html':'UTF-8'};
+    var allowedMaxHeight = {$getPriceDetails->cust_height|escape:'html':'UTF-8'};
+    var sampleProductId = {$getPriceDetails->sample_product|escape:'html':'UTF-8'};
+    var rootUrl = '{$rootUrl|escape:"html":"UTF-8"}';
     var Cropper = window.Cropper;
     var URL = window.URL || window.webkitURL;
     var container = document.querySelector('.img-container');
