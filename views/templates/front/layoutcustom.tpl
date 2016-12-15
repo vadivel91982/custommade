@@ -814,6 +814,11 @@
         });
 
     });
+    
+    jQuery(document).on('click','.attributes_more',function(){
+        jQuery('.list_accessories').css('height','auto');
+        jQuery(this).hide();
+    });
 
     function setCropToSession() {
         var currentCropData = cropper.getData(true);
