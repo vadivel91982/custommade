@@ -362,10 +362,11 @@ class Custommade extends Module
                     Tools::redirect($redirectPath);
                 }
                 $this->smarty->assign(
-                        array(
-                            'prodCustomizeStatus' => (int) $customize,
-                            'id_product' => (int) $product->id
-                ));
+                    array(
+                        'prodCustomizeStatus' => (int) $customize,
+                        'id_product' => (int) $product->id
+                    )
+                );
                 return $this->display(__FILE__, 'product.tpl');
             }
         }
