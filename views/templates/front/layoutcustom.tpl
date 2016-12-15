@@ -338,7 +338,7 @@
                                     <p>
                                         <span style="padding-right:10px;float:left;">{l s='Coloris' mod='custommade'}</span> 
                                         <select style="width:250px" onchange="javascript:document.location.href = this.value">
-                                            <option value="">{$color_feature|escape:'UTF-8':'htmlall'} - {l s='Ref.' mod='custommade'} {$product->reference|escape:'UTF-8':'htmlall'}</option>
+                                            <option value="">{$color_feature|escape:'htmlall':'UTF-8'} - {l s='Ref.' mod='custommade'} {$product->reference|escape:'htmlall':'UTF-8'}</option>
                                             {foreach from=$accessories item=accessoire}
                                                 <option value="{$tempModuleUrl}?id_product={$accessoire['id_product']|intval}">{foreach from=$accessoire.features item=feature}{if $feature.id_feature==1}{$feature.value}{/if}{/foreach} - {l s='Ref.' mod='custommade'} {$accessoire.reference}</option>
                                             {/foreach}
@@ -384,7 +384,7 @@
                             {foreach from=$getUnivers1 key=k item=universeImage}
                                 <li {if (1 == $k+1)}class="active"{/if}>
                                    <!-- <a href="#scene{$k+1}" data-toggle="tab">{$universeImage['universe_name']|escape:'html':'UTF-8'}</a>-->
-                                    <a href="#scene{$k+1}" data-toggle="tab"><img src="{$img_dir|escape:'html':'UTF-8'}{$universeImage['image']|escape:'html':'UTF-8'}" width="90px"></a>
+                                    <a href="#scene{$k+1}" data-toggle="tab"><img src="{$img_dir|escape:'htmlall':'UTF-8'}{$universeImage['image']|escape:'htmlall':'UTF-8'}" width="90px"></a>
                                 </li>
                             {/foreach}
                         </ul>
@@ -399,7 +399,7 @@
                                         <span class="gridlayout"></span>
                                     </div>
                                     <div class="overlay">
-                                        <img src="{$img_dir|escape:'html':'UTF-8'}{$universeImage['image']|escape:'html':'UTF-8'}">
+                                        <img src="{$img_dir|escape:'htmlall':'UTF-8'}{$universeImage['image']|escape:'htmlall':'UTF-8'}">
                                     </div>
                                 </div>
                             {/foreach}
