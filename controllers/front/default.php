@@ -222,6 +222,12 @@ class CustomMadeDefaultModuleFrontController extends ModuleFrontController
             $getUnivers = AuFilDesCoul::getUniversImage();
             $getPriceDetail = AuFilDesCoul::getAuFilDesByIDProduct((int) $this->product->id);
             $sampleProductInfo = new Product($getPriceDetail->sample_product);
+            $sample_id_image_direct = Product::getCover($getPriceDetail->sample_product);
+            $sample_imageDirect = new Image($sample_id_image_direct['id_image']);
+            // get image full URL
+            $sample_image_url_direct = Tools::getHttpHost(true) . _THEME_PROD_DIR_ . $sample_imageDirect->getExistingImgPath() . ".jpg";
+            
+            
             
             //echo "<pre>";
             //p($getPriceDetail);
@@ -239,6 +245,7 @@ class CustomMadeDefaultModuleFrontController extends ModuleFrontController
             $imageDirect = new Image($id_image_direct['id_image']);
             // get image full URL
             $image_url_direct = Tools::getHttpHost(true) . _THEME_PROD_DIR_ . $imageDirect->getExistingImgPath() . ".jpg";
+            
 
             $this->context->smarty->assign(array(
                 'stock_management' => Configuration::get('PS_STOCK_MANAGEMENT'),
@@ -280,6 +287,7 @@ class CustomMadeDefaultModuleFrontController extends ModuleFrontController
                 'tempModuleUrl' => $tempModuleUrl,
                 'image_direct_url' => $image_url_direct,
                 'sampleProductInfo' => $sampleProductInfo,
+                'sample_image_url_direct' => $sample_image_url_direct,
                 'rootUrl' => Tools::getHttpHost(true) . __PS_BASE_URI__
             ));
         }

@@ -750,7 +750,7 @@
             setTimeout(function () {
 
                 if (jQuery('.popin-product .product-img').length > 0) {
-                    jQuery('.popin-product .product-img').attr('src', "{$image_direct_url|escape:'htmlall':'UTF-8'}");
+                    jQuery('.popin-product .product-img').attr('src', "{$sample_image_url_direct|escape:'htmlall':'UTF-8'}");
                     jQuery('.popin-title').html('1 x <strong>{$sampleProductInfo->name['1']|escape:"htmlall":"UTF-8"}</strong>');
                     jQuery('.popin-reference').html('Référence : {$sampleProductInfo->reference|escape:"htmlall":"UTF-8"}');
                     jQuery('.popin-price').html('{sprintf("%.02f", $sampleProductInfo->price|intval)}')
