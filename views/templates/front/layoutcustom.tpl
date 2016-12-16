@@ -85,7 +85,7 @@
                                             <div class="input-group-addon">
                                                 <i class="fa fa-arrows-h" aria-hidden="true"></i>
                                             </div>
-                                            <input value="300" class="form-control" id="dataWidth" type="number" placeholder="{$getPriceDetails->cust_width} cm max">
+                                            <input value="300" class="form-control" id="dataWidth" type="number" placeholder="{$getPriceDetails->cust_width|escape:'htmlall':'UTF-8'} cm max">
                                         </div>
                                     </div>
                                     <div class="form-group heightbox">
@@ -94,7 +94,7 @@
                                             <div class="input-group-addon">
                                                 <i class="fa fa-arrows-v" aria-hidden="true"></i>
                                             </div>
-                                            <input value="300" class="form-control" id="dataHeight" type="number"  placeholder="{$getPriceDetails->cust_height} cm max">
+                                            <input value="300" class="form-control" id="dataHeight" type="number"  placeholder="{$getPriceDetails->cust_height|escape:'htmlall':'UTF-8'} cm max">
                                         </div>
                                     </div>
                                     <div><a id="button-scroll" title="Autres dimensions?">Autres dimensions?</a></div>
@@ -149,7 +149,7 @@
                                             <span class="price our_price_display"> 
                                                 <meta itemprop="currency" content="EUR" />
                                                 {if $priceDisplay >= 0 && $priceDisplay <= 2}
-                                                    <span itemprop="price" style="display: none;">{sprintf("%.02f", $productPrice)}</span>
+                                                    <span itemprop="price" style="display: none;">{sprintf("%.02f", $productPrice)|escape:'htmlall':'UTF-8'}</span>
                                                 {/if}
                                                 <span itemprop="condition" style="display: none;" content="new"></span>
                                                 {if (!$allow_oosp && $product->quantity <= 0) OR !$product->available_for_order OR (isset($restricted_country_mode) AND $restricted_country_mode) OR $PS_CATALOG_MODE}
@@ -203,14 +203,14 @@
 
                         <div class="col-md-9" id="right-col"> 
                             <div class="img-resize imr_top">
-                                <img id="dimension_indicator" src="{$rootUrl}modules/custommade/views/img/top.png">
+                                <img id="dimension_indicator" src="{$rootUrl|escape:'htmlall':'UTF-8'}modules/custommade/views/img/top.png">
                                 <span class="length-cm cmvalue">200cm</span>
                             </div>
                             <div class="img-container">
-                                <img src="{$image_direct_url}" alt="Picture"/>
+                                <img src="{$image_direct_url|escape:'htmlall':'UTF-8'}" alt="Picture"/>
                             </div>
                             <div class="img-resize-right imr_right">
-                                <img id="dimension_indicator_right" src="{$rootUrl}modules/custommade/views/img/right.png">
+                                <img id="dimension_indicator_right" src="{$rootUrl|escape:'htmlall':'UTF-8'}modules/custommade/views/img/right.png">
                                 <span class="length-cm-right cmvalue">200cm</span>
                             </div>
                         </div><div class="clearfix"></div>
@@ -229,7 +229,7 @@
                                         <select style="width:250px" onchange="javascript:document.location.href = this.value">
                                             <option value="">{$color_feature|escape:'htmlall':'UTF-8'} - {l s='Ref.' mod='custommade'} {$product->reference|escape:'htmlall':'UTF-8'}</option>
                                             {foreach from=$accessories item=accessoire}
-                                                <option value="{$accessoire.link}">{foreach from=$accessoire.features item=feature}{if $feature.id_feature==1}{$feature.value}{/if}{/foreach} - {l s='Ref.' mod='custommade'} {$accessoire.reference}</option>
+                                                <option value="{$accessoire.link|escape:'htmlall':'UTF-8'}">{foreach from=$accessoire.features item=feature}{if $feature.id_feature==1}{$feature.value|escape:'htmlall':'UTF-8'}{/if}{/foreach} - {l s='Ref.' mod='custommade'} {$accessoire.reference}</option>
                                             {/foreach}
                                         </select>
                                     </p>
@@ -246,11 +246,11 @@
                                         {/if}
 
                                         <li>
-                                            <img src="{$link->getImageLink($product->link_rewrite, $product->id|cat:'-'|cat:$cover, 'home_default')}" alt="" height="46" width="46" />
+                                            <img src="{$link->getImageLink($product->link_rewrite, $product->id|cat:'-'|cat:$cover|escape:'htmlall':'UTF-8', 'home_default')}" alt="" height="46" width="46" />
                                         </li>
 
                                         {foreach from=$accessories item=accessoire}
-                                            <li><a href="{$accessoire.link}"><img src="{$link->getImageLink($accessoire.link_rewrite, $accessoire.id_image, 'large_default')}" class="img-responsive" width="46" height="46" /></a></li>
+                                            <li><a href="{$accessoire.link|escape:'htmlall':'UTF-8'}"><img src="{$link->getImageLink($accessoire.link_rewrite, $accessoire.id_image, 'large_default')}" class="img-responsive" width="46" height="46" /></a></li>
                                                 {/foreach}
                                     </ul>
                                     {if $accessories|@count > 5}
@@ -272,7 +272,7 @@
                             <!-- 'tabs-right' for right tabs -->
                             {foreach from=$getUnivers1 key=k item=universeImage}
                                 <li {if (1 == $k+1)}class="active"{/if}>
-                                    <a href="#scene{$k+1}" data-toggle="tab"><img src="{$img_dir|escape:'htmlall':'UTF-8'}{$universeImage['image']|escape:'htmlall':'UTF-8'}" width="90px"></a>
+                                    <a href="#scene{$k+1|escape:'htmlall':'UTF-8'}" data-toggle="tab"><img src="{$img_dir|escape:'htmlall':'UTF-8'}{$universeImage['image']|escape:'htmlall':'UTF-8'}" width="90px"></a>
                                 </li>
                             {/foreach}
                         </ul>
@@ -281,7 +281,7 @@
                         <!-- Tab panes -->
                         <div class="tab-content">
                             {foreach from=$getUnivers1 key=k item=universeImage}
-                                <div class="tab-pane {if (1 == $k+1)}active{/if} docs-preview" id="scene{$k+1}">
+                                <div class="tab-pane {if (1 == $k+1)}active{/if} docs-preview" id="scene{$k+1|escape:'htmlall':'UTF-8'}">
                                     <div class="backdrop" style="height:76%;">
                                         <img class="preview" src="" style="left:0;top:0;">
                                         <span class="gridlayout"></span> 										
@@ -696,7 +696,7 @@
             setTimeout(function () {
 
                 if (jQuery('.popin-product .product-img').length > 0) {
-                    jQuery('.popin-product .product-img').attr('src', '{$image_direct_url}');
+                    jQuery('.popin-product .product-img').attr('src', "{$image_direct_url|escape:'htmlall':'UTF-8'}");
                     jQuery('.popin-title').html('1 x <strong>{$product->name|escape:"htmlall":"UTF-8"}</strong>');
                     jQuery('.popin-reference').html('Référence : {$product->reference|escape:"htmlall":"UTF-8"}');
                 }
@@ -750,7 +750,7 @@
             setTimeout(function () {
 
                 if (jQuery('.popin-product .product-img').length > 0) {
-                    jQuery('.popin-product .product-img').attr('src', '{$image_direct_url}');
+                    jQuery('.popin-product .product-img').attr('src', "{$image_direct_url|escape:'htmlall':'UTF-8'}");
                     jQuery('.popin-title').html('1 x <strong>{$sampleProductInfo->name['1']|escape:"htmlall":"UTF-8"}</strong>');
                     jQuery('.popin-reference').html('Référence : {$sampleProductInfo->reference|escape:"htmlall":"UTF-8"}');
                     jQuery('.popin-price').html('{sprintf("%.02f", $sampleProductInfo->price|intval)}')
