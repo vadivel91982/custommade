@@ -143,7 +143,7 @@
 
 {if isset($confirmation) && $confirmation}
     <p class="confirmation">
-        {$confirmation}
+        {$confirmation|escape:'htmlall':'UTF-8'}
     </p>
 {/if}
 {if ($product->show_price AND !isset($restricted_country_mode)) OR isset($groups) OR $product->reference OR (isset($HOOK_PRODUCT_ACTIONS) && $HOOK_PRODUCT_ACTIONS)}
@@ -165,7 +165,7 @@
                         <div class="prod_desc">
                             <h2>PERSONNALISEZ LE PAPIER PEINT KUBE</h2>
                             <p>
-                                {$product->description_short}
+                                {$product->description_short|escape:'html':'UTF-8'|htmlspecialchars_decode:3}
                             </p>
                         </div>
                     </div>
