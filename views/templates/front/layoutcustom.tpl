@@ -9,7 +9,7 @@
 // <![CDATA[
 
 // PrestaShop internal settings
-    var currencySign = '{$currencySign|escape:"htmlall":"UTF-8"|html_entity_decode:2}';
+    var currencySign = "{$currencySign|escape:'html':'UTF-8'|htmlspecialchars_decode:3}";
     var currencyRate = '{$currencyRate|floatval}';
     var currencyFormat = '{$currencyFormat|intval}';
     var currencyBlank = '{$currencyBlank|intval}';
@@ -162,7 +162,7 @@
                                                 {/if}
                                             </span>
                                         </p>
-                                        <span class="sq-price">{$getPriceDetails->sq_meter_price|floatval} {$currencySign|escape:"htmlall":"UTF-8"|html_entity_decode:2}/m2</span>
+                                        <span class="sq-price">{$getPriceDetails->sq_meter_price|floatval} {$currencySign|escape:'html':'UTF-8'|htmlspecialchars_decode:3}/m2</span>
                                     </div>
 
 
