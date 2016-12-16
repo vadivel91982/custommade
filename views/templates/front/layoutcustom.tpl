@@ -9,7 +9,7 @@
 // <![CDATA[
 
 // PrestaShop internal settings
-    var currencySign = '{$currencySign|html_entity_decode:2:"UTF-8"}';
+    var currencySign = '{$currencySign|escape:"htmlall":"UTF-8"|html_entity_decode:2}';
     var currencyRate = '{$currencyRate|floatval}';
     var currencyFormat = '{$currencyFormat|intval}';
     var currencyBlank = '{$currencyBlank|intval}';
@@ -43,7 +43,7 @@
 {if isset($adminActionDisplay) && $adminActionDisplay}
     <div id="admin-action">
         <p>{l s='This product is not visible to your customers.' mod='custommade'}
-            <input type="hidden" id="admin-action-product-id" value="{$product->id}" />
+            <input type="hidden" id="admin-action-product-id" value="{$product->id|intval}" />
             <input type="submit" value="{l s='Publish' mod='custommade'}" class="exclusive" onclick="submitPublishProduct('{$base_dir}{$smarty.get.ad|escape:'htmlall':'UTF-8'}', 0, '{$smarty.get.adtoken|escape:'htmlall':'UTF-8'}')"/>
             <input type="submit" value="{l s='Back' mod='custommade'}" class="exclusive" onclick="submitPublishProduct('{$base_dir}{$smarty.get.ad|escape:'htmlall':'UTF-8'}', 1, '{$smarty.get.adtoken|escape:'htmlall':'UTF-8'}')"/>
         </p>
@@ -75,7 +75,7 @@
                         <div class="prod_desc">
                             <h2>PERSONNALISEZ LE PAPIER PEINT KUBE</h2>
                             <p>
-                                {$product->description_short}
+                                {$product->description_short|escape:'html':'UTF-8'|htmlspecialchars_decode:3}
                             </p>
                         </div>
                     </div>
@@ -178,7 +178,7 @@
                                                 {/if}
                                             </span>
                                         </p>
-                                        <span class="sq-price">{$getPriceDetails->sq_meter_price} £/m2</span>
+                                        <span class="sq-price">{$getPriceDetails->sq_meter_price|floatval} £/m2</span>
                                     </div>
 
 
@@ -196,7 +196,7 @@
                                                 <input type="button" id="addcartbtn" name="Submit" value="{l s='Ajouter au panier' mod='custommade'}" class="exclusive" />
                                             </p>
                                         {/if}
-                                        <p>Livraison sous {$getPriceDetails->cust_delivery} jours</p>
+                                        <p>Livraison sous {$getPriceDetails->cust_delivery|intval} jours</p>
                                         {if ($getPriceDetails->sample_product > 0)}
                                             <a href="javascript:void(0)" id="sampleButton" onclick="addSampleToCart();
                                                     return false;">Commander un échantillon</a>
@@ -236,8 +236,8 @@
                             <div class="accessories">
                                 <div class="col-md-8">
                                     <p>Au fil des Couleurs - Volume 1</p>
-                                    <h3>Référence : {$product->reference}</h3>
-                                    <p>{$product->description}</p>
+                                    <h3>Référence : {$product->reference|escape:"htmlall":"UTF-8"}</h3>
+                                    <p>{$product->description|escape:'html':'UTF-8'|htmlspecialchars_decode:3}</p>
                                 </div>
                                 <div class="col-md-4">
                                     <p>
@@ -245,7 +245,7 @@
                                         <select style="width:250px" onchange="javascript:document.location.href = this.value">
                                             <option value="">{$color_feature|escape:'htmlall':'UTF-8'} - {l s='Ref.' mod='custommade'} {$product->reference|escape:'htmlall':'UTF-8'}</option>
                                             {foreach from=$accessories item=accessoire}
-                                                <option value="{$tempModuleUrl}?id_product={$accessoire['id_product']|intval}">{foreach from=$accessoire.features item=feature}{if $feature.id_feature==1}{$feature.value}{/if}{/foreach} - {l s='Ref.' mod='custommade'} {$accessoire.reference}</option>
+                                                <option value="{$accessoire.link}">{foreach from=$accessoire.features item=feature}{if $feature.id_feature==1}{$feature.value}{/if}{/foreach} - {l s='Ref.' mod='custommade'} {$accessoire.reference}</option>
                                             {/foreach}
                                         </select>
                                     </p>
