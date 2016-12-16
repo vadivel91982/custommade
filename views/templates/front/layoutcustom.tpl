@@ -229,7 +229,7 @@
                                         <select style="width:250px" onchange="javascript:document.location.href = this.value">
                                             <option value="">{$color_feature|escape:'htmlall':'UTF-8'} - {l s='Ref.' mod='custommade'} {$product->reference|escape:'htmlall':'UTF-8'}</option>
                                             {foreach from=$accessories item=accessoire}
-                                                <option value="{$accessoire.link|escape:'htmlall':'UTF-8'}">{foreach from=$accessoire.features item=feature}{if $feature.id_feature==1}{$feature.value|escape:'htmlall':'UTF-8'}{/if}{/foreach} - {l s='Ref.' mod='custommade'} {$accessoire.reference}</option>
+                                                <option value="{$accessoire.link|escape:'htmlall':'UTF-8'}">{foreach from=$accessoire.features item=feature}{if $feature.id_feature==1}{$feature.value|escape:'htmlall':'UTF-8'}{/if}{/foreach} - {l s='Ref.' mod='custommade'} {$accessoire.reference|escape:'htmlall':'UTF-8'}</option>
                                             {/foreach}
                                         </select>
                                     </p>
@@ -250,7 +250,7 @@
                                         </li>
 
                                         {foreach from=$accessories item=accessoire}
-                                            <li><a href="{$accessoire.link|escape:'htmlall':'UTF-8'}"><img src="{$link->getImageLink($accessoire.link_rewrite, $accessoire.id_image, 'large_default')}" class="img-responsive" width="46" height="46" /></a></li>
+                                            <li><a href="{$accessoire.link|escape:'htmlall':'UTF-8'}"><img src="{$link->getImageLink($accessoire.link_rewrite, $accessoire.id_image, 'large_default')|escape:'htmlall':'UTF-8'}" class="img-responsive" width="46" height="46" /></a></li>
                                                 {/foreach}
                                     </ul>
                                     {if $accessories|@count > 5}
