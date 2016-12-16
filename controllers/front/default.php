@@ -226,9 +226,6 @@ class CustomMadeDefaultModuleFrontController extends ModuleFrontController
             $sample_imageDirect = new Image($sample_id_image_direct['id_image']);
             // get image full URL
             $sample_image_url_direct = Tools::getHttpHost(true) . _THEME_PROD_DIR_ . $sample_imageDirect->getExistingImgPath() . ".jpg";
-            
-            
-            
             //echo "<pre>";
             //p($getPriceDetail);
             $iso_code = Language::getIsoById((int) $this->context->language->id);
