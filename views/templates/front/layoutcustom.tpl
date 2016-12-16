@@ -40,22 +40,6 @@
 //]]>
 </script>
 
-{if isset($adminActionDisplay) && $adminActionDisplay}
-    <div id="admin-action">
-        <p>{l s='This product is not visible to your customers.' mod='custommade'}
-            <input type="hidden" id="admin-action-product-id" value="{$product->id|intval}" />
-            <input type="submit" value="{l s='Publish' mod='custommade'}" class="exclusive" onclick="submitPublishProduct('{$base_dir}{$smarty.get.ad|escape:'htmlall':'UTF-8'}', 0, '{$smarty.get.adtoken|escape:'htmlall':'UTF-8'}')"/>
-            <input type="submit" value="{l s='Back' mod='custommade'}" class="exclusive" onclick="submitPublishProduct('{$base_dir}{$smarty.get.ad|escape:'htmlall':'UTF-8'}', 1, '{$smarty.get.adtoken|escape:'htmlall':'UTF-8'}')"/>
-        </p>
-        <p id="admin-action-result"></p>    
-    </div>
-{/if}
-
-{if isset($confirmation) && $confirmation}
-    <p class="confirmation">
-        {$confirmation}
-    </p>
-{/if}
 {if ($product->show_price AND !isset($restricted_country_mode)) OR isset($groups) OR $product->reference OR (isset($HOOK_PRODUCT_ACTIONS) && $HOOK_PRODUCT_ACTIONS)}
     <!-- add to cart form-->
     <form id="buy_block" class="span4" {if $PS_CATALOG_MODE AND !isset($groups) AND $product->quantity > 0}class="hidden"{/if} action="{$link->getPageLink('cart')|escape:'htmlall':'UTF-8'}" method="post">
@@ -178,7 +162,7 @@
                                                 {/if}
                                             </span>
                                         </p>
-                                        <span class="sq-price">{$getPriceDetails->sq_meter_price|floatval} £/m2</span>
+                                        <span class="sq-price">{$getPriceDetails->sq_meter_price|floatval} {$currencySign|escape:"htmlall":"UTF-8"|html_entity_decode:2}/m2</span>
                                     </div>
 
 
@@ -199,7 +183,7 @@
                                         <p>Livraison sous {$getPriceDetails->cust_delivery|intval} jours</p>
                                         {if ($getPriceDetails->sample_product > 0)}
                                             <a href="javascript:void(0)" id="sampleButton" onclick="addSampleToCart();
-                                                    return false;">Commander un échantillon</a>
+                                                    return false;">Commander un &eacute;chantillon</a>
                                         {/if}
                                     </div>
 
@@ -783,5 +767,5 @@
             scrollTop: $("#custom-product-detail").offset().top
         }, 2000);
     });
-    
+
 </script>
