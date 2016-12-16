@@ -151,9 +151,9 @@ class Custommade extends Module
         if (!$tab->delete()) {
             return false;
         }
-        $sql = "DROP TABLE IF EXISTS '" . _DB_PREFIX_ . Tools::strtolower($this->default_name) . "'";
-        $universesql = "DROP TABLE IF EXISTS '" . _DB_PREFIX_ . Tools::strtolower($this->universe) . "'";
-        $customoptionsql = "DROP TABLE IF EXISTS '" . _DB_PREFIX_ . Tools::strtolower($this->customoption) . "'";
+        $sql = "DROP TABLE IF EXISTS `" . _DB_PREFIX_ . Tools::strtolower($this->default_name) . "`";
+        $universesql = "DROP TABLE IF EXISTS `" . _DB_PREFIX_ . Tools::strtolower($this->universe) . "`";
+        $customoptionsql = "DROP TABLE IF EXISTS `" . _DB_PREFIX_ . Tools::strtolower($this->customoption) . "`";
         if (parent::uninstall() === false || DB::getInstance()->Execute($sql) === false || DB::getInstance()->Execute($universesql) === false || DB::getInstance()->Execute($customoptionsql) === false) {
             return false;
         }

@@ -21,34 +21,7 @@
 
         // Parameters
         var id_product = '{$product->id|intval}';
-        var productHasAttributes = {if isset($groups)}true{else}false{/if};
-            var quantitiesDisplayAllowed = {if $display_qties == 1}true{else}false{/if};
-                var quantityAvailable = {if $display_qties == 1 && $product->quantity}{$product->quantity}{else}0{/if};
-                    var allowBuyWhenOutOfStock = {if $allow_oosp == 1}true{else}false{/if};
-                        var availableNowValue = '{*{$product->available_now|escape:'quotes':'UTF-8'}*}';
-                        var availableLaterValue = '{$product->available_later|escape:'quotes':'UTF-8'}';
-                        var productPriceTaxExcluded = {$product->getPriceWithoutReduct(true)|default:'null'} - {$product->ecotax};
-                        var reduction_percent = {if $product->specificPrice AND $product->specificPrice.reduction AND $product->specificPrice.reduction_type == 'percentage'}{$product->specificPrice.reduction*100}{else}0{/if};
-                            var reduction_price = {if $product->specificPrice AND $product->specificPrice.reduction AND $product->specificPrice.reduction_type == 'amount'}{$product->specificPrice.reduction|floatval}{else}0{/if};
-                                var specific_price = {if $product->specificPrice AND $product->specificPrice.price}{$product->specificPrice.price}{else}0{/if};
-                                    var product_specific_price = new Array();
-    {foreach from=$product->specificPrice key='key_specific_price' item='specific_price_value'}
-                                    product_specific_price['{$key_specific_price}'] = '{$specific_price_value}';
-    {/foreach}
-                                    var specific_currency = {if $product->specificPrice AND $product->specificPrice.id_currency}true{else}false{/if};
-                                        var group_reduction = '{$group_reduction|escape:"htmlall":"UTF-8"}';
-                                        var default_eco_tax = {$product->ecotax|escape:'htmlall':'UTF-8'};
-                                        var ecotaxTax_rate = {$ecotaxTax_rate|escape:'htmlall':'UTF-8'};
-                                        var currentDate = '{$smarty.now|date_format:'%Y-%m-%d %H:%M:%S'}';
-                                        var maxQuantityToAllowDisplayOfLastQuantityMessage = {$last_qties};
-                                        var noTaxForThisProduct = {if $no_tax == 1}true{else}false{/if};
-                                            var displayPrice = {$priceDisplay|escape:'htmlall':'UTF-8'};
-                                            var productReference = '{$product->reference|escape:'htmlall':'UTF-8'}';
-                                            var productAvailableForOrder = {if (isset($restricted_country_mode) AND $restricted_country_mode) OR $PS_CATALOG_MODE}'0'{else}'{$product->available_for_order}'{/if};
-                                                    var productShowPrice = '{if !$PS_CATALOG_MODE}{$product->show_price}{else}0{/if}';
-                                                        var productUnitPriceRatio = '{$product->unit_price_ratio|escape:"htmlall":"UTF-8"}';
-                                                        var idDefaultImage = {if isset($cover.id_image_only)}{$cover.id_image_only}{else}0{/if};
-                                                            var stock_management = {$stock_management|intval};
+
 
     {if !isset($priceDisplayPrecision)}
         {assign var='priceDisplayPrecision' value=2}
@@ -61,72 +34,9 @@
         {assign var='productPriceWithoutReduction' value=$product->getPriceWithoutReduct(true, $smarty.const.NULL)}
     {/if}
 
-                                                            var productPriceWithoutReduction = '{$productPriceWithoutReduction|escape:"htmlall":"UTF-8"}';
-                                                            var productPrice = '{$productPrice|escape:"htmlall":"UTF-8"}';
+        var productPriceWithoutReduction = '{$productPriceWithoutReduction|escape:"htmlall":"UTF-8"}';
+        var productPrice = '{$productPrice|escape:"htmlall":"UTF-8"}';
 
-                                                            // Customizable field
-                                                            var img_ps_dir = '{$img_ps_dir|escape:"htmlall":"UTF-8"}';
-                                                            var customizationFields = new Array();
-
-    {assign var='imgIndex' value=0}
-    {assign var='textFieldIndex' value=0}
-    {foreach from=$customizationFields item='field' name='customizationFields'}
-        {assign var="key" value="pictures_`$product->id`_`$field.id_customization_field`"}
-                                                            customizationFields[{$smarty.foreach.customizationFields.index|intval}] = new Array();
-                                                            customizationFields[{$smarty.foreach.customizationFields.index|intval}][0] = '{if $field.type|intval == 0}img{$imgIndex++}{else}textField{$textFieldIndex++}{/if}';
-                                                                customizationFields[{$smarty.foreach.customizationFields.index|intval}][1] = {if $field.type|intval == 0 && isset($pictures.$key) && $pictures.$key}2{else}{$field.required|intval}{/if};
-    {/foreach}
-
-                                                                    // Images
-                                                                    var img_prod_dir = '{$img_prod_dir}';
-                                                                    var combinationImages = new Array();
-
-    {if isset($combinationImages)}
-        {foreach from=$combinationImages item='combination' key='combinationId' name='f_combinationImages'}
-                                                                    combinationImages[{$combinationId}] = new Array();
-            {foreach from=$combination item='image' name='f_combinationImage'}
-                                                                    combinationImages[{$combinationId}][{$smarty.foreach.f_combinationImage.index}] = {$image.id_image|intval};
-            {/foreach}
-        {/foreach}
-    {/if}
-
-                                                                    combinationImages[0] = new Array();
-    {if isset($images)}
-        {foreach from=$images item='image' name='f_defaultImages'}
-                                                                    combinationImages[0][{$smarty.foreach.f_defaultImages.index}] = {$image.id_image};
-        {/foreach}
-    {/if}
-
-// Translations
-                                                                    var doesntExist = '{l s='This combination does not exist for this product. Please choose another.' mod='custommade' js=1}';
-                                                                    var doesntExistNoMore = '{l s='This product is no longer in stock' mod='custommade' js=1}';
-                                                                    var doesntExistNoMoreBut = '{l s='with those attributes but is available with others' mod='custommade'  js=1}';
-                                                                    var uploading_in_progress = '{l s='Uploading in progress, please wait...' mod='custommade' js=1}';
-                                                                    var fieldRequired = '{l s='Please fill in all required fields, then save the customization.' mod='custommade' js=1}';
-
-    {if isset($groups)}
-                                                                    // Combinations
-        {foreach from=$combinations key=idCombination item=combination}
-                                                                    var specific_price_combination = new Array();
-                                                                    specific_price_combination['reduction_percent'] = {if $combination.specific_price AND $combination.specific_price.reduction AND $combination.specific_price.reduction_type == 'percentage'}{$combination.specific_price.reduction*100}{else}0{/if};
-                                                                        specific_price_combination['reduction_price'] = {if $combination.specific_price AND $combination.specific_price.reduction AND $combination.specific_price.reduction_type == 'amount'}{$combination.specific_price.reduction}{else}0{/if};
-                                                                            specific_price_combination['price'] = {if $combination.specific_price AND $combination.specific_price.price}{$combination.specific_price.price}{else}0{/if};
-                                                                                specific_price_combination['reduction_type'] = '{if $combination.specific_price}{$combination.specific_price.reduction_type}{/if}';
-        {/foreach}
-    {/if}
-
-    {if isset($attributesCombinations)}
-                                                                                // Combinations attributes informations
-                                                                                var attributesCombinations = new Array();
-        {foreach from=$attributesCombinations key=id item=aC}
-                                                                                tabInfos = new Array();
-                                                                                tabInfos['id_attribute'] = '{$aC.id_attribute|intval}';
-                                                                                tabInfos['attribute'] = '{$aC.attribute}';
-                                                                                tabInfos['group'] = '{$aC.group}';
-                                                                                tabInfos['id_attribute_group'] = '{$aC.id_attribute_group|intval}';
-                                                                                attributesCombinations.push(tabInfos);
-        {/foreach}
-    {/if}
 //]]>
 </script>
 
@@ -143,7 +53,7 @@
 
 {if isset($confirmation) && $confirmation}
     <p class="confirmation">
-        {$confirmation|escape:'htmlall':'UTF-8'}
+        {$confirmation}
     </p>
 {/if}
 {if ($product->show_price AND !isset($restricted_country_mode)) OR isset($groups) OR $product->reference OR (isset($HOOK_PRODUCT_ACTIONS) && $HOOK_PRODUCT_ACTIONS)}
@@ -165,7 +75,7 @@
                         <div class="prod_desc">
                             <h2>PERSONNALISEZ LE PAPIER PEINT KUBE</h2>
                             <p>
-                                {$product->description_short|escape:'html':'UTF-8'|htmlspecialchars_decode:3}
+                                {$product->description_short}
                             </p>
                         </div>
                     </div>
@@ -356,7 +266,7 @@
                                         </li>
 
                                         {foreach from=$accessories item=accessoire}
-                                            <li><a href="{$tempModuleUrl}?id_product={$accessoire['id_product']|intval}"><img src="{$link->getImageLink($accessoire.link_rewrite, $accessoire.id_image, 'large_default')}" class="img-responsive" width="46" height="46" /></a></li>
+                                            <li><a href="{$accessoire.link}"><img src="{$link->getImageLink($accessoire.link_rewrite, $accessoire.id_image, 'large_default')}" class="img-responsive" width="46" height="46" /></a></li>
                                                 {/foreach}
                                     </ul>
                                     {if $accessories|@count > 5}
