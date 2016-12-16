@@ -713,8 +713,8 @@
 
                 if (jQuery('.popin-product .product-img').length > 0) {
                     jQuery('.popin-product .product-img').attr('src', '{$image_direct_url}');
-                    jQuery('.popin-title').html('1 x <strong>{$product->name}</strong>');
-                    jQuery('.popin-reference').html('Référence : {$product->reference}');
+                    jQuery('.popin-title').html('1 x <strong>{$product->name|escape:"htmlall":"UTF-8"}</strong>');
+                    jQuery('.popin-reference').html('Référence : {$product->reference|escape:"htmlall":"UTF-8"}');
                 }
             }, 1000);
         });
@@ -767,9 +767,9 @@
 
                 if (jQuery('.popin-product .product-img').length > 0) {
                     jQuery('.popin-product .product-img').attr('src', '{$image_direct_url}');
-                    jQuery('.popin-title').html('1 x <strong>{$sampleProductInfo->name['1']}</strong>');
-                    jQuery('.popin-reference').html('Référence : {$sampleProductInfo->reference}');
-                    jQuery('.popin-price').html('{sprintf("%.02f", $sampleProductInfo->price)}')
+                    jQuery('.popin-title').html('1 x <strong>{$sampleProductInfo->name['1']|escape:"htmlall":"UTF-8"}</strong>');
+                    jQuery('.popin-reference').html('Référence : {$sampleProductInfo->reference|escape:"htmlall":"UTF-8"}');
+                    jQuery('.popin-price').html('{sprintf("%.02f", $sampleProductInfo->price|intval)}')
                     //
                 }
             }, 1000);
@@ -783,15 +783,5 @@
             scrollTop: $("#custom-product-detail").offset().top
         }, 2000);
     });
-
-    /*setInterval(function () {
-     var currentCropData = cropper.getData();
-     sessionStorage.cropData = JSON.stringify(currentCropData);
-     //console.log(currentCropData);
-     }, 1000);*/
-
-    //};
-
-
-
+    
 </script>
