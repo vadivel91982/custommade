@@ -148,7 +148,7 @@ class CustomMadeAdminController extends ModuleAdminController
                     $target_file = $this->custModuleFolderName . basename($_FILES[$name]["name"]);
                     if ($error = ImageManager::validateUpload($_FILES[$name], Tools::getMaxUploadSize())) {
                         $id_universe = (int)Tools::getValue('id_universe');
-                        if (isset($id_universe) && !empty($id_universe) && $id_universe != 0) {                
+                        if (isset($id_universe) && !empty($id_universe) && $id_universe != 0) {
                             $universe_name = (string)Tools::getValue('universe_name');
                             $active = (int)Tools::getValue('active');
                             $this->withoutimageupload($id_universe, $universe_name, $active);
