@@ -447,11 +447,12 @@ button.image-grid {
     -webkit-transform: rotate(90deg);
     -moz-transform: rotate(90deg);
     -o-transform: rotate(90deg);
+	transform: rotate(90deg);
     writing-mode: lr-tb;
     color: #9e191d;
     font-weight: 600;
     font-size: 17px;
-    left: -7px;
+    left: -15px;
 }
 .length-cm {
     position: absolute;
@@ -502,6 +503,7 @@ button.image-grid {
     .cart-section #dataWidth,.cart-section #dataHeight {
         float: left;
         width: 144px !important;
+		height:32px;
     }
     .cart-section input, #sampleButton{
         width: 174px !important;
@@ -643,8 +645,7 @@ button.image-grid {
 }
 
 
-input[type=number]::-webkit-inner-spin-button, 
-input[type=number]::-webkit-outer-spin-button { 
+input[type=number]{ 
     -webkit-appearance: none; 
-    margin: 0; 
+	-moz-appearance:textfield;
 }
