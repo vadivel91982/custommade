@@ -146,7 +146,14 @@ class CustomMadeAdminController extends ModuleAdminController
                 if ($formated_medium == $image_type['name']) {
                     $target_file = $this->custModuleFolderName . basename($_FILES[$name]["name"]);
                     if ($error = ImageManager::validateUpload($_FILES[$name], Tools::getMaxUploadSize())) {
-                        $this->errors[] = $error;
+                        $id_universe = (int)Tools::getValue('id_universe');
+                        if (isset($id_universe) && !empty($id_universe) && $id_universe != 0) {                
+                            $universe_name = (string)Tools::getValue('universe_name');
+                            $active = (int)Tools::getValue('active');
+                            $this->withoutimageupload($id_universe, $universe_name, $active);
+                        } else {
+                            $this->errors[] = $error;
+                        }
                     } elseif (!move_uploaded_file($_FILES[$name]['tmp_name'], $target_file)) {
                         $this->errors = Tools::displayError('An error occurred while uploading image.');
                     } else {
@@ -191,6 +198,21 @@ class CustomMadeAdminController extends ModuleAdminController
             }
         }
         return parent::postProcess();
+    }
+
+    private function withoutimageupload($id_universe, $universe_name, $active)
+    {
+        if (isset($id_universe) && !empty($id_universe) && $id_universe != 0) {
+            $sql = "UPDATE `"._DB_PREFIX_.Tools::strtolower($this->table)."` SET 
+                                                    universe_name = '".$universe_name."',
+                                                    active = '".$active."'
+                                                WHERE id_universe = ".$id_universe;
+            if (Db::getInstance()->execute($sql)) {
+                Tools::redirectAdmin(self::$currentIndex.'&token='.Tools::getAdminTokenLite('CustomMadeAdmin'));
+            } else {
+                return false;
+            }
+        }
     }
 
     private function imageupload($id_universe, $universe_name, $image, $thump, $active)
