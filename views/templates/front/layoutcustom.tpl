@@ -85,7 +85,7 @@
                                             <div class="input-group-addon">
                                                 <i class="fa fa-arrows-h" aria-hidden="true"></i>
                                             </div>
-                                            <input value="300" class="form-control" id="dataWidth" type="number" placeholder="{$getPriceDetails->cust_width|escape:'htmlall':'UTF-8'} cm max">
+                                            <input value="300" class="form-control" id="dataWidth" type="text" placeholder="{$getPriceDetails->cust_width|escape:'htmlall':'UTF-8'} cm max">
                                         </div>
                                     </div>
                                     <div class="form-group heightbox">
@@ -94,7 +94,7 @@
                                             <div class="input-group-addon">
                                                 <i class="fa fa-arrows-v" aria-hidden="true"></i>
                                             </div>
-                                            <input value="300" class="form-control" id="dataHeight" type="number"  placeholder="{$getPriceDetails->cust_height|escape:'htmlall':'UTF-8'} cm max">
+                                            <input value="300" class="form-control" id="dataHeight" type="text"  placeholder="{$getPriceDetails->cust_height|escape:'htmlall':'UTF-8'} cm max">
                                         </div>
                                     </div>
                                     <div><a id="button-scroll" title="Autres dimensions?">Autres dimensions?</a></div>
@@ -716,9 +716,10 @@
         setIndicatorPosition();
         setNewCustomPrice();
     }
-    
+
     function setNewCustomPrice() {
         newCustomPrice = (((cropper.getData(true).width) * (cropper.getData(true).height)) / 10000) * pricePerMeterSq;
+        //console.log(addCommas(newCustomPrice));
         newCustomPrice = newCustomPrice.toFixed(2);
         jQuery('#our_price_display').html(currencySign + newCustomPrice);
         //console.log(newCustomPrice.toFixed(2));
@@ -753,11 +754,37 @@
                     jQuery('.popin-product .product-img').attr('src', "{$sample_image_url_direct|escape:'htmlall':'UTF-8'}");
                     jQuery('.popin-title').html('1 x <strong>{$sampleProductInfo->name['1']|escape:"htmlall":"UTF-8"}</strong>');
                     jQuery('.popin-reference').html('Référence : {$sampleProductInfo->reference|escape:"htmlall":"UTF-8"}');
-                    jQuery('.popin-price').html(currencySign+'{sprintf("%.02f", $sampleProductInfo->price|intval)}')
+                    jQuery('.popin-price').html(currencySign + '{sprintf("%.02f", $sampleProductInfo->price|intval)}')
                     //
                 }
             }, 1000);
         }
+    }
+
+    function addCommas(nStr) {
+        nStr += '';
+        var x = nStr.split('.');
+        var x1 = x[0];
+        var x2 = x.length > 1 ? '.' + x[1] : '';
+        var rgx = /(\d+)(\d{3})/;
+        while (rgx.test(x1)) {
+            x1 = x1.replace(rgx, '$1' + ',' + '$2');
+        }
+        return x1 + x2;
+    }
+    function addSeparatorsNF(nStr, inD, outD, sep) {
+        nStr += '';
+        var dpos = nStr.indexOf(inD);
+        var nStrEnd = '';
+        if (dpos != -1) {
+            nStrEnd = outD + nStr.substring(dpos + 1, nStr.length);
+            nStr = nStr.substring(0, dpos);
+        }
+        var rgx = /(\d+)(\d{3})/;
+        while (rgx.test(nStr)) {
+            nStr = nStr.replace(rgx, '$1' + sep + '$2');
+        }
+        return nStr + nStrEnd;
     }
 
 
