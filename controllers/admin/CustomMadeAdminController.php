@@ -78,7 +78,7 @@ class CustomMadeAdminController extends ModuleAdminController
             'legend' => array(
                 'title' => $this->module->l('Add Universe', 'CustomMadeAdmin'),
                 //'image' => Tools::getHttpHost(true)._PS_MODULE_DIR_.$this->custommadeObj->name.'/logo.gif'
-                'image' => Tools::getHttpHost(true) . PS_BASE_URI . 'modules/'.$this->custommadeObj->name.'/logo.gif'
+                'image' => Tools::getHttpHost(true) . __PS_BASE_URI__ . 'modules/'.$this->custommadeObj->name.'/logo.gif'
             ),
             'submit' => array(
                 'name' => 'subtmitAddCustommade',
