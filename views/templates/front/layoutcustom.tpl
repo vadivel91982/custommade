@@ -721,7 +721,7 @@
         newCustomPrice = (((cropper.getData(true).width) * (cropper.getData(true).height)) / 10000) * pricePerMeterSq;
         //console.log(addCommas(newCustomPrice));
         newCustomPrice = newCustomPrice.toFixed(2);
-        jQuery('#our_price_display').html(currencySign + newCustomPrice);
+        jQuery('#our_price_display').html(newCustomPrice + currencySign);
         //console.log(newCustomPrice.toFixed(2));
 
         setTimeout(function () {
@@ -754,7 +754,7 @@
                     jQuery('.popin-product .product-img').attr('src', "{$sample_image_url_direct|escape:'htmlall':'UTF-8'}");
                     jQuery('.popin-title').html('1 x <strong>{$sampleProductInfo->name['1']|escape:"htmlall":"UTF-8"}</strong>');
                     jQuery('.popin-reference').html('Référence : {$sampleProductInfo->reference|escape:"htmlall":"UTF-8"}');
-                    jQuery('.popin-price').html(currencySign + '{sprintf("%.02f", $sampleProductInfo->price|intval)}')
+                    jQuery('.popin-price').html('{sprintf("%.02f", $sampleProductInfo->price|intval)}' + currencySign)
                     //
                 }
             }, 1000);
