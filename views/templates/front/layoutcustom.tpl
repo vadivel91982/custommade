@@ -318,7 +318,8 @@
     var pricePerMeterSq = {$getPriceDetails->sq_meter_price|escape:'html':'UTF-8'};
     var allowedMaxWidth = {$getPriceDetails->cust_width|escape:'html':'UTF-8'};
     var allowedMaxHeight = {$getPriceDetails->cust_height|escape:'html':'UTF-8'};
-    var sampleProductId = {$getPriceDetails->sample_product|escape:'html':'UTF-8'};
+    var sampleProductId = '{$getPriceDetails->sample_product|escape:'html':'UTF-8'}';
+    var customGridSize = {$getPriceDetails->grid_size|escape:'html':'UTF-8'};
     var rootUrl = '{$rootUrl|escape:"html":"UTF-8"}';
     var Cropper = window.Cropper;
     var URL = window.URL || window.webkitURL;
@@ -334,15 +335,36 @@
     var dataScaleX = document.getElementById('dataScaleX');
     var dataScaleY = document.getElementById('dataScaleY');
     var options = {
-        viewMode: 1,
-        aspectRatio: NaN,
+        /*  viewMode: 1,
+         aspectRatio: 1 / 1,
+         dragMode: 'move',
+         checkCrossOrigin: false,
+         zoomOnWheel: false,
+         zoomable: false,
+         guides: false,
+         cropBoxResizable: false,
+         movable: false,
+         minCropBoxHeight: 1000,
+         minContainerWidth: 200,
+         minContainerHeight: 550, */
+
+        viewMode: 1, // Can use 'viewMode: 3' to remove the canvas borders but causes zoom issues on rotate.
+        aspectRatio: 1 / 1,
         dragMode: 'move',
         checkCrossOrigin: false,
         zoomOnWheel: false,
         zoomable: false,
-        guides: false,
-        cropBoxResizable: false,
         movable: false,
+        // scalable: false,
+        cropBoxResizable: false,
+        /*minCropBoxHeight: 1500,
+         minContainerWidth: 200,
+         minContainerHeight: 600,*/
+        guides: false,
+        //minCropBoxWidth: 0,
+        minCropBoxHeight: 9000,
+        //minContainerWidth: 200,
+        //minContainerHeight: 600,
 
         ready: function (e) {
             if (jQuery.trim(sessionStorage.cropData) != '') {
@@ -351,26 +373,33 @@
                 //console.log(cropper.getData());
                 if (jQuery.trim(sessionStorage.hasGrid) == '1') {
                     jQuery('.gridlayout').addClass('gridbg');
+                    jQuery('.image-grid').addClass('grid_active');
+                    createGrid(customGridSize);
                     setTimeout(function () {
                         var previewWidth = jQuery('.backdrop .preview').width();
                         var previewHeight = jQuery('.backdrop .preview').height();
                         $('.backdrop .gridlayout').css('width', previewWidth + 'px');
                         $('.backdrop .gridlayout').css('height', previewHeight + 'px');
-                        
+
                         setNewCustomPrice();
                     }, 500);
                 }
-                jQuery('#dataWidth').val(prevCropDataOrg.width);
-                jQuery('#dataHeight').val(prevCropDataOrg.height);
+                jQuery('#dataWidth').val(sessionStorage.customWidth);
+                jQuery('#dataHeight').val(sessionStorage.customHeight);
             } else {
-                var newOpt = {
-                    width: 300,
-                    height: 300,
-                    x: 0,
-                    y: 0
-                };
-                cropper.setData(newOpt);
+                /*var newOpt = {
+                 width: 300,
+                 height: 300,
+                 x: 0,
+                 y: 0
+                 };
+                 cropper.setData(newOpt);*/
             }
+
+            if (jQuery.trim(sessionStorage.aspectRatio) != '') {
+                cropper.setAspectRatio(sessionStorage.aspectRatio);
+            }
+
             dynamicImage = image.cropper.getCroppedCanvas().toDataURL('image/jpeg', 1);
             $('.preview').attr('src', dynamicImage);
             setCropToSession();
@@ -575,18 +604,28 @@
     $(document).on('click', '.image-grid', function (e) {
         e.preventDefault();
         //alert('testing');
+        jQuery(this).toggleClass('grid_active');
+        //
         var button = $(this);
 
         $('.gridlayout').toggleClass('gridbg');
-
-        if ($('.gridlayout').hasClass('gridbg')) {
+        if($('.image-grid').hasClass('grid_active')){
+            jQuery('.cropper-crop-box .gridlayout').html('');
+            createGrid(customGridSize);
             sessionStorage.hasGrid = '1';
+        }else{
+            jQuery('.cropper-crop-box .gridlayout').html('');
+            //createGrid(100);
+            sessionStorage.hasGrid = '0';
+        }
+        if ($('.gridlayout').hasClass('gridbg')) {
+            //sessionStorage.hasGrid = '1';
             var previewWidth = jQuery('.backdrop .preview').width();
             var previewHeight = jQuery('.backdrop .preview').height();
             $('.backdrop .gridlayout').css('width', previewWidth + 'px');
             $('.backdrop .gridlayout').css('height', previewHeight + 'px');
         } else {
-            sessionStorage.hasGrid = '0';
+            //sessionStorage.hasGrid = '0';
         }
 
         if ($(this).hasClass('disabled')) {
@@ -656,10 +695,13 @@
             curVal = allowedMaxWidth;
             jQuery(this).val(allowedMaxWidth);
         }
-        var newOpt = {
-            width: curVal
-        };
-        cropper.setData(newOpt);
+        /*var newOpt = {
+         width: curVal
+         };
+         cropper.setData(newOpt);*/
+        var tempAspectRatio = jQuery('#dataWidth').val() / jQuery('#dataHeight').val();
+        cropper.setAspectRatio(tempAspectRatio);
+        sessionStorage.aspectRatio = tempAspectRatio;
         dynamicImage = image.cropper.getCroppedCanvas().toDataURL('image/jpeg', 1);
         $('.preview').attr('src', dynamicImage);
         setCropToSession();
@@ -674,10 +716,13 @@
             curVal = allowedMaxHeight;
             jQuery(this).val(allowedMaxHeight);
         }
-        var newOpt = {
-            height: curVal
-        };
-        cropper.setData(newOpt);
+        /*var newOpt = {
+         height: curVal
+         };
+         cropper.setData(newOpt);*/
+        var tempAspectRatio = jQuery('#dataWidth').val() / jQuery('#dataHeight').val();
+        cropper.setAspectRatio(tempAspectRatio);
+        sessionStorage.aspectRatio = tempAspectRatio;
         dynamicImage = image.cropper.getCroppedCanvas().toDataURL('image/jpeg', 1);
         $('.preview').attr('src', dynamicImage);
         setCropToSession();
@@ -689,6 +734,7 @@
         var finalData = cropper.getData(true);
         finalData.stripe = sessionStorage.hasGrid;
         finalData.customPrice = newCustomPrice;
+        finalData.gridSize = customGridSize;
         var finalDataString = JSON.stringify(finalData);
         jQuery.post(rootUrl + 'module/custommade/cropper?action=setdata&pid=' + id_product, {
             data: finalDataString
@@ -714,7 +760,10 @@
 
     function setCropToSession() {
         var currentCropData = cropper.getData(true);
+        currentCropData.gridSize = customGridSize;
         sessionStorage.cropData = JSON.stringify(currentCropData);
+        sessionStorage.customWidth = jQuery('#dataWidth').val();
+        sessionStorage.customHeight = jQuery('#dataHeight').val();
         setIndicatorPosition();
         setNewCustomPrice();
     }
@@ -725,7 +774,7 @@
         newCustomPrice = newCustomPrice.toFixed(2);
         //newCustomPrice = newCustomPrice.replace(/(\d)(?=(\d{3})+\.)/g, '$1,');
         //alert(newCustomPrice.replace(/(\d)(?=(\d{3})+\.)/g, '$1,'));
-        jQuery('#our_price_display').html(newCustomPrice.replace(/(\d)(?=(\d{3})+\.)/g, '$1,') + ' '+currencySign);
+        jQuery('#our_price_display').html(newCustomPrice.replace(/(\d)(?=(\d{3})+\.)/g, '$1,') + ' ' + currencySign);
         //console.log(newCustomPrice.toFixed(2));
 
         setTimeout(function () {
@@ -762,6 +811,26 @@
                     //
                 }
             }, 1000);
+        }
+    }
+    //createGrid(100);
+    function createGrid(size) {
+        var ratioW = Math.floor($(window).width() / size),
+                ratioH = Math.floor($(window).height() / size);
+
+        var parent = $('<div />', {
+            class: 'customgrid',
+            width: ratioW * size,
+            height: ratioH * size
+        }).addClass('customgrid').appendTo('.cropper-crop-box .gridlayout');
+
+        for (var i = 0; i < ratioH; i++) {
+            for (var p = 0; p < ratioW; p++) {
+                $('<div />', {
+                    width: size - 1,
+                    height: size - 1
+                }).appendTo(parent);
+            }
         }
     }
 

@@ -107,6 +107,7 @@ class Custommade extends Module
                 `sq_meter_price` varchar(5) NOT NULL,
                 `cust_delivery` int(8) NOT NULL,
                 `sample_product` int(11) NOT NULL,
+                `grid_size` int(11) NOT NULL,
                 `date_add` DATETIME NOT NULL,
                 `date_upd` DATETIME NOT NULL,
                 PRIMARY KEY (`id_afdc`)
@@ -407,12 +408,13 @@ class Custommade extends Module
             $prod_save->sq_meter_price = ($product['SquareMeter'] != '') ? (int) $product['SquareMeter'] : '0';
             $prod_save->cust_delivery = ($product['Delivery'] != '') ? (string) $product['Delivery'] : '0';
             $prod_save->sample_product = ($product['sample_product'] != '') ? (int) $product['sample_product'] : '0';
+            $prod_save->grid_size = ($product['grid_size'] != '') ? (int) $product['grid_size'] : '0';
             if ($prod_save->prod_customize != '0') {
                 return $prod_save->save();
             }
         } else {
             $prod_customize = ($product['prod_customize'] != '' || $product['prod_customize'] != '0') ? (int) $product['prod_customize'] : '0';
-            $sql = "UPDATE `" . _DB_PREFIX_ . Tools::strtolower($this->default_name) . "` SET prod_customize = " . $prod_customize . ",cust_height = " . $product['Height'] . ",cust_width = " . $product['Width'] . ",sq_meter_price = " . $product['SquareMeter'] . ",cust_delivery = " . $product['Delivery'] . ",sample_product = " . $product['sample_product'] . " WHERE id_product = " . $product['id_product'];
+            $sql = "UPDATE `" . _DB_PREFIX_ . Tools::strtolower($this->default_name) . "` SET prod_customize = " . $prod_customize . ",cust_height = " . $product['Height'] . ",cust_width = " . $product['Width'] . ",sq_meter_price = " . $product['SquareMeter'] . ",cust_delivery = " . $product['Delivery'] . ",sample_product = " . $product['sample_product'] . ",grid_size = ".$product['grid_size']." WHERE id_product = " . $product['id_product'];
             if (!Db::getInstance()->execute($sql)) {
                 die('error!');
             }

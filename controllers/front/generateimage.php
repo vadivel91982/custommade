@@ -1,4 +1,5 @@
 <?php
+
 /**
  * NOTICE OF LICENSE
  *
@@ -12,16 +13,13 @@
  *
  * Support <support@202-ecommerce.com>
  */
-
 if (!defined('_PS_VERSION_')) {
     die(header('HTTP/1.0 404 Not Found'));
 }
 
-class CustomMadeGenerateimageModuleFrontController extends ModuleFrontController
-{
+class CustomMadeGenerateimageModuleFrontController extends ModuleFrontController {
 
-    public function __construct()
-    {
+    public function __construct() {
         parent::__construct();
         //$select = "SELECT * FROM "._DB_PREFIX_."options WHERE 1 and status = 'pending' limit 5";
         $select = "SELECT * FROM " . _DB_PREFIX_ . "options WHERE 1";
@@ -38,12 +36,14 @@ class CustomMadeGenerateimageModuleFrontController extends ModuleFrontController
                 // get image full URL
                 $image_url = Tools::getHttpHost(true) . _THEME_PROD_DIR_ . $image->getExistingImgPath() . ".jpg";
                 $options = array();
+                $options['record_id'] = $id;
                 $options['hd_image_url'] = $image_url;
                 $options['crop_x'] = $customOptions->x;
                 $options['crop_y'] = $customOptions->y;
                 $options['width'] = $customOptions->width;
                 $options['height'] = $customOptions->height;
                 $options['rotate_degree'] = $customOptions->rotate;
+                $options['grid_size'] = $customOptions->gridSize;
                 if ($customOptions->scaleX == '-1' || $customOptions->scaleY == '-1') {
                     $options['mirror_effect'] = 1;
                 } else {
@@ -71,13 +71,18 @@ class CustomMadeGenerateimageModuleFrontController extends ModuleFrontController
         die;
     }
 
-    private function generateFinalImage($config)
-    {
+    private function generateFinalImage($config) {
         if (isset($config['hd_image_url']) && filter_var($config['hd_image_url'], FILTER_VALIDATE_URL)) {
             //$imageData = Tools::file_get_contents($config['hd_image_url']);
             $imageData = $this->grabImage($config['hd_image_url']);
-            $tmpFileName = 'modules/custommade/tmp/tmp_image.jpg';
+            $tmpFileName = 'modules/custommade/tmp/tmp_image_'. $config['record_id'].'.jpg';
             file_put_contents($tmpFileName, $imageData);
+
+            $imageSize = getimagesize($tmpFileName);
+
+            $bgWidth = $imageSize[0];
+            $bgHeight = $imageSize[1];
+
             $im = imagecreatefromjpeg($tmpFileName);
 
             /* Start : Crop Image */
@@ -94,7 +99,12 @@ class CustomMadeGenerateimageModuleFrontController extends ModuleFrontController
             /* Start : Merge Stripe */
             if (isset($config['stripe_filename']) && trim($config['stripe_filename']) != '') {
                 $sim = imagecreatefrompng($config['stripe_filename']);
-                imagecopyresampled($im, $sim, 0, 0, 0, 0, $config['width'], $config['height'], $config['width'], $config['height']);
+                //imagecopyresampled($im, $sim, 0, 0, 0, 0, $config['width'], $config['height'], $config['width'], $config['height']);
+                for ($i = 0; $i <= $bgWidth; $i = $i + $config['grid_size']) {
+                    for ($j = 0; $j <= $bgHeight; $j++) {
+                        imagecopyresampled($im, $sim, $i, $j, 0, 1, 1, 1, 1, 1);
+                    }
+                }
             }
             /* Stop : Merge Stripe */
             //generate final output image
@@ -108,8 +118,7 @@ class CustomMadeGenerateimageModuleFrontController extends ModuleFrontController
         }
     }
 
-    public function grabImage($url)
-    {
+    public function grabImage($url) {
         $ch = curl_init();
         curl_setopt($ch, CURLOPT_URL, $url);
         curl_setopt($ch, CURLOPT_HEADER, false);
@@ -121,4 +130,5 @@ class CustomMadeGenerateimageModuleFrontController extends ModuleFrontController
         curl_close($ch);
         return $res;
     }
+
 }

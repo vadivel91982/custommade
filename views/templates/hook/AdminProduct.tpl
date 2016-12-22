@@ -59,6 +59,16 @@
         <p class="preference_description"></p>
         </tr>
         <tr>
+            <td valign="top"><label for="grid_size" style="width:300px;">{l s='Grid Size :' mod='custommade'}</label></td>
+            <td>
+                <input type="text" name="grid_size" id="grid_size" value="{$getCustomize->grid_size|escape:'html':'UTF-8'}" >
+            </td>
+            <td>
+                <p class="preference_description">{l s='px' mod='custommade'}</p>
+            </td>
+        <p class="preference_description"></p>
+        </tr>
+        <tr>
             <td valign="top"><label for="productlist_custom" style="width:300px;">{l s='Sample Product :' mod='custommade'}</label></td>
             <td>
                 <select name="sample_product" id="sample_product">
