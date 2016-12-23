@@ -833,31 +833,7 @@
         }
     }
 
-    function addCommas(nStr) {
-        nStr += '';
-        var x = nStr.split('.');
-        var x1 = x[0];
-        var x2 = x.length > 1 ? '.' + x[1] : '';
-        var rgx = /(\d+)(\d{3})/;
-        while (rgx.test(x1)) {
-            x1 = x1.replace(rgx, '$1' + ',' + '$2');
-        }
-        return x1 + x2;
-    }
-    function addSeparatorsNF(nStr, inD, outD, sep) {
-        nStr += '';
-        var dpos = nStr.indexOf(inD);
-        var nStrEnd = '';
-        if (dpos != -1) {
-            nStrEnd = outD + nStr.substring(dpos + 1, nStr.length);
-            nStr = nStr.substring(0, dpos);
-        }
-        var rgx = /(\d+)(\d{3})/;
-        while (rgx.test(nStr)) {
-            nStr = nStr.replace(rgx, '$1' + sep + '$2');
-        }
-        return nStr + nStrEnd;
-    }
+   
 
 
 
