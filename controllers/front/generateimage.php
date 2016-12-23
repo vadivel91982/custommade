@@ -1,4 +1,5 @@
 <?php
+
 /**
  * NOTICE OF LICENSE
  *
@@ -19,7 +20,6 @@ if (!defined('_PS_VERSION_')) {
 
 class CustomMadeGenerateimageModuleFrontController extends ModuleFrontController
 {
-
     public function __construct()
     {
         parent::__construct();
@@ -70,6 +70,15 @@ class CustomMadeGenerateimageModuleFrontController extends ModuleFrontController
                 DB::getInstance()->Execute($updateStatus);
             }
         }
+        /* Unlink temp images */
+        $scanPath = 'modules/custommade/tmp';
+        $tmpFileList = scandir($scanPath);
+        //echo '----' . __LINE__ . '----' . __FILE__ . '<pre>' . print_r($tmpFileList, true) . '</pre>';
+        foreach ($tmpFileList as $k => $file) {
+            if ($file != '.' && $file != '..' && $file != 'index.php') {
+                unlink($scanPath . '/' . $file);
+            }
+        }
         die;
     }
 
@@ -78,7 +87,7 @@ class CustomMadeGenerateimageModuleFrontController extends ModuleFrontController
         if (isset($config['hd_image_url']) && filter_var($config['hd_image_url'], FILTER_VALIDATE_URL)) {
             //$imageData = Tools::file_get_contents($config['hd_image_url']);
             $imageData = $this->grabImage($config['hd_image_url']);
-            $tmpFileName = 'modules/custommade/tmp/tmp_image_'. $config['record_id'].'.jpg';
+            $tmpFileName = 'modules/custommade/tmp/tmp_image_' . $config['record_id'] . '.jpg';
             file_put_contents($tmpFileName, $imageData);
 
             $imageSize = getimagesize($tmpFileName);
