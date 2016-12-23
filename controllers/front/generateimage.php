@@ -12,9 +12,11 @@
  *
  * Support <support@202-ecommerce.com>
  */
+
 if (!defined('_PS_VERSION_')) {
     die(header('HTTP/1.0 404 Not Found'));
 }
+
 class CustomMadeGenerateimageModuleFrontController extends ModuleFrontController {
 
     public function __construct() {
@@ -128,5 +130,4 @@ class CustomMadeGenerateimageModuleFrontController extends ModuleFrontController
         curl_close($ch);
         return $res;
     }
-
 }
