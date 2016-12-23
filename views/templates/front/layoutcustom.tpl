@@ -770,12 +770,11 @@
 
     function setNewCustomPrice() {
         newCustomPrice = (((cropper.getData(true).width) * (cropper.getData(true).height)) / 10000) * pricePerMeterSq;
-        //console.log(addCommas(newCustomPrice));
+
         newCustomPrice = newCustomPrice.toFixed(2);
-        //newCustomPrice = newCustomPrice.replace(/(\d)(?=(\d{3})+\.)/g, '$1,');
-        //alert(newCustomPrice.replace(/(\d)(?=(\d{3})+\.)/g, '$1,'));
+
         jQuery('#our_price_display').html(newCustomPrice.replace(/(\d)(?=(\d{3})+\.)/g, '$1,') + ' ' + currencySign);
-        //console.log(newCustomPrice.toFixed(2));
+
 
         setTimeout(function () {
             var previewWidth = jQuery('.backdrop .preview').width();
