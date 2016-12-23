@@ -773,7 +773,7 @@
 
         newCustomPrice = newCustomPrice.toFixed(2);
 
-        jQuery('#our_price_display').html(newCustomPrice.replace(/(\d)(?=(\d{3})+\.)/g, '$1,') + ' ' + currencySign);
+        jQuery('#our_price_display').html(newCustomPrice + ' ' + currencySign);
 
 
         setTimeout(function () {
