@@ -684,6 +684,7 @@
         $('.preview').attr('src', dynamicImage);
         setIndicatorPosition();
         setNewCustomPrice();
+        removeStripes();
     });
 
     jQuery(document).on('click', '.flipbtns', function () {
@@ -692,6 +693,7 @@
         $('.preview').attr('src', dynamicImage);
         setIndicatorPosition();
         setNewCustomPrice();
+        removeStripes();
     });
 
     jQuery(document).on('keyup', '#dataWidth', function () {
@@ -763,6 +765,13 @@
         jQuery('.list_accessories').css('height', 'auto');
         jQuery(this).hide();
     });
+    
+    function removeStripes(){
+        $('.gridlayout').removeClass('gridbg');
+        $('.image-grid').removeClass('grid_active');
+        jQuery('.cropper-crop-box .gridlayout').html('');
+        sessionStorage.hasGrid = '0';
+    }
 
     function setCropToSession() {
         var currentCropData = cropper.getData(true);
