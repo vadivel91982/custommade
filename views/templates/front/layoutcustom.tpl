@@ -830,7 +830,7 @@
             class: 'customgrid',
             width: ratioW * size,
             height: ratioH * size
-        }).addClass('customgrid').appendTo('.cropper-crop-box .gridlayout');
+        }).addClass('customgrid').appendTo('.gridlayout');
 
         for (var i = 0; i < ratioH; i++) {
             for (var p = 0; p < ratioW; p++) {
