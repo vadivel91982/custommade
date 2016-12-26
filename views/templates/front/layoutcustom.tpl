@@ -321,6 +321,12 @@
     var sampleProductId = '{$getPriceDetails->sample_product|escape:'html':'UTF-8'}';
     var customGridSize = {$getPriceDetails->grid_size|escape:'html':'UTF-8'};
     var rootUrl = '{$rootUrl|escape:"html":"UTF-8"}';
+    if (sampleProductId != '') {
+        var samplePrice = {sprintf("%.02f", $sampleProductInfo->price|intval)};
+    } else {
+        var samplePrice = '';
+    }
+
     var Cropper = window.Cropper;
     var URL = window.URL || window.webkitURL;
     var container = document.querySelector('.img-container');
@@ -609,11 +615,11 @@
         var button = $(this);
 
         $('.gridlayout').toggleClass('gridbg');
-        if($('.image-grid').hasClass('grid_active')){
+        if ($('.image-grid').hasClass('grid_active')) {
             jQuery('.cropper-crop-box .gridlayout').html('');
             createGrid(customGridSize);
             sessionStorage.hasGrid = '1';
-        }else{
+        } else {
             jQuery('.cropper-crop-box .gridlayout').html('');
             //createGrid(100);
             sessionStorage.hasGrid = '0';
@@ -772,8 +778,10 @@
         newCustomPrice = (((cropper.getData(true).width) * (cropper.getData(true).height)) / 10000) * pricePerMeterSq;
 
         newCustomPrice = newCustomPrice.toFixed(2);
+//        alert(number_format(newCustomPrice, 2, ',', ' '));
+        var formattedPrice = number_format(newCustomPrice, 2, ',', ' ');
 
-        jQuery('#our_price_display').html(newCustomPrice + ' ' + currencySign);
+        jQuery('#our_price_display').html(formattedPrice + ' ' + currencySign);
 
 
         setTimeout(function () {
@@ -806,7 +814,8 @@
                     jQuery('.popin-product .product-img').attr('src', "{$sample_image_url_direct|escape:'htmlall':'UTF-8'}");
                     jQuery('.popin-title').html('1 x <strong>{$sampleProductInfo->name['1']|escape:"htmlall":"UTF-8"}</strong>');
                     jQuery('.popin-reference').html('Référence : {$sampleProductInfo->reference|escape:"htmlall":"UTF-8"}');
-                    jQuery('.popin-price').html('{sprintf("%.02f", $sampleProductInfo->price|intval)} ' + currencySign)
+                    var formattedSamplePrice = number_format(samplePrice, 2, ',', ' ');
+                    jQuery('.popin-price').html(formattedSamplePrice + ' ' + currencySign)
                     //
                 }
             }, 1000);
@@ -833,7 +842,29 @@
         }
     }
 
-   
+    function number_format(number, decimals, decPoint, thousandsSep) {
+        decimals = decimals || 0;
+        number = parseFloat(number);
+
+        if (!decPoint || !thousandsSep) {
+            decPoint = '.';
+            thousandsSep = ',';
+        }
+
+        var roundedNumber = Math.round(Math.abs(number) * ('1e' + decimals)) + '';
+        var numbersString = decimals ? roundedNumber.slice(0, decimals * -1) : roundedNumber;
+        var decimalsString = decimals ? roundedNumber.slice(decimals * -1) : '';
+        var formattedNumber = "";
+
+        while (numbersString.length > 3) {
+            formattedNumber += thousandsSep + numbersString.slice(-3)
+            numbersString = numbersString.slice(0, -3);
+        }
+
+        return (number < 0 ? '-' : '') + numbersString + formattedNumber + (decimalsString ? (decPoint + decimalsString) : '');
+    }
+
+
 
 
 
