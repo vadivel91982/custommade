@@ -222,7 +222,7 @@ class CustomMadeDefaultModuleFrontController extends ModuleFrontController
             $getUnivers = AuFilDesCoul::getUniversImage();
             $getPriceDetail = AuFilDesCoul::getAuFilDesByIDProduct((int) $this->product->id);
             
-            if(trim($getPriceDetail->prod_customize) != '1'){
+            if (trim($getPriceDetail->prod_customize) != '1') {
                 Tools::redirect($this->context->link->getProductLink($this->product->id));
                 exit;
             }
