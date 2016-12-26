@@ -769,7 +769,7 @@
     function removeStripes(){
         $('.gridlayout').removeClass('gridbg');
         $('.image-grid').removeClass('grid_active');
-        jQuery('.cropper-crop-box .gridlayout').html('');
+        jQuery('.gridlayout').html('');
         sessionStorage.hasGrid = '0';
     }
 
