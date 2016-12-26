@@ -221,6 +221,12 @@ class CustomMadeDefaultModuleFrontController extends ModuleFrontController
             }
             $getUnivers = AuFilDesCoul::getUniversImage();
             $getPriceDetail = AuFilDesCoul::getAuFilDesByIDProduct((int) $this->product->id);
+            
+            if(trim($getPriceDetail->prod_customize) != '1'){
+                Tools::redirect($this->context->link->getProductLink($this->product->id));
+                exit;
+            }
+            
             $sampleProductInfo = new Product($getPriceDetail->sample_product);
             $sample_id_image_direct = Product::getCover($getPriceDetail->sample_product);
             $sample_imageDirect = new Image($sample_id_image_direct['id_image']);
