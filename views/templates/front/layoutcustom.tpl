@@ -770,6 +770,10 @@
         sessionStorage.cropData = JSON.stringify(currentCropData);
         sessionStorage.customWidth = jQuery('#dataWidth').val();
         sessionStorage.customHeight = jQuery('#dataHeight').val();
+        
+        var cropBoxData = cropper.getCropBoxData();
+        jQuery('.backdrop .preview').width(cropBoxData.width);
+        
         setIndicatorPosition();
         setNewCustomPrice();
     }
