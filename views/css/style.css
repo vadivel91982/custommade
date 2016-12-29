@@ -31,15 +31,22 @@ Description: Dedicated Wordpress theme for Create a Wall
     border:0px;
 }
 
-
-button.image-grid .fa-align-justify{
-    transform: rotate(90deg);
+button.image-rotate-left{
+	background: #afb2b4 url(../img/rotate.jpg) no-repeat 2px top !important	
+}
+button.image-flip-horizontally,button.image-flip-vertically{
+	background: #afb2b4 url(../img/effect.jpg) no-repeat 2px top !important
+}
+button.image-grid {
+	background: #afb2b4 url(../img/mirror.jpg) no-repeat -2px top !important
+    /*transform: rotate(90deg);
     padding: 0px;
     font-size: 44px;
     position: absolute;
     left: -5px;
-    top: -2px;
+    top: -2px;*/
 }
+.mirror{}
 
 .gridbg{
     /* background: url(../img/grid-line.png) repeat;*/

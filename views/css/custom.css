@@ -107,7 +107,7 @@ input[type="radio"]:checked + label span {
     max-height: 300px;
 }
 .transform-buttons button {
-    height: 40px;
+    height: 38px;
     border-radius: 0 !important;
 }
 .transform-info, .transform-info:hover, .transform-info:active, .transform-info:focus {
@@ -145,7 +145,7 @@ input[type="radio"]:checked + label span {
     color: #8a6293;
 }
 .preview_preview-text-container p small { color: #aaa; }
-.previews .tab-content { margin: 0; }
+.previews .tab-content { margin: 0;width: 100%;overflow:hidden;position:relative }
 
 .choose-area {padding-bottom: 0;}
 
@@ -251,17 +251,17 @@ ul.share-buttons li { display: inline; }
 .backdrop .preview { height: 100%; }
 
 /**** new design **/
-.product-title{
+.product-title,.product-title strong {
     font-size: 30px;
     font-family: 'Conv_Book Antiqua Regular';
     text-align: center;
-    font-weight: normal;
-    /*border-bottom: 1px solid #b3b3b3;*/
+    font-weight: normal;    
     color: #666666;
     padding-bottom: 10px;
     margin-bottom: 40px;
+	text-transform: uppercase
 }
-
+.product-title strong {border-bottom: 1px solid #b3b3b3;}
 .prod_desc{ padding-bottom: 30px; }
 .form-horizontal .control-label {
     margin-bottom: 5px;
@@ -297,7 +297,7 @@ ul.share-buttons li { display: inline; }
 .button-sec p{font-weight: normal}
 
 #sampleButton {
-    background: #676767;
+    background: #afb2b4 !important;
 }
 
 #buy_block{
@@ -386,6 +386,7 @@ button.image-grid {
     padding-left: 0;
     font-weight: normal;
     font-size: 14px;
+	padding-left: 22px;
 }
 #add_to_cart input, #sampleButton {
     background: #891812;

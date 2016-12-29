@@ -110,16 +110,16 @@
                                                     <i class="fa fa-undo" aria-hidden="true"></i> Rotation 90&deg;<br />
                                                 </button>-->
                                                 <button type="button" class="btn btn-default image-rotate-left">
-                                                    <i class="fa fa-undo" aria-hidden="true"></i> Rotation 90&deg;<br />
+                                                    Rotation 90&deg;<br />
                                                 </button>
 
                                                 <button type="button" class="btn btn-default flipbtns image-flip-horizontally" data-method="scaleX" data-option="-1">
-                                                    <i class="fa fa-arrows-h" aria-hidden="true"></i> Effet Mirror<br />
+                                                    Effet Mirror<br />
                                                 </button>
                                                 <button type="button" class="btn btn-default flipbtns image-flip-vertically" data-method="scaleY" data-option="-1" style="display:none;">
-                                                    <i class="fa fa-arrows-h" aria-hidden="true"></i> Effet Mirror<br />
+                                                    Effet Mirror<br />
                                                 </button>
-                                                <button type="button" class="btn btn-default image-grid"><i class="fa fa-align-justify" aria-hidden="true"></i>
+                                                <button type="button" class="btn btn-default image-grid">
                                                     Montrer les l&eacute;s
                                                 </button>
                                                 <!-- Show the cropped image in modal -->
@@ -167,9 +167,6 @@
                                         </p>
                                         <span class="sq-price">{$getPriceDetails->sq_meter_price|floatval} {$currencySign|escape:'html':'UTF-8'|htmlspecialchars_decode:3}/m2</span>
                                     </div>
-
-
-
 
                                     <div class="button-sec">
                                         {if (!$allow_oosp && $product->quantity <= 0) OR !$product->available_for_order OR (isset($restricted_country_mode) AND $restricted_country_mode) OR $PS_CATALOG_MODE}
@@ -224,11 +221,10 @@
                             <div class="col-md-8">
                                 <p>Au fil des Couleurs - Volume 1</p>
                                 <h3>Référence : {$product->reference|escape:"htmlall":"UTF-8"}</h3>
-                                <p>{$product->description|escape:'html':'UTF-8'|htmlspecialchars_decode:3}</p>
+                                {$product->description|escape:'html':'UTF-8'|htmlspecialchars_decode:3}
                             </div>
                             {if isset($accessories) && $accessories}
                                 <div class="col-md-4">
-                                    <p>
                                         <span style="padding-right:10px;float:left;">{l s='Coloris' mod='custommade'}</span> 
                                         <select style="width:250px" onchange="javascript:document.location.href = this.value">
                                             <option value="">{$color_feature|escape:'htmlall':'UTF-8'} - {l s='Ref.' mod='custommade'} {$product->reference|escape:'htmlall':'UTF-8'}</option>
@@ -236,7 +232,6 @@
                                                 <option value="{$accessoire.link|escape:'htmlall':'UTF-8'}">{foreach from=$accessoire.features item=feature}{if $feature.id_feature==1}{$feature.value|escape:'htmlall':'UTF-8'}{/if}{/foreach} - {l s='Ref.' mod='custommade'} {$accessoire.reference|escape:'htmlall':'UTF-8'}</option>
                                             {/foreach}
                                         </select>
-                                    </p>
                                     <div class="clear"></div>
                                     <ul class="list_accessories">
                                         {assign var="cover" value=""}
@@ -676,6 +671,7 @@
     };
 
     jQuery(document).on('click', '.image-rotate-left', function () {
+        jQuery('.flipbtns').attr('disabled','true');
         cropper.rotate(90);
         var currentCropData = cropper.getData();
         if (currentCropData.rotate == 90 || currentCropData.rotate == 270) {
@@ -692,15 +688,23 @@
         setIndicatorPosition();
         setNewCustomPrice();
         removeStripes();
+        setTimeout(function(){
+            jQuery('.flipbtns').removeAttr('disabled');
+        },1000);
+        
     });
 
     jQuery(document).on('click', '.flipbtns', function () {
+        jQuery('.image-rotate-left').attr('disabled','true');
         setCropToSession();
         dynamicImage = image.cropper.getCroppedCanvas().toDataURL('image/jpeg', 1);
         $('.preview').attr('src', dynamicImage);
         setIndicatorPosition();
         setNewCustomPrice();
         removeStripes();
+        setTimeout(function(){
+            jQuery('.image-rotate-left').removeAttr('disabled');
+        },1000);
     });
 
     jQuery(document).on('keyup', '#dataWidth', function () {
