@@ -96,10 +96,11 @@ class CustomMadeGenerateimageModuleFrontController extends ModuleFrontController
 
             $im = imagecreatefromjpeg($tmpFileName);
 
+            /* Stop : Rotate Image */
+            $im = imagerotate($im, ($config['rotate_degree'] * -1), 0);
             /* Start : Crop Image */
             $im = imagecrop($im, ['x' => $config['crop_x'], 'y' => $config['crop_y'], 'width' => $config['width'], 'height' => $config['height']]);
-            $im = imagerotate($im, ($config['rotate_degree'] * -1), 0);
-            /* Stop : Rotate Image */
+            
 
             /* Start : Flip Image (Mirror effect) */
             if ($config['mirror_effect']) {
