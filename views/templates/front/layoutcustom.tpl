@@ -106,7 +106,10 @@
                                     <div class="btn-group transform-buttons" role="group" aria-label="...">                              
                                         <div id="actions">
                                             <div class="docs-buttons">		
-                                                <button type="button" data-method="rotate" data-option="90" class="btn btn-default image-rotate-left">
+                                                <!--<button type="button" data-method="rotate" data-option="90" class="btn btn-default image-rotate-left">
+                                                    <i class="fa fa-undo" aria-hidden="true"></i> Rotation 90&deg;<br />
+                                                </button>-->
+                                                <button type="button" class="btn btn-default image-rotate-left">
                                                     <i class="fa fa-undo" aria-hidden="true"></i> Rotation 90&deg;<br />
                                                 </button>
 
@@ -216,13 +219,14 @@
                         </div><div class="clearfix"></div>
 
 
-                        {if isset($accessories) && $accessories}
-                            <div class="accessories">
-                                <div class="col-md-8">
-                                    <p>Au fil des Couleurs - Volume 1</p>
-                                    <h3>Référence : {$product->reference|escape:"htmlall":"UTF-8"}</h3>
-                                    <p>{$product->description|escape:'html':'UTF-8'|htmlspecialchars_decode:3}</p>
-                                </div>
+
+                        <div class="accessories">
+                            <div class="col-md-8">
+                                <p>Au fil des Couleurs - Volume 1</p>
+                                <h3>Référence : {$product->reference|escape:"htmlall":"UTF-8"}</h3>
+                                <p>{$product->description|escape:'html':'UTF-8'|htmlspecialchars_decode:3}</p>
+                            </div>
+                            {if isset($accessories) && $accessories}
                                 <div class="col-md-4">
                                     <p>
                                         <span style="padding-right:10px;float:left;">{l s='Coloris' mod='custommade'}</span> 
@@ -257,9 +261,11 @@
                                         <span class="attributes_more">{l s='Voir plus' mod='custommade'}</span>
                                     {/if}
                                     <div class="clear"></div>
-                                </div><div class="clearfix"></div>
-                            </div>
-                        {/if}
+                                </div>
+                            {/if}
+                            <div class="clearfix"></div>
+                        </div>
+
                     </div>
                 </div>
 
@@ -670,6 +676,7 @@
     };
 
     jQuery(document).on('click', '.image-rotate-left', function () {
+        cropper.rotate(90);
         var currentCropData = cropper.getData();
         if (currentCropData.rotate == 90 || currentCropData.rotate == 270) {
             jQuery('.image-flip-horizontally').hide();
@@ -765,8 +772,8 @@
         jQuery('.list_accessories').css('height', 'auto');
         jQuery(this).hide();
     });
-    
-    function removeStripes(){
+
+    function removeStripes() {
         $('.gridlayout').removeClass('gridbg');
         $('.image-grid').removeClass('grid_active');
         jQuery('.gridlayout').html('');
@@ -779,10 +786,10 @@
         sessionStorage.cropData = JSON.stringify(currentCropData);
         sessionStorage.customWidth = jQuery('#dataWidth').val();
         sessionStorage.customHeight = jQuery('#dataHeight').val();
-        
+
         var cropBoxData = cropper.getCropBoxData();
         jQuery('.backdrop .preview').width(cropBoxData.width);
-        
+
         setIndicatorPosition();
         setNewCustomPrice();
     }
