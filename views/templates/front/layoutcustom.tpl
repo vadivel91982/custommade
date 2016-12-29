@@ -232,7 +232,7 @@
                                                 <option value="{$accessoire.link|escape:'htmlall':'UTF-8'}">{foreach from=$accessoire.features item=feature}{if $feature.id_feature==1}{$feature.value|escape:'htmlall':'UTF-8'}{/if}{/foreach} - {l s='Ref.' mod='custommade'} {$accessoire.reference|escape:'htmlall':'UTF-8'}</option>
                                             {/foreach}
                                         </select>
-                                    <div class="clear"></div>
+                                    <div class="clear" style="padding-top: 20px;"></div>
                                     <ul class="list_accessories">
                                         {assign var="cover" value=""}
                                         {if isset($images) && $images|is_array && $images|count}
