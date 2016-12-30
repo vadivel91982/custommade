@@ -383,8 +383,8 @@
                     jQuery('.image-grid').addClass('grid_active');
                     createGrid(customGridSize);
                     setTimeout(function () {
-                        var previewWidth = jQuery('.backdrop .preview').width();
-                        var previewHeight = jQuery('.backdrop .preview').height();
+                        var previewWidth = jQuery('.tab-content .active .backdrop .preview').width();
+                        var previewHeight = jQuery('.tab-content .active .backdrop .preview').height();
                         $('.backdrop .gridlayout').css('width', previewWidth + 'px');
                         $('.backdrop .gridlayout').css('height', previewHeight + 'px');
 
@@ -627,8 +627,8 @@
         }
         if ($('.gridlayout').hasClass('gridbg')) {
             //sessionStorage.hasGrid = '1';
-            var previewWidth = jQuery('.backdrop .preview').width();
-            var previewHeight = jQuery('.backdrop .preview').height();
+            var previewWidth = jQuery('.tab-content .active .backdrop .preview').width();
+            var previewHeight = jQuery('.tab-content .active .backdrop .preview').height();
             $('.backdrop .gridlayout').css('width', previewWidth + 'px');
             $('.backdrop .gridlayout').css('height', previewHeight + 'px');
         } else {
@@ -792,6 +792,7 @@
         sessionStorage.customHeight = jQuery('#dataHeight').val();
 
         var cropBoxData = cropper.getCropBoxData();
+        //jQuery('.tab-content .active .backdrop .preview').width(cropBoxData.width);
         jQuery('.backdrop .preview').width(cropBoxData.width);
 
         setIndicatorPosition();
@@ -809,8 +810,8 @@
 
 
         setTimeout(function () {
-            var previewWidth = jQuery('.backdrop .preview').width();
-            var previewHeight = jQuery('.backdrop .preview').height();
+            var previewWidth = jQuery('.tab-content .active .backdrop .preview').width();
+            var previewHeight = jQuery('.tab-content .active .backdrop .preview').height();
             $('.backdrop .gridlayout').css('width', previewWidth + 'px');
             $('.backdrop .gridlayout').css('height', previewHeight + 'px');
         }, 500);
