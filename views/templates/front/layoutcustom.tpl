@@ -868,6 +868,9 @@
     }
 
     function number_format(number, decimals, decPoint, thousandsSep) {
+        if(parseInt(number) == 0){
+            return '0';
+        }
         decimals = decimals || 0;
         number = parseFloat(number);
 
