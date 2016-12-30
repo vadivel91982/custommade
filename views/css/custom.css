@@ -360,7 +360,7 @@ button.image-grid {
 .accessories {
     padding:60px 0px 30px 0px;
 }
-
+.accessories p{margin-bottom: 0}
 .accessories .list_accessories li {
     float: left;
     margin-right: 15px;
