@@ -293,7 +293,18 @@
                                 </div>
                             {/foreach}
                         </div>
+                        <div class="span2 clear product_social">
+                            <ul class="social align_center">{strip}
+                                    <li><a title="Facebook" href="https://www.facebook.com/sharer.php?u={$link->getProductLink($product)|rawurlencode}&amp;t={$product->name} sur Au Fil des Couleurs" class="facebook-button" rel="nofollow" onclick="javascript:window.open(this.href, '', 'menubar=no,toolbar=no,resizable=yes,scrollbars=yes,height=500,width=700');return false;"><img src="{$img_dir}social_fb.png" alt="Facebook" /></a></li>
+                                    <li><a title="Twitter" href="https://twitter.com/share?url={$link->getProductLink($product)|rawurlencode}&amp;text={$product->name} sur Au Fil des Couleurs" class="tweet-button" rel="nofollow" onclick="javascript:window.open(this.href, '', 'menubar=no,toolbar=no,resizable=yes,scrollbars=yes,height=400,width=700');return false;"><img src="{$img_dir}social_twitter.png" alt="Twitter" /></a></li>
+                                    <li><a title="Pinterest" href="https://www.pinterest.com/pin/create/button/?url={$link->getProductLink($product)|rawurlencode}&amp;media={$link->getImageLink($product->link_rewrite, $cover.id_image, 'thickbox_default')|rawurlencode}&amp;description={$product->name} sur Au Fil des Couleurs" class="pin-it-button" rel="nofollow" onclick="javascript:window.open(this.href, '', 'menubar=no,toolbar=no,resizable=yes,scrollbars=yes,height=350,width=850');return false;"><img src="{$img_dir}social_pint.png" alt="Pinterest" /></a></li>
+                                    {*<li><a title="Google +" href="https://plus.google.com/share?url={$link->getProductLink($product)|rawurlencode}&amp;hl=fr" class="google-button" rel="nofollow" onclick="javascript:window.open(this.href, '', 'menubar=no,toolbar=no,resizable=yes,scrollbars=yes,height=450,width=650');return false;"><img src="{$img_dir}social_google.png" alt="Google" /></a></li>*}				
+                                    <li class="print"><a onclick="$.get('{$img_dir}blank.gif');" href="javascript:print();"><img src="{$img_dir}social_print.png" alt="{l s='Print'}" /></a></li>
+                            {/strip}
+                            </ul>
+                        </div>
                     </div><div class="clearfix"></div>
+                    
                 </div>
 
                 <div class="custom-product-detail" id="custom-product-detail">

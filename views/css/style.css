@@ -57,3 +57,16 @@ button.image-grid {
     z-index: 1;
     overflow:hidden;
 }
+.product_social {}
+.social {
+	clear:both;padding-top: 20px;text-align: center
+}
+.social li {
+    display: inline;
+    line-height: 19px;
+    height: 19px;
+}
+.social li:after {
+    vertical-align: -5px;
+    content: url(../img/social_slash.png);
+}
