@@ -24,7 +24,7 @@ class CustomMadeGenerateimageModuleFrontController extends ModuleFrontController
         parent::__construct();
         //$select = "SELECT * FROM "._DB_PREFIX_."options WHERE 1 and status = 'pending' limit 5";
         $select = "SELECT * FROM "._DB_PREFIX_."options WHERE 1 and status = 'pending'";
-        //$select = "SELECT * FROM " . _DB_PREFIX_ . "options WHERE 1";
+        //$select = "SELECT * FROM " . _DB_PREFIX_ . "options WHERE 1 ORDER BY id DESC";
         $results = Db::getInstance()->ExecuteS($select);
         foreach ($results as $row) {
             $id = $row['id'];
@@ -44,6 +44,8 @@ class CustomMadeGenerateimageModuleFrontController extends ModuleFrontController
                 $options['crop_y'] = $customOptions->y;
                 $options['width'] = $customOptions->width;
                 $options['height'] = $customOptions->height;
+                $options['user_width'] = $customOptions->userWidth;
+                $options['user_height'] = $customOptions->userHeight;
                 $options['rotate_degree'] = $customOptions->rotate;
                 $options['grid_size'] = $customOptions->gridSize;
                 if ($customOptions->scaleX == '-1' || $customOptions->scaleY == '-1') {
@@ -69,6 +71,7 @@ class CustomMadeGenerateimageModuleFrontController extends ModuleFrontController
                 $updateStatus = 'UPDATE ' . _DB_PREFIX_ . 'options SET status = "image_error" WHERE 1 and id = "' . $id . '"';
                 DB::getInstance()->Execute($updateStatus);
             }
+            die;
         }
         /* Unlink temp images */
         $scanPath = 'modules/custommade/tmp';
@@ -120,9 +123,21 @@ class CustomMadeGenerateimageModuleFrontController extends ModuleFrontController
                 }
             }
             /* Stop : Merge Stripe */
+            
             //generate final output image
             if ($im !== false) {
-                imagepng($im, $config['output_filename']);
+                //imagepng($im, $config['output_filename']);
+                /*Start : Resize image to user entered dimension*/
+                $cmtopx = 37.795275591;
+                //$im = imagecreatefrompng($config['output_filename']);
+                $newWidth = $config['user_width'] * $cmtopx;
+                $newHeight = $config['user_height'] * $cmtopx;
+                $rsz = imagecreatetruecolor($newWidth, $newHeight);
+                //echo '----' . __LINE__ . '----' . __FILE__ . $newWidth;
+                // Resize
+                imagecopyresampled($rsz, $im, 0, 0, 0, 0, $newWidth, $newHeight, $config['width'], $config['height']);
+                imagepng($rsz, $config['output_filename']);
+                /* Stop : Resize image to user entered dimension */
                 return true;
             }
             return false;

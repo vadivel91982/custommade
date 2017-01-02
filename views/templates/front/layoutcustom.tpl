@@ -765,6 +765,9 @@
         finalData.stripe = sessionStorage.hasGrid;
         finalData.customPrice = newCustomPrice;
         finalData.gridSize = customGridSize;
+        finalData.userWidth = jQuery('#dataWidth').val();
+        finalData.userHeight = jQuery('#dataHeight').val();
+        console.log(finalData);
         var finalDataString = JSON.stringify(finalData);
         jQuery.post(rootUrl + 'module/custommade/cropper?action=setdata&pid=' + id_product, {
             data: finalDataString
@@ -811,9 +814,20 @@
     }
 
     function setNewCustomPrice() {
-        newCustomPrice = (((cropper.getData(true).width) * (cropper.getData(true).height)) / 10000) * pricePerMeterSq;
+        
+        
+        //newCustomPrice = (((cropper.getData(true).width) * (cropper.getData(true).height)) / 10000) * pricePerMeterSq;
+        var widthValue = parseFloat(jQuery('#dataWidth').val());
+        var heightValue = parseFloat(jQuery('#dataHeight').val());
+        
+        var dimension = widthValue * heightValue;
+        newCustomPrice = dimension * (pricePerMeterSq);
+        
+        
+        
+        /*newCustomPrice = (((widthValue) * (heightValue)) / 10000) * pricePerMeterSq;
 
-        newCustomPrice = newCustomPrice.toFixed(2);
+        newCustomPrice = newCustomPrice.toFixed(2);*/
 //        alert(number_format(newCustomPrice, 2, ',', ' '));
         var formattedPrice = number_format(newCustomPrice, 2, ',', ' ');
 
@@ -829,16 +843,19 @@
     }
 
     function setIndicatorPosition() {
+        var widthValue = parseFloat(jQuery('#dataWidth').val());
+        var heightValue = parseFloat(jQuery('#dataHeight').val());
+        
         jQuery('.imr_top').width(cropper.getCropBoxData().width);
         jQuery('.imr_top').css('margin-left', cropper.getCropBoxData().left + 'px');
         jQuery('#dimension_indicator').width(cropper.getCropBoxData().width);
-        jQuery('.imr_top .cmvalue').text(cropper.getData(true).width + 'cm');
+        jQuery('.imr_top .cmvalue').text(widthValue + 'cm');
 
 
         jQuery('.imr_right').height(cropper.getCropBoxData().height);
         jQuery('.imr_right').css('margin-top', cropper.getCropBoxData().top + 'px');
         jQuery('#dimension_indicator_right').height(cropper.getCropBoxData().height);
-        jQuery('.imr_right .cmvalue').text(cropper.getData(true).height + 'cm');
+        jQuery('.imr_right .cmvalue').text(heightValue + 'cm');
     }
 
     function addSampleToCart() {

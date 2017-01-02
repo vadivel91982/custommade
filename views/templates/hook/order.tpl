@@ -48,12 +48,12 @@
                             <img style="width:50px;height:50px;" src="{$getHDDetails['image_link'][$key]|escape:'htmlall':'UTF-8'}"/>
                         </a>
                     </td>
-                    <td>{$getHDDetails['product_name'][$key]|escape:'htmlall':'UTF-8'}</td>
+                    <td>{$getHDDetails['product_name'][$key]|escape:'htmlall':'UTF-8'|htmlspecialchars_decode:3}</td>
                     <td>
                         X: {$getHDDetails['crop_options'][$key]->x|escape:'htmlall':'UTF-8'}</br>
                         Y: {$getHDDetails['crop_options'][$key]->y|escape:'htmlall':'UTF-8'}</br>
-                        Width: {$getHDDetails['crop_options'][$key]->width|escape:'htmlall':'UTF-8'}</br>
-                        Height: {$getHDDetails['crop_options'][$key]->height|escape:'htmlall':'UTF-8'}</br>
+                        Width: {$getHDDetails['crop_options'][$key]->userWidth|escape:'htmlall':'UTF-8'}</br>
+                        Height: {$getHDDetails['crop_options'][$key]->userHeight|escape:'htmlall':'UTF-8'}</br>
                         Rotate: {$getHDDetails['crop_options'][$key]->rotate|escape:'htmlall':'UTF-8'}</br>
                     </td>                    
                     <td>
